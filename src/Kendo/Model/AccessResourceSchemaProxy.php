@@ -13,12 +13,14 @@ class AccessResourceSchemaProxy extends RuntimeSchema
   1 => 'name',
   2 => 'label',
   3 => 'description',
+  4 => 'id',
 );
     public static $column_hash = array (
   'rules_class' => 1,
   'name' => 1,
   'label' => 1,
   'description' => 1,
+  'id' => 1,
 );
     public static $mixin_classes = array (
 );
@@ -27,6 +29,7 @@ class AccessResourceSchemaProxy extends RuntimeSchema
   1 => 'name',
   2 => 'label',
   3 => 'description',
+  4 => 'id',
 );
 
     const schema_class = 'Kendo\\Model\\AccessResourceSchema';
@@ -34,7 +37,7 @@ class AccessResourceSchemaProxy extends RuntimeSchema
     const model_class = 'Kendo\\Model\\AccessResource';
     const model_name = 'AccessResource';
     const model_namespace = 'Kendo\\Model';
-    const primary_key = NULL;
+    const primary_key = 'id';
     const table = 'access_resources';
     const label = 'AccessResource';
 
@@ -56,6 +59,7 @@ class AccessResourceSchemaProxy extends RuntimeSchema
           'type' => 'varchar(64)',
           'isa' => 'str',
           'size' => 64,
+          'unique' => true,
           'required' => true,
         ),
     ),
@@ -74,14 +78,24 @@ class AccessResourceSchemaProxy extends RuntimeSchema
           'isa' => 'str',
         ),
     ),
+  'id' => array( 
+      'name' => 'id',
+      'attributes' => array( 
+          'type' => 'integer',
+          'isa' => 'int',
+          'primary' => true,
+          'autoIncrement' => true,
+        ),
+    ),
 );
         $this->columnNames     = array( 
+  'id',
   'rules_class',
   'name',
   'label',
   'description',
 );
-        $this->primaryKey      = NULL;
+        $this->primaryKey      = 'id';
         $this->table           = 'access_resources';
         $this->modelClass      = 'Kendo\\Model\\AccessResource';
         $this->collectionClass = 'Kendo\\Model\\AccessResourceCollection';

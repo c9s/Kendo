@@ -14,6 +14,7 @@ class AccessRuleSchemaProxy extends RuntimeSchema
   2 => 'operation',
   3 => 'operation_label',
   4 => 'description',
+  5 => 'id',
 );
     public static $column_hash = array (
   'rules_class' => 1,
@@ -21,6 +22,7 @@ class AccessRuleSchemaProxy extends RuntimeSchema
   'operation' => 1,
   'operation_label' => 1,
   'description' => 1,
+  'id' => 1,
 );
     public static $mixin_classes = array (
 );
@@ -30,6 +32,7 @@ class AccessRuleSchemaProxy extends RuntimeSchema
   2 => 'operation',
   3 => 'operation_label',
   4 => 'description',
+  5 => 'id',
 );
 
     const schema_class = 'Kendo\\Model\\AccessRuleSchema';
@@ -37,7 +40,7 @@ class AccessRuleSchemaProxy extends RuntimeSchema
     const model_class = 'Kendo\\Model\\AccessRule';
     const model_name = 'AccessRule';
     const model_namespace = 'Kendo\\Model';
-    const primary_key = NULL;
+    const primary_key = 'id';
     const table = 'access_rules';
     const label = 'AccessRule';
 
@@ -86,15 +89,25 @@ class AccessRuleSchemaProxy extends RuntimeSchema
           'isa' => 'str',
         ),
     ),
+  'id' => array( 
+      'name' => 'id',
+      'attributes' => array( 
+          'type' => 'integer',
+          'isa' => 'int',
+          'primary' => true,
+          'autoIncrement' => true,
+        ),
+    ),
 );
         $this->columnNames     = array( 
+  'id',
   'rules_class',
   'resource',
   'operation',
   'operation_label',
   'description',
 );
-        $this->primaryKey      = NULL;
+        $this->primaryKey      = 'id';
         $this->table           = 'access_rules';
         $this->modelClass      = 'Kendo\\Model\\AccessRule';
         $this->collectionClass = 'Kendo\\Model\\AccessRuleCollection';

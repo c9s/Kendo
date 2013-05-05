@@ -3,7 +3,8 @@ namespace DBTestRules;
 
 class FooRules extends \Kendo\Acl\DatabaseRules
 {
-    function build() {
+    public function build()
+    {
         $this->resource('product')
                 ->label('Product');
 
@@ -17,16 +18,21 @@ namespace main;
 
 class DatabaseRulesTest extends \PHPUnit_Framework_TestCase
 {
-    function test()
-    {
+
+    public function testDatabaseRulesWithApc() {
+        if ( ! ini_get('apc.enable_cli') ) {
+            skip("You must enable apc.enable_cli to test this");
+        }
+
         $loader = new \Kendo\Acl\RuleLoader;
         ok($loader);
 
         $rules = $loader->load('DBTestRules::FooRules');
+        $rules->buildAndSync();
+
         ok( $rules,'Rules loaded' );
         ok( $loader->authorize('admin','product','create') , "Admin Can Create Product" );
         ok( ! $loader->authorize('admin','product','update') , "Admin Can Not Update Product" );
-
         ok( ! $rules->cacheLoaded );
 
         ok( $loaded = $rules->load() , 'can be re-loaded from database' );
@@ -37,6 +43,23 @@ class DatabaseRulesTest extends \PHPUnit_Framework_TestCase
         ok( $rules2->authorize('admin','product','create') );
         ok( ! $rules2->authorize('admin','product','update') );
         $rules->clean();
+
+    }
+
+    public function testDatabaseRules()
+    {
+        $loader = new \Kendo\Acl\RuleLoader;
+        ok($loader);
+
+        $rules = $loader->load('DBTestRules::FooRules');
+        $rules->buildAndSync();
+
+        ok( $rules,'Rules loaded' );
+        ok( $loader->authorize('admin','product','create') , "Admin Can Create Product" );
+        ok( ! $loader->authorize('admin','product','update') , "Admin Can Not Update Product" );
+        ok( ! $rules->cacheLoaded );
+
+        ok( $loaded = $rules->load() , 'can be re-loaded from database' );
     }
 
 }

@@ -1,24 +1,10 @@
-README
+Kendo
 ======
 
-Phifty Web Framework documentation files are placed in `doc`.
+    composer install --dev
+    lazy build-conf db/config/database.yml
+    lazy build-schema
+    lazy build-sql --rebuild
+    phpunit
 
-To generate wiki html files:
-
-    $ php scripts/gen_wiki.php 
-
-
-    bin/   - Main executable script of phifty framework
-    utils/ - Utility (non-framework related)
-    scripts/ - Batch/Helper scripts (framework related)
-
-    webroot/index.php - Entry point
-
-    src/ - Phifty framework source code directory
-    libraries/ - External library
-    plugins/   - Phifty plugins
-
-    locale/    - I18N translations
-    cache/     - cache files
-    config/    - config files
 

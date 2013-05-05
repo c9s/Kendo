@@ -10,6 +10,7 @@ class AccessResourceSchema extends SchemaDeclare
 
         $this->column('name')
             ->varchar(64)
+            ->unique()
             ->required();
 
         $this->column('label')

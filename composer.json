@@ -1,9 +1,10 @@
 {
     "name": "corneltek\/kendo",
-    "version": "1.0.1",
+    "version": "1.0.4",
     "require-dev": {
         "corneltek\/phpunit-testmore": "dev-master",
         "corneltek\/universal": "dev-master",
+        "corneltek\/lazyrecord": "dev-master",
         "twig\/twig": "~1.12"
     },
     "license": "MIT",

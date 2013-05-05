@@ -13,6 +13,7 @@ public static $column_names = array (
   2 => 'operation',
   3 => 'operation_label',
   4 => 'description',
+  5 => 'id',
 );
 public static $column_hash = array (
   'rules_class' => 1,
@@ -20,6 +21,7 @@ public static $column_hash = array (
   'operation' => 1,
   'operation_label' => 1,
   'description' => 1,
+  'id' => 1,
 );
 public static $mixin_classes = array (
 );

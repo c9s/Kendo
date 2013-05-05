@@ -11,11 +11,13 @@ public static $column_names = array (
   0 => 'role',
   1 => 'rule_id',
   2 => 'allow',
+  3 => 'id',
 );
 public static $column_hash = array (
   'role' => 1,
   'rule_id' => 1,
   'allow' => 1,
+  'id' => 1,
 );
 public static $mixin_classes = array (
 );

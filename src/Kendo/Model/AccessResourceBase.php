@@ -12,12 +12,14 @@ public static $column_names = array (
   1 => 'name',
   2 => 'label',
   3 => 'description',
+  4 => 'id',
 );
 public static $column_hash = array (
   'rules_class' => 1,
   'name' => 1,
   'label' => 1,
   'description' => 1,
+  'id' => 1,
 );
 public static $mixin_classes = array (
 );

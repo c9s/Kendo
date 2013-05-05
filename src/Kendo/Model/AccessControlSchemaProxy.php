@@ -12,11 +12,13 @@ class AccessControlSchemaProxy extends RuntimeSchema
   0 => 'role',
   1 => 'rule_id',
   2 => 'allow',
+  3 => 'id',
 );
     public static $column_hash = array (
   'role' => 1,
   'rule_id' => 1,
   'allow' => 1,
+  'id' => 1,
 );
     public static $mixin_classes = array (
 );
@@ -24,6 +26,7 @@ class AccessControlSchemaProxy extends RuntimeSchema
   0 => 'role',
   1 => 'rule_id',
   2 => 'allow',
+  3 => 'id',
 );
 
     const schema_class = 'Kendo\\Model\\AccessControlSchema';
@@ -31,7 +34,7 @@ class AccessControlSchemaProxy extends RuntimeSchema
     const model_class = 'Kendo\\Model\\AccessControl';
     const model_name = 'AccessControl';
     const model_namespace = 'Kendo\\Model';
-    const primary_key = NULL;
+    const primary_key = 'id';
     const table = 'access_controls';
     const label = 'AccessControl';
 
@@ -63,13 +66,23 @@ class AccessControlSchemaProxy extends RuntimeSchema
           'default' => false,
         ),
     ),
+  'id' => array( 
+      'name' => 'id',
+      'attributes' => array( 
+          'type' => 'integer',
+          'isa' => 'int',
+          'primary' => true,
+          'autoIncrement' => true,
+        ),
+    ),
 );
         $this->columnNames     = array( 
+  'id',
   'role',
   'rule_id',
   'allow',
 );
-        $this->primaryKey      = NULL;
+        $this->primaryKey      = 'id';
         $this->table           = 'access_controls';
         $this->modelClass      = 'Kendo\\Model\\AccessControl';
         $this->collectionClass = 'Kendo\\Model\\AccessControlCollection';
