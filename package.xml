@@ -1,0 +1,826 @@
+<?xml version="1.0"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.10" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0               http://pear.php.net/dtd/tasks-1.0.xsd               http://pear.php.net/dtd/package-2.0               http://pear.php.net/dtd/package-2.0.xsd">
+  <name>Phifty</name>
+  <channel>pear.corneltek.com</channel>
+  <summary>Phifty Web Framework</summary>
+  <description>Phifty Web Framework</description>
+  <lead>
+    <name>Yo-An Lin</name>
+    <user/>
+    <email>cornelius.howl@gmail.com</email>
+    <active>yes</active>
+  </lead>
+  <date>2013-02-26</date>
+  <time>12:30:30</time>
+  <version>
+    <release>2.5.0</release>
+    <api>2.5.0</api>
+  </version>
+  <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+  </stability>
+  <license>PHP</license>
+  <notes>-</notes>
+  <contents>
+    <dir name="/">
+      <file name="doc/.DS_Store" role="doc" md5sum="facde99a0fd069c82ca4f0911f4cf063"/>
+      <file name="doc/Action.js.md" role="doc" md5sum="6857db2d575f8f9142b8c823b37d77dc"/>
+      <file name="doc/Action.md" role="doc" md5sum="b58153906d5bd77e0e54b175ae495243"/>
+      <file name="doc/Action2.md" role="doc" md5sum="36e4c1b12f307b571301160c2fd9450b"/>
+      <file name="doc/Asset.md" role="doc" md5sum="86274cd0d0531bf9c316e06d6b29203e"/>
+      <file name="doc/code/conventions.md" role="doc" md5sum="3fe0bea5b1614a2a1f63522b99fdc3a0"/>
+      <file name="doc/code/standards.md" role="doc" md5sum="096398a1dd483cb2f3cefe05d6bc5230"/>
+      <file name="doc/collection.md" role="doc" md5sum="d98a7d2f5e57dd0d0f910c169ea21e75"/>
+      <file name="doc/cookbook/AdminMenu.md" role="doc" md5sum="85e7bbb2eeeadc4078b0985bccd94623"/>
+      <file name="doc/Cookbook.md" role="doc" md5sum="63be036a41b5f89e6b21a87355b0be9d"/>
+      <file name="doc/CRUD.md" role="doc" md5sum="5521b458c272add008b163cf2b2b1675"/>
+      <file name="doc/CurrentUser.md" role="doc" md5sum="88d169f4e775f98d4c6c53249de2d38b"/>
+      <file name="doc/database/conventions.md" role="doc" md5sum="7f9ba37f8fc492cb588266f7396412af"/>
+      <file name="doc/development/documentation.md" role="doc" md5sum="78ed441e4e9274f1a9bca866c81b240b"/>
+      <file name="doc/development/Jenkins.md" role="doc" md5sum="d3bdb62f5681aeeeaaad418bcc7fced5"/>
+      <file name="doc/development/ReleaseProcess.md" role="doc" md5sum="8329733c937fda8201758891ac794695"/>
+      <file name="doc/Email.md" role="doc" md5sum="b396c8543931539d2cbddc46400a3069"/>
+      <file name="doc/Finder.md" role="doc" md5sum="23dcf7d18671791ffaebe10d814596b9"/>
+      <file name="doc/getting_started/how_to_write_controller.md" role="doc" md5sum="af7257a7ecee4aec677c6079ee491432"/>
+      <file name="doc/getting_started/index.md" role="doc" md5sum="3fc9db37cb710f3a80475d47c8d6ca92"/>
+      <file name="doc/getting_started/requirements.md" role="doc" md5sum="b277c1c215b233ae05797cca5d4e8098"/>
+      <file name="doc/getting_started/rewrite.md" role="doc" md5sum="d662679e202b41976bf80087c9cd003e"/>
+      <file name="doc/getting_started/setup.md" role="doc" md5sum="38622cb0a0133e6a6f0c468e3f215591"/>
+      <file name="doc/getting_started/structure.md" role="doc" md5sum="a0459ef67a25f8576b49e1a725cbb339"/>
+      <file name="doc/HttpServer.md" role="doc" md5sum="c5136995c817657e965c4ff50cc39b1a"/>
+      <file name="doc/index.md" role="doc" md5sum="1f863d549bb94b07e74b7a9c114a96e1"/>
+      <file name="doc/Bundle.md" role="doc" md5sum="065a63d5cc57b4b480e69758cb6a0044"/>
+      <file name="doc/Notification.md" role="doc" md5sum="caf1b37c6f45db6a4d53fcaa61b9d9fc"/>
+      <file name="doc/pager.md" role="doc" md5sum="9dccad7d73b74a84b13f543b8330ccef"/>
+      <file name="doc/Plan.md" role="doc" md5sum="1dfeb367a83ad33ef2c89135346615f4"/>
+      <file name="doc/plans/access_control.md" role="doc" md5sum="81e25bf28dfc0679f57a12f1bc6c03ff"/>
+      <file name="doc/plans/action.md" role="doc" md5sum="d2dfa7b3dd365bfab513fc3cf0f57559"/>
+      <file name="doc/plans/adminui.md" role="doc" md5sum="ddcfd3d0b8b97383340b8b615f607237"/>
+      <file name="doc/plans/controller.md" role="doc" md5sum="297ceec6f6bdcd082287dbcfef019db5"/>
+      <file name="doc/plans/core_improvement.md" role="doc" md5sum="780b29389a714cfd24746de6f48372bc"/>
+      <file name="doc/plans/cropper.md" role="doc" md5sum="f7dfbe998f8d85adfb4ada833a425dac"/>
+      <file name="doc/plans/crud_chooser.md" role="doc" md5sum="32613ac7236bb2dbc3cc4299bc072dc7"/>
+      <file name="doc/plans/debug_toolbar.md" role="doc" md5sum="b5835d064046e786e36f97b90e5103f9"/>
+      <file name="doc/plans/done/dynamic-menu.md" role="doc" md5sum="da059cba68ecef894eb66389afd03bda"/>
+      <file name="doc/plans/done/oauth.md" role="doc" md5sum="ab0b58af366da33c838eba6151ecb9e3"/>
+      <file name="doc/plans/extjs.md" role="doc" md5sum="7e6276bf75f1a59ab13382757aeda2f0"/>
+      <file name="doc/plans/important/banner_improvement.md" role="doc" md5sum="3b0390b4457572beb49ae9b9d897ff95"/>
+      <file name="doc/plans/nested_form.md" role="doc" md5sum="67d7eb6d42210254500b4a3eb5efad83"/>
+      <file name="doc/plans/placeholder.md" role="doc" md5sum="27a910065258abb7bcfe356398e29b16"/>
+      <file name="doc/plans/search_builder.md" role="doc" md5sum="6a9bc69264f5eedcee45f4a93ec27409"/>
+      <file name="doc/plans/sitemap.md" role="doc" md5sum="7733f27c5932c8d33a3915033ec23d36"/>
+      <file name="doc/Plugin.md" role="doc" md5sum="4c9776778c940b667b729e227c4a3ba6"/>
+      <file name="doc/plugins/product.md" role="doc" md5sum="2585232decaddbef5d835bdd0421b00b"/>
+      <file name="doc/preference.md" role="doc" md5sum="81e30801c1919b3aad738f86f019c3c2"/>
+      <file name="doc/Profiling.md" role="doc" md5sum="59f8702e1a8741714990a7e5d761f08b"/>
+      <file name="doc/services/Gearman.md" role="doc" md5sum="1b68375fcc8b304786ca381e985d93b3"/>
+      <file name="doc/Services.md" role="doc" md5sum="b65496d40a1d3e63f41679484cf5cdeb"/>
+      <file name="doc/testing.md" role="doc" md5sum="dd6f1f6cebe6a1fcf13226ea18e769fe"/>
+      <file name="doc/Todo.md" role="doc" md5sum="d36eeef6319233a6d616de1ccf82e28d"/>
+      <file name="doc/upgrade/ctravel.md" role="doc" md5sum="dbb805a9763cd484873f2c2b19d77eca"/>
+      <file name="doc/upgrade/ibiyaya.md" role="doc" md5sum="285a019379e56191d6e521a10dbfdf1a"/>
+      <file name="doc/View.md" role="doc" md5sum="9a077725c75aa33a5a753478c3cc5db5"/>
+      <file name="examples/excel_test.php" role="doc" md5sum="297e63dcc28cc99d8eac99b74e320d53"/>
+      <file name="examples/gearman/client.php" role="doc" md5sum="1d168f034409a1fe49065613580c2c79"/>
+      <file name="examples/gearman/worker.php" role="doc" md5sum="7932f277a68ac3ddbb1e987fda8cd00f"/>
+      <file name="examples/gearman_test.php" role="doc" md5sum="d64895d26d676abf539ba54d61c31e27"/>
+      <file name="examples/geoip_test.php" role="doc" md5sum="44c86e15a8eeb4399a8e50f91a005212"/>
+      <file name="examples/getbrowser_test.php" role="doc" md5sum="2168b37eefe581e25e43061866fc1376"/>
+      <file name="examples/mailer_test.php" role="doc" md5sum="ff2db7aeb761dcfdd72045b285b89469"/>
+      <file name="examples/mongodb_test.php" role="doc" md5sum="6546ddae23471d735761d5a2250ac2a6"/>
+      <file name="examples/pdf_export.php" role="doc" md5sum="10b86ec1f8c9b76c3da58889e14e1971"/>
+      <file name="examples/swift_mailer.php" role="doc" md5sum="5d972afc4ba8caff5d4d13dcdab3fdb7"/>
+      <file name="tests/_old/CRUDTest/Model/Foo.php" role="test" md5sum="7ae4234df143d9d56b12c3391beb4861"/>
+      <file name="tests/_old/CRUDTest/Model/FooBase.php" role="test" md5sum="5e71580f6ac6a48e179fdcbfe2e413a7"/>
+      <file name="tests/_old/CRUDTest/Model/FooCollection.php" role="test" md5sum="059a19cc4e323cea9d4e4816c108269a"/>
+      <file name="tests/_old/CRUDTest/Model/FooCollectionBase.php" role="test" md5sum="63f9a678e63f78cf180d450aa9c1812e"/>
+      <file name="tests/_old/CRUDTest/Model/FooSchemaProxy.php" role="test" md5sum="a532fd591d9023c3a56db22ba31bb0ac"/>
+      <file name="tests/_old/CRUDTest.php" role="test" md5sum="a519654f3c2c20c2beed3c650b74d1ca"/>
+      <file name="tests/_old/EmailTest.php" role="test" md5sum="953426553ae4dafde2079b9781c54e63"/>
+      <file name="tests/_old/HeredocTest.php" role="test" md5sum="6a7366df3fba9ed2cd9d11275e45b9d5"/>
+      <file name="tests/_old/plugins/AdminUI/MenuTest.php" role="test" md5sum="d45e1439caf66abb0850be29e32686c6"/>
+      <file name="tests/_old/plugins/Contact/ContactTest.php" role="test" md5sum="16ac6bed06c3c78e1f03150822faafe9"/>
+      <file name="tests/_old/plugins/DMenu/DMenuTest.php" role="test" md5sum="e9e4f5b773a483d0ba968e1b2206ab71"/>
+      <file name="tests/_old/plugins/ImageData/CreateImageTest.php" role="test" md5sum="f028b770b831bb32eb3b740c997a469d"/>
+      <file name="tests/_old/plugins/News/CreateNewsTest.php" role="test" md5sum="b6eacfe0d55360faa6294c0839149a0b"/>
+      <file name="tests/_old/plugins/ProductTest.php" role="test" md5sum="ebfdb23019ca24a75cd9b65b174fa170"/>
+      <file name="tests/_old/plugins/UrlTracker/UrlReplaceTest.php" role="test" md5sum="6aa62b7093102cc4a07e28d139c9c60f"/>
+      <file name="tests/ActionKit/ActionGeneratorTest.php" role="test" md5sum="3b567e3253e19160225c13b0564fc12c"/>
+      <file name="tests/ActionKit/ActionRunnerTest.php" role="test" md5sum="37b89309247c1e397f7d8197c29ee53c"/>
+      <file name="tests/ActionKit/ActionTest.php" role="test" md5sum="6444cbabc3a8a9d67fc80ce3004fcf08"/>
+      <file name="tests/ActionKit/ColumnConvertTest.php" role="test" md5sum="8ecf67ef2bc82a3d478bef4fc9034615"/>
+      <file name="tests/ActionKit/CRUDTest.php" role="test" md5sum="a0024ffad4b78ad685e6deba312a54ae"/>
+      <file name="tests/ActionKit/Model/CRUDTest/FooUser.php" role="test" md5sum="047f920d09843ed5fecf79d13369d5af"/>
+      <file name="tests/ActionKit/Model/CRUDTest/FooUserCollection.php" role="test" md5sum="313ebeb42d5c4807a95763d968ba1b27"/>
+      <file name="tests/ActionKit/Model/CRUDTest/FooUserCollectionBase.php" role="test" md5sum="0b8d1a9402bef6d2fe9e71693aec8c1a"/>
+      <file name="tests/ActionKit/Model/CRUDTest/FooUserSchemaProxy.php" role="test" md5sum="95076a9bd9141e303c22643cf502bc02"/>
+      <file name="tests/ActionKit/ParamTest.php" role="test" md5sum="79461a57644f2268242b1d85240adf5b"/>
+      <file name="tests/ActionKit/View/StackViewTest.php" role="test" md5sum="dfbafc435d54f38257e4d1a5c95b4e95"/>
+      <file name="tests/bootstrap.php" role="test" md5sum="d1ebed94b7fe274748a53d620e9c7839"/>
+      <file name="tests/data/404.png" role="test" md5sum="3ede38f811bbf0af28c914f2517dc53b"/>
+      <file name="tests/data/angry-bird.png" role="test" md5sum="1696932073b8d5d27cd26f239ea6436b"/>
+      <file name="tests/data/cat.jpg" role="test" md5sum="bb009916195c9137f44a1ef51c39eab9"/>
+      <file name="tests/data/email.xlsx" role="test" md5sum="d2c94931203fabb5076f5d456ea4fb22"/>
+      <file name="tests/data/goraster-crop.png" role="test" md5sum="861f4c487dfd87bde12cf7689921047b"/>
+      <file name="tests/data/goraster.png" role="test" md5sum="02de6b34aed24887247ecdfdc3a51492"/>
+      <file name="tests/data/street_names.txt" role="test" md5sum="2fd086b9cbcf540a50616646b2023855"/>
+      <file name="tests/data/test_mail/images/6165798128_62a0746471.jpg" role="test" md5sum="fd2ac32d92aaeda767397960c4aea656"/>
+      <file name="tests/data/test_mail/index.html" role="test" md5sum="78c90ef9a608e0bba8e45127f425ce5f"/>
+      <file name="tests/data/test_mail/style.css" role="test" md5sum="935d9be8bc447d57f3114850ca7d6d2a"/>
+      <file name="tests/data/test_mail/test_mail.zip" role="test" md5sum="e6c4a8bb08c5cd53fcce4d0e2e9564ac"/>
+      <file name="tests/functional/ImageDataTest.php" role="test" md5sum="b95c39ee624d0228112aaa7459774fdd"/>
+      <file name="tests/functional/NewsCategoryTest.php" role="test" md5sum="71586d0c693556f77854a79635b2099c"/>
+      <file name="tests/functional/NewsTest.php" role="test" md5sum="1f0b0230e3defecc82c9940917e1202e"/>
+      <file name="tests/functional/others/ContactGroupsTest_.php" role="test" md5sum="f55a2b7966f9acf0a2b78f6066e21fd6"/>
+      <file name="tests/functional/others/ContactsTest_.php" role="test" md5sum="74d00f45af44173dfc9748ea3811577c"/>
+      <file name="tests/functional/others/functionTest_.php" role="test" md5sum="f4f866c64df81b1506f789ec2b4e1caa"/>
+      <file name="tests/functional/PageTest.php" role="test" md5sum="33959215ed5b48accab82a0ac0c4255c"/>
+      <file name="tests/functional/ProductTest.php" role="test" md5sum="485af8966a0c7ed29f979a49154aa856"/>
+      <file name="tests/I18NKit/data/messages.txt" role="test" md5sum="fa6d28bb3454179701f22c5ec811d830"/>
+      <file name="tests/I18NKit/Scanner/GettextPluginTest.php" role="test" md5sum="3fbc7dbad030ed1911351005cfb0b4fb"/>
+      <file name="tests/I18NKit/ScannerTest.php" role="test" md5sum="d2b16ccd21fbb80d3cfc11a6c42f277d"/>
+      <file name="tests/InquiryCartTest.php" role="test" md5sum="bceb562a04bb10d65a82a35d536bbfaa"/>
+      <file name="tests/Kendo/Acl/AclTest.php" role="test" md5sum="b72f999b84396cb64cc0ae728692b5a4"/>
+      <file name="tests/Kendo/Acl/BaseRulesTest.php" role="test" md5sum="9246305b34eba65805add129d04fce44"/>
+      <file name="tests/Kendo/Acl/DatabaseRulesTest.php" role="test" md5sum="f024a0a2074a8c0133a3eef919b5877d"/>
+      <file name="tests/Kendo/Acl/RuleLoaderTest.php" role="test" md5sum="52a1d3eb6cfd20bce9de36b571c7269a"/>
+      <file name="tests/Kendo/Model/AccessResourceTest.php" role="test" md5sum="479c77843c45aca4fe3e5995f231a932"/>
+      <file name="tests/MongoDB.php" role="test" md5sum="e26ddd84399027fd1d3a7755853870dd"/>
+      <file name="tests/Phifty/ClassUtilsTest.php" role="test" md5sum="f9f01035d3758cf3fb1aaf629db1c680"/>
+      <file name="tests/Phifty/ControllerTest.php" role="test" md5sum="9039c6fd3543869cb98b7d8a6b8e1cd2"/>
+      <file name="tests/Phifty/ExcelTest.php" role="test" md5sum="4abb4f9b7eaab23c98c2804ead106e5a"/>
+      <file name="tests/Phifty/FileUtilsTest.php" role="test" md5sum="67db34e740f20e0d24d9534abc0b0e7a"/>
+      <file name="tests/Phifty/Http/BrowserClientTest.php" role="test" md5sum="4253cfb49b3cfd78bf0d0084e7236be9"/>
+      <file name="tests/Phifty/JsonStore/JsonStoreFileTest.php" role="test" md5sum="db71b4fa27c5d76e99929111115eb2a4"/>
+      <file name="tests/Phifty/KernelTest.php" role="test" md5sum="d5998acc16dfe978f37e6036c96ce2dd"/>
+      <file name="tests/Phifty/PluginManagerTest.php" role="test" md5sum="b7e9feadfbe0cb07ef3edf0dc81db355"/>
+      <file name="tests/Phifty/PluginTest.php" role="test" md5sum="4838847d75fe81c9a5a232d0fcd62f3c"/>
+      <file name="tests/Phifty/Security/CurrentUserTest.php" role="test" md5sum="63b4de4d6594b60994978059932232a2"/>
+      <file name="tests/Phifty/Service/ActionServiceTest.php" role="test" md5sum="fec513be9b3e7ef5581f25bcfd714ca6"/>
+      <file name="tests/Phifty/Service/CurrentUserServiceTest.php" role="test" md5sum="f02dc30ed00dff6256c626d7baef8f95"/>
+      <file name="tests/Phifty/Service/RouterServiceTest.php" role="test" md5sum="43f210dd3637c0bdf712c5215fa1fdd5"/>
+      <file name="tests/Phifty/Service/ViewServiceTest.php" role="test" md5sum="10e5e40e2740c051c66645b434daa083"/>
+      <file name="tests/Phifty/SessionTest.php" role="test" md5sum="4859dfc74e94ec6895279c3744b582d3"/>
+      <file name="tests/Phifty/TwigLightTest.php" role="test" md5sum="4030d62f77e45a345015181f239baa96"/>
+      <file name="tests/Phifty/ViewTest.php" role="test" md5sum="eb8ef737ea315ea447056c9c945599a5"/>
+      <file name="tests/plugins/News/ActionTest.php" role="test" md5sum="40bb542fc7110dd4f7811168bdc0b80f"/>
+      <file name="tests/plugins/Product/ActionTest.php" role="test" md5sum="46ce1b5362076cbd87c763f25b06fa4b"/>
+      <file name="tests/plugins/User/UserRoleTest.php" role="test" md5sum="6e5dca5c20eabea5e8b595c83a3ed38f"/>
+      <file name="tests/plugins/User/UserTest.php" role="test" md5sum="df20d0b0198c09395109fb755c0be813"/>
+      <file name="tests/ProcessPipeTest.php" role="test" md5sum="6285251a79c4b66470402a87747e5fed"/>
+      <file name="tests/screenshots/.empty" role="test" md5sum="d41d8cd98f00b204e9800998ecf8427e"/>
+      <file name="tests/screenshots/1347211839_9795.png" role="test" md5sum="2e141817d5beb247dcdd476fa89d2010"/>
+      <file name="tests/screenshots/1347211872_8455.png" role="test" md5sum="cd476056a7e96d7dfefa525d46b1a527"/>
+      <file name="tests/screenshots/1347211997_9022.png" role="test" md5sum="a8e7b2f83719300f33e3f4df31f42e40"/>
+      <file name="tests/screenshots/1347212018_8522.png" role="test" md5sum="2e1511dc1acf1c2ec22fdb62a43d4c43"/>
+      <file name="tests/screenshots/1347212164_3251.png" role="test" md5sum="44d5f1dc72eb844c3cf21ebd87f02084"/>
+      <file name="tests/screenshots/1347212340_2238.png" role="test" md5sum="04bc1034352bb724b016778828c8b429"/>
+      <file name="tests/screenshots/1347212542_0239.png" role="test" md5sum="ec6c822c4ffc13affcb7933da49a099e"/>
+      <file name="tests/screenshots/1347239281_3288.png" role="test" md5sum="2823a5a1b35c1a0a156e135fbdf8c47e"/>
+      <file name="tests/screenshots/1347239449_882.png" role="test" md5sum="213f403712394cd9c03e3d412664a8b1"/>
+      <file name="tests/screenshots/1347239736_1422.png" role="test" md5sum="c8fb211a70d522b2326d138b8078c4a2"/>
+      <file name="tests/screenshots/1347241685_5535.png" role="test" md5sum="6b1561354b77a4542a0d3d30fe239014"/>
+      <file name="tests/screenshots/1347798552_0765.png" role="test" md5sum="9c731c274a2eb3ccc6da238067e3b289"/>
+      <file name="tests/screenshots/1347804380_8012.png" role="test" md5sum="074a336bdf986eb8ac7ae2021c5ce151"/>
+      <file name="tests/screenshots/1347804407_0792.png" role="test" md5sum="08710b78d12457058779a76c8197ec8d"/>
+      <file name="tests/screenshots/1347804447_6783.png" role="test" md5sum="39836d11faed9640cc04679b2d9388b7"/>
+      <file name="tests/screenshots/1347804461_3444.png" role="test" md5sum="215e0a6498a417803e1925dab0fb1c9d"/>
+      <file name="tests/screenshots/1347804518_7707.png" role="test" md5sum="6796362ac986640bdbba9c1f2f455f38"/>
+      <file name="tests/screenshots/1347804531_9884.png" role="test" md5sum="f5dfba00df47f6eafebea7a13dd6bf33"/>
+      <file name="tests/screenshots/1347804828_3152.png" role="test" md5sum="1e80d2aadffd87671611c3fe6182d991"/>
+      <file name="tests/screenshots/1347804937_1359.png" role="test" md5sum="bd8bd3f2d3dc7387bb4da28833e5cb14"/>
+      <file name="tests/screenshots/1347804948_7681.png" role="test" md5sum="1e7fb2e957a2eb51bcf01fea64716844"/>
+      <file name="tests/screenshots/1347804963_6857.png" role="test" md5sum="b572b6fb0d08ad42a520a9a0978b2555"/>
+      <file name="tests/screenshots/1347804997_419.png" role="test" md5sum="0c7dc74ba8e09c8a01e50f8cdf2af83f"/>
+      <file name="tests/screenshots/1347805007_1272.png" role="test" md5sum="3252f8bf4c771ebb16a73f47d6f60a87"/>
+      <file name="tests/screenshots/1347805043_976.png" role="test" md5sum="34d491f3b72c03dd5e91b8c5ad084759"/>
+      <file name="tests/screenshots/1347805055_5531.png" role="test" md5sum="196675783a16c8e0a7551e31d0c15db5"/>
+      <file name="tests/screenshots/1347805159_6541.png" role="test" md5sum="196675783a16c8e0a7551e31d0c15db5"/>
+      <file name="tests/screenshots/1347805210_3379.png" role="test" md5sum="1e80d2aadffd87671611c3fe6182d991"/>
+      <file name="tests/screenshots/1347805225_9483.png" role="test" md5sum="4e794b1a1add9932e5a96abb977fc8e4"/>
+      <file name="tests/screenshots/1347805248_7279.png" role="test" md5sum="c7ed116f7d4b35809031fea67a3900f3"/>
+      <file name="tests/screenshots/1347805339_5527.png" role="test" md5sum="f4254fa80ec5a18b46c58b806a8ef59d"/>
+      <file name="tests/screenshots/1347805484_4527.png" role="test" md5sum="47404bf15391bfdcdd59d873e2b36249"/>
+      <file name="tests/screenshots/1347805548_1699.png" role="test" md5sum="5b39a9133cb54e2f20048ad8c9945cfa"/>
+      <file name="tests/screenshots/1347805692_7581.png" role="test" md5sum="c39d57c70dd55f10f4418fa4792e654a"/>
+      <file name="tests/screenshots/1347805724_7692.png" role="test" md5sum="8a5b2faf30672d5415cb9b1b1a107efe"/>
+      <file name="tests/screenshots/1347811143_7344.png" role="test" md5sum="3e394d7765e0d07b7c095b5ea6ab83ff"/>
+      <file name="tests/screenshots/1347811645_3447.png" role="test" md5sum="85c3316916fb3b3a4837d3cff3474bcd"/>
+      <file name="tests/screenshots/1347811925_5532.png" role="test" md5sum="6b4b796d51465f469b9ab14eeeabbe22"/>
+      <file name="tests/screenshots/1347817182_3556.png" role="test" md5sum="690db86695b4cca55f9d36564d480640"/>
+      <file name="tests/screenshots/now.png" role="test" md5sum="690db86695b4cca55f9d36564d480640"/>
+      <file name="tests/selenium_helpers.php" role="test" md5sum="a4e580bd05033e269e75a015d8177eaf"/>
+      <file name="tests/SimpleImageTest.php" role="test" md5sum="4ccaf851c1237e5bf547a7cc8ee4e5b0"/>
+      <file name="tests/SiteMapKit/SiteMapIndexTest.php" role="test" md5sum="bab02df5602590f9da49780845faebf2"/>
+      <file name="tests/SiteMapKit/SiteMapTest.php" role="test" md5sum="181a328e065de9f162c1553b555498d0"/>
+      <file name="src/ActionKit/Action.php" role="php" md5sum="e01a2a54744139ade6e0cec02fe2c26b"/>
+      <file name="src/ActionKit/ActionGenerator.php" role="php" md5sum="2cbe6ef68ef04e4d0e856678f742aebd"/>
+      <file name="src/ActionKit/ActionRunner.php" role="php" md5sum="f5c57e1825c7966f83765d2258fe5587"/>
+      <file name="src/ActionKit/ColumnConvert.php" role="php" md5sum="f513e1ee10d370e8dabdc139f183cd5c"/>
+      <file name="src/ActionKit/CRUD.php" role="php" md5sum="4c40a8289ed54b123d61ba1daa69b64c"/>
+      <file name="src/ActionKit/EmailAction.php" role="php" md5sum="088b0f9d0748d452c15dc98a5cf9debd"/>
+      <file name="src/ActionKit/Exception/ActionException.php" role="php" md5sum="65549cc556a1e52216b64c327a347f47"/>
+      <file name="src/ActionKit/FieldView/DivFieldView.php" role="php" md5sum="cd1b4b05c9a01f36e5825d9da0b25c4f"/>
+      <file name="src/ActionKit/Param/File.php" role="php" md5sum="3e7045e9a40e900991fdf098469913d0"/>
+      <file name="src/ActionKit/Param/Image/CropAndScaleResize.php" role="php" md5sum="7fc45ca84de674a1fb3ed1b6f5349aa9"/>
+      <file name="src/ActionKit/Param/Image/MaxHeightResize.php" role="php" md5sum="087a5fd2f6348b55b554824039d034c0"/>
+      <file name="src/ActionKit/Param/Image/MaxWidthResize.php" role="php" md5sum="860e49a8000e6e6a3a54ae8a7eb1b869"/>
+      <file name="src/ActionKit/Param/Image/ScaleResize.php" role="php" md5sum="002bcd7e04ffd3a65330475f855a3dd7"/>
+      <file name="src/ActionKit/Param/Image.php" role="php" md5sum="08d6f772bab01d4d72c30af8b298986b"/>
+      <file name="src/ActionKit/Param.php" role="php" md5sum="513bafd6baa37eb3482e0bb80d78afe0"/>
+      <file name="src/ActionKit/RecordAction/BaseRecordAction.php" role="php" md5sum="576bc523cd53bbebc6b70421c04d86ac"/>
+      <file name="src/ActionKit/RecordAction/BulkDeleteRecordAction.php" role="php" md5sum="541f9d2c37815c868aa8f5d37dd6abe2"/>
+      <file name="src/ActionKit/RecordAction/BulkRecordAction.php" role="php" md5sum="83658a3ffd069e07d5e991471efe26ce"/>
+      <file name="src/ActionKit/RecordAction/BulkZhConvertRecordAction.php" role="php" md5sum="c00217b85210bf1a822a17c1ade29238"/>
+      <file name="src/ActionKit/RecordAction/CreateRecordAction.php" role="php" md5sum="88097969a8b9619585b4c7ad5a8a0b2a"/>
+      <file name="src/ActionKit/RecordAction/DeleteRecordAction.php" role="php" md5sum="a11416f17aea2c6315a91d0591dfd64e"/>
+      <file name="src/ActionKit/RecordAction/UpdateRecordAction.php" role="php" md5sum="7e64945340c4263e7621e7266ce8d5bc"/>
+      <file name="src/ActionKit/Result.php" role="php" md5sum="4f03e2d095b4546a54671b3f75e1f9cf"/>
+      <file name="src/ActionKit/View/BaseView.php" role="php" md5sum="969e4a5a4656638fefc8d2d19a02af7f"/>
+      <file name="src/ActionKit/View/StackView.php" role="php" md5sum="ce247af6a38b2d137c836ab4377eae39"/>
+      <file name="src/ActionKit/View.php" role="php" md5sum="b9b117ca1ccb16e49ab6a6ff0234717c"/>
+      <file name="src/I18NKit/Exceptions/EncodingException.php" role="php" md5sum="ef7271eab48fe05d8ad8a1cdcd63dbb9"/>
+      <file name="src/I18NKit/Reader/FileReaderInterface.php" role="php" md5sum="fea67bd66de3c9b4185ef26bfd8e1540"/>
+      <file name="src/I18NKit/Reader/POFileReader.php" role="php" md5sum="bfe416464a4205efa1abc131421a97d9"/>
+      <file name="src/I18NKit/Scanner/GettextPlugin.php" role="php" md5sum="d86bfec24edf541f699a08b30f2f9946"/>
+      <file name="src/I18NKit/Scanner/PluginInterface.php" role="php" md5sum="ca8d9926b7ee0d184ffbd0ba74b4053d"/>
+      <file name="src/I18NKit/Scanner.php" role="php" md5sum="ea6672754e9624ddd30f01ab57111847"/>
+      <file name="src/Kendo/Acl/AccessObserver.php" role="php" md5sum="dc45fecafc982aedca3bcda52bd8b712"/>
+      <file name="src/Kendo/Acl/Acl.php" role="php" md5sum="6918ddd13f52087cd86b1ecf9dc8814f"/>
+      <file name="src/Kendo/Acl/BaseRules.php" role="php" md5sum="75b00963bc668879122427afafbc7e83"/>
+      <file name="src/Kendo/Acl/DatabaseRules.php" role="php" md5sum="ddb6b68e206cc63fdb2db9798def7513"/>
+      <file name="src/Kendo/Acl/MultiRoleInterface.php" role="php" md5sum="29c6a43df5999ebd5fdf0ec9417f27ed"/>
+      <file name="src/Kendo/Acl/Resource.php" role="php" md5sum="22e31c6e52f2f6f9a391fa394db5998d"/>
+      <file name="src/Kendo/Acl/Rule.php" role="php" md5sum="2ac047717e83dd1fa7ee45d0af967b7d"/>
+      <file name="src/Kendo/Acl/RuleLoader.php" role="php" md5sum="039b96e224b093662da82623449bb947"/>
+      <file name="src/Kendo/Model/AccessControl.php" role="php" md5sum="6ed4cd6a41fb83785ba80426b3f67580"/>
+      <file name="src/Kendo/Model/AccessControlBase.php" role="php" md5sum="d8574a4119623b59786076f0b5e4b26d"/>
+      <file name="src/Kendo/Model/AccessControlCollection.php" role="php" md5sum="34e9e307eb6e3eff5dd5df721b4b6372"/>
+      <file name="src/Kendo/Model/AccessControlCollectionBase.php" role="php" md5sum="f498a2bd947f7f78e4e0c75b2618939b"/>
+      <file name="src/Kendo/Model/AccessControlSchema.php" role="php" md5sum="8fda15b2fe20b3e05a2b6e909213e7a7"/>
+      <file name="src/Kendo/Model/AccessControlSchemaProxy.php" role="php" md5sum="8b1c88b079627ce7e6043f321fa57a1e"/>
+      <file name="src/Kendo/Model/AccessResource.php" role="php" md5sum="36e677e494ef8b5baec0c20d2fd880f2"/>
+      <file name="src/Kendo/Model/AccessResourceBase.php" role="php" md5sum="c9fa982c646024062a4695b2d3250898"/>
+      <file name="src/Kendo/Model/AccessResourceCollection.php" role="php" md5sum="faa46306e5e1486c4fe51f96e7a46c20"/>
+      <file name="src/Kendo/Model/AccessResourceCollectionBase.php" role="php" md5sum="8c24721fd795872313f4e4e8a1655bee"/>
+      <file name="src/Kendo/Model/AccessResourceSchema.php" role="php" md5sum="ff8cf7aa0d12781af59031089a751c0d"/>
+      <file name="src/Kendo/Model/AccessResourceSchemaProxy.php" role="php" md5sum="f29a913648c361b57cfc695a382ed65a"/>
+      <file name="src/Kendo/Model/AccessRule.php" role="php" md5sum="aa8e4673c56b96f6d689bfc580215777"/>
+      <file name="src/Kendo/Model/AccessRuleBase.php" role="php" md5sum="271af82bb617b3b39572f191178f29b7"/>
+      <file name="src/Kendo/Model/AccessRuleCollection.php" role="php" md5sum="addb4dabfcf5053a1fdff4c795de5044"/>
+      <file name="src/Kendo/Model/AccessRuleCollectionBase.php" role="php" md5sum="8db76a64b0ee601cc430e506776c757f"/>
+      <file name="src/Kendo/Model/AccessRuleSchema.php" role="php" md5sum="c690cd351559623988aeb13ee06e58fd"/>
+      <file name="src/Kendo/Model/AccessRuleSchemaProxy.php" role="php" md5sum="8a5264e65fc5e4a418e0f75b947048b0"/>
+      <file name="src/Phifty/Bootstrap.php" role="php" md5sum="f0255902005515cb0b0ca0a6da4847dd"/>
+      <file name="src/Phifty/ClassUtils.php" role="php" md5sum="73481e9c15cffeb028d58c42cb528274"/>
+      <file name="src/Phifty/Command/AssetCommand.php" role="php" md5sum="9aee8c9dcabea739be298fa18d6fe9de"/>
+      <file name="src/Phifty/Command/AssetInitCommand.php" role="php" md5sum="d6c574240254602652534bbedb1284c5"/>
+      <file name="src/Phifty/Command/AssetInstallCommand.php" role="php" md5sum="2efb91d2e50fb0010f3e9c188dc5758c"/>
+      <file name="src/Phifty/Command/BuildConfCommand.php" role="php" md5sum="7971a7122797198c4dacbc4ec1597c5a"/>
+      <file name="src/Phifty/Command/ConsoleCommand.php" role="php" md5sum="b2aa47ecdb448d4fe3246ea1f25ff0ae"/>
+      <file name="src/Phifty/Command/CreateCommand.php" role="php" md5sum="51dbcca8bdd98f244eb749e6f67ea57f"/>
+      <file name="src/Phifty/Command/ExportCommand.php" role="php" md5sum="95c7343a2549a82fe9394d71d7d68b42"/>
+      <file name="src/Phifty/Command/Generate/GenerateActionCommand.php" role="php" md5sum="f36bcaf8805e4bf2e66b20165ddc3c12"/>
+      <file name="src/Phifty/Command/Generate/GenerateControllerCommand.php" role="php" md5sum="eeecb6151819f8b3e6b5d7233052bb11"/>
+      <file name="src/Phifty/Command/Generate/GenerateModelCommand.php" role="php" md5sum="65f95967c2c5ffd2f4a6f5b4e899ff20"/>
+      <file name="src/Phifty/Command/Generate/GenerateTestCommand.php" role="php" md5sum="fc7533d9a0da48347de7883af1c64cc7"/>
+      <file name="src/Phifty/Command/GenerateCommand.php" role="php" md5sum="7e389b58820cdc576c6c78a0b298796d"/>
+      <file name="src/Phifty/Command/InitCommand.php" role="php" md5sum="c96ace2241b235d4dba32002be7dbcc2"/>
+      <file name="src/Phifty/Command/Locale.php" role="php" md5sum="147aaab66c7a4de6b1a671369eda7337"/>
+      <file name="src/Phifty/Command/LocaleCommand.php" role="php" md5sum="5336846377448101fe31dce731bf0a87"/>
+      <file name="src/Phifty/Command/MigrationCheckCommand.php" role="php" md5sum="3f2c888bce0ec7da23d3ab340b1682f4"/>
+      <file name="src/Phifty/Command/RequirementCommand.php" role="php" md5sum="c227a1345e5b35e076d5f43e57eed736"/>
+      <file name="src/Phifty/Command/RouterCommand.php" role="php" md5sum="753d2c5d833b01bd1695b4111064481f"/>
+      <file name="src/Phifty/Command/ServerCommand.php" role="php" md5sum="919e75e2ea718f28d8a815fe62177b63"/>
+      <file name="src/Phifty/Console.php" role="php" md5sum="b9c3a2b38bd7f91cc669f28240124dc2"/>
+      <file name="src/Phifty/Controller.php" role="php" md5sum="87b800ebd1c6be50c0f84f72ccc5bc0a"/>
+      <file name="src/Phifty/Email.php" role="php" md5sum="02c0bc24991dfc866dc46008b64b36a7"/>
+      <file name="src/Phifty/Environment/CommandLine.php" role="php" md5sum="cd5be7afabf60062ea5247f0b834e763"/>
+      <file name="src/Phifty/Environment/Development.php" role="php" md5sum="e3d5ffdcb380403fdec7fb69e2d974c3"/>
+      <file name="src/Phifty/Environment/Production.php" role="php" md5sum="025222bfa29c9c535cbd5167ffb004dc"/>
+      <file name="src/Phifty/Excel/ExcelExporter.php" role="php" md5sum="2011adcb2e76c0ada97abf93c50cff42"/>
+      <file name="src/Phifty/Excel/ExcelUtils.php" role="php" md5sum="42a963dce849292f6cd538198574a3e2"/>
+      <file name="src/Phifty/ExcelExporter.php" role="php" md5sum="df733485679933fc6b3ce7913b475806"/>
+      <file name="src/Phifty/ExceptionDisplay.php" role="php" md5sum="94056419fcc2cff67fc6651740de9914"/>
+      <file name="src/Phifty/FileUtils.php" role="php" md5sum="b3a3ddfbca4908c2efed7b66618f476b"/>
+      <file name="src/Phifty/Flavors/action/Generator.php" role="php" md5sum="f7b4e7931d9a6ce9e14ffc3dcc08544b"/>
+      <file name="src/Phifty/Flavors/action/Resource/Action.php.twig" role="php" md5sum="dde3250b7b23b3c8cc603a469adf46ec"/>
+      <file name="src/Phifty/Flavors/controller/Generator.php" role="php" md5sum="92e29a94228c2d080fdfee2144acf501"/>
+      <file name="src/Phifty/Flavors/controller/Resource/Controller.php.twig" role="php" md5sum="365dffa7be0e9ab5f19942721cdf9157"/>
+      <file name="src/Phifty/Flavors/plugin/Generator.php" role="php" md5sum="973ee243451004198bfd851d50165698"/>
+      <file name="src/Phifty/Flavors/schema/Generator.php" role="php" md5sum="691dfc07583131f603cc80bcc49759c4"/>
+      <file name="src/Phifty/Flavors/schema/Resource/Schema.php.twig" role="php" md5sum="52be72e4e491b304cf158fa8f86c382e"/>
+      <file name="src/Phifty/Html5UploadHandler.php" role="php" md5sum="f8d2a73e132dcab9d61fd5ee817d9439"/>
+      <file name="src/Phifty/Http/Browscap.php" role="php" md5sum="960d02d30c4e63219c4bf695c5817646"/>
+      <file name="src/Phifty/Http/BrowserClient.php" role="php" md5sum="afa4351162edb693edb6ea701b64386a"/>
+      <file name="src/Phifty/Importer.php" role="php" md5sum="2d23521b7ead45728266f618ce96a0c6"/>
+      <file name="src/Phifty/Inflector.php" role="php" md5sum="d065d1c4750bed48c77cc25bbf1d7e5d"/>
+      <file name="src/Phifty/JsonStore/FileJsonModel.php" role="php" md5sum="e1deaf50e2fec6d3a0cfae9ca469c3ae"/>
+      <file name="src/Phifty/JsonStore/FileJsonStore.php" role="php" md5sum="0fcd1c0336b1c5a1e8753350f0fc7407"/>
+      <file name="src/Phifty/Kernel.php" role="php" md5sum="dea969db6c9f9fb6684349e565d8b86f"/>
+      <file name="src/Phifty/Locale.php" role="php" md5sum="b462faadfebbc3167281b15b96a40d97"/>
+      <file name="src/Phifty/Logger.php" role="php" md5sum="708df4b336ce01f9f2d73d596c02ed4f"/>
+      <file name="src/Phifty/Bundle.php" role="php" md5sum="fb30ce3418356755b8bd8c3c9344e255"/>
+      <file name="src/Phifty/Model/Column.php" role="php" md5sum="817cb47339b95f8d68e89326c5c12803"/>
+      <file name="src/Phifty/Model/Mixin/I18NSchema.php" role="php" md5sum="fdfff591084331a4d320259eb011baf4"/>
+      <file name="src/Phifty/Model/Mixin/MetadataSchema.php" role="php" md5sum="e41d04e1d598b2a37134940bac97e397"/>
+      <file name="src/Phifty/Model.php" role="php" md5sum="4489ce9af94e5ff54336321b134d1943"/>
+      <file name="src/Phifty/Notification/NotificationCenter.php" role="php" md5sum="d9b188d431d5fd98d714bfc37422b7cc"/>
+      <file name="src/Phifty/Notification/NotificationServer.php" role="php" md5sum="9fac542fb9cf46376cd8d4e8de76552a"/>
+      <file name="src/Phifty/Notification/NotificationSubscriber.php" role="php" md5sum="664ecec5718cc42b8a9642f7762ccfeb"/>
+      <file name="src/Phifty/Notification/NotificationTopic.php" role="php" md5sum="48a067eee7c2b0a01b3177cb4909384f"/>
+      <file name="src/Phifty/Plugin/Plugin.php" role="php" md5sum="c6609586344d1d4e5731df06ebd34f10"/>
+      <file name="src/Phifty/Plugin/PluginManager.php" role="php" md5sum="d3d408d875f2e4bd994996364ca5a12d"/>
+      <file name="src/Phifty/Pygmentize.php" role="php" md5sum="c2f91f55fb8b524b38ff0089237dcfbb"/>
+      <file name="src/Phifty/Region.php" role="php" md5sum="229436691292e5fdf0ae264e94f79c62"/>
+      <file name="src/Phifty/Routing/CRUDHandler.php" role="php" md5sum="cb35f1888773cf0902e47783041f5d9d"/>
+      <file name="src/Phifty/Routing/ExpandableController.php" role="php" md5sum="d07d1c4e4ca88a9a8934e7f680932259"/>
+      <file name="src/Phifty/Routing/Route/ControllerRoute.php" role="php" md5sum="be95c3ca5d1a1636875ee86f7ffcad05"/>
+      <file name="src/Phifty/Routing/Route.php" role="php" md5sum="cdea2abd096c3d769809e473aeb8944a"/>
+      <file name="src/Phifty/Routing/TemplateController.php" role="php" md5sum="1d8d5687998e15d79cf7f9725b02c59d"/>
+      <file name="src/Phifty/SchemaLoader.php" role="php" md5sum="bcc08c957a7f87f3f74cacca1dbec832"/>
+      <file name="src/Phifty/Security/CurrentUser.php" role="php" md5sum="5954f41fffd8c336b9cb00d8083c9ab6"/>
+      <file name="src/Phifty/Security/CurrentUserRole.php" role="php" md5sum="1355cfb5be9c6a10731f847cdf2b6f5b"/>
+      <file name="src/Phifty/Service/ActionService.php" role="php" md5sum="7550a16672cf1a9ca16da03e61f08679"/>
+      <file name="src/Phifty/Service/AssetService.php" role="php" md5sum="e65619d53c1d50773ae5a3a28ce2a466"/>
+      <file name="src/Phifty/Service/BaseService.php" role="php" md5sum="1ba76ad436c42232d8613bd0e1cc385c"/>
+      <file name="src/Phifty/Service/CacheService.php" role="php" md5sum="3ea2d8884b3a3ebb9c9d736886ffae86"/>
+      <file name="src/Phifty/Service/ClassLoaderService.php" role="php" md5sum="cfe975ef4dee6577fa3e7b275060a39c"/>
+      <file name="src/Phifty/Service/ConfigService.php" role="php" md5sum="400b5bf77cdc00bda4a00ff35b85436a"/>
+      <file name="src/Phifty/Service/CoreService.php" role="php" md5sum="64354e17be31968110b975ee11323765"/>
+      <file name="src/Phifty/Service/CurrentUserService.php" role="php" md5sum="977ab42fbd86b359871dd457a755f8fd"/>
+      <file name="src/Phifty/Service/DatabaseService.php" role="php" md5sum="b4173fb807c73543e0a684fdfb030f31"/>
+      <file name="src/Phifty/Service/EventService.php" role="php" md5sum="db5f6a746b0eb961eb46ecb3f69f734c"/>
+      <file name="src/Phifty/Service/FirePHPService.php" role="php" md5sum="18aa9c87c1bf58ab3a4e2ca7ff140f98"/>
+      <file name="src/Phifty/Service/GearmanService.php" role="php" md5sum="6db38de957ec5bd0754d579f021930e4"/>
+      <file name="src/Phifty/Service/KendoService.php" role="php" md5sum="666c85d972ecff865e241449a10e7da8"/>
+      <file name="src/Phifty/Service/LibraryService.php" role="php" md5sum="05318b7e6620e6c993139aea6e3b6f37"/>
+      <file name="src/Phifty/Service/LocaleService.php" role="php" md5sum="40165d2185e3b2bf8a06e154571560fc"/>
+      <file name="src/Phifty/Service/MailerService.php" role="php" md5sum="925c85cd8c5340057d0d8f7cb5266570"/>
+      <file name="src/Phifty/Service/MemcacheService.php" role="php" md5sum="3d59f844823e761aa56eac02ac5d15ca"/>
+      <file name="src/Phifty/Service/MongodbService.php" role="php" md5sum="0bd538518252fb96fb97db3cdc616acb"/>
+      <file name="src/Phifty/Service/PluginService.php" role="php" md5sum="92ea313fb04385b5c258651d6c66609c"/>
+      <file name="src/Phifty/Service/RouterService.php" role="php" md5sum="91c35484af73db8d27f4d349dd6a9169"/>
+      <file name="src/Phifty/Service/ServiceInterface.php" role="php" md5sum="a034263196f53716f887280f0de15078"/>
+      <file name="src/Phifty/Service/SessionService.php" role="php" md5sum="dc4f166fa000021e864e3da42c6d8653"/>
+      <file name="src/Phifty/Service/TwigService.php" role="php" md5sum="7876cd334af3a092051f203e0cfc56ee"/>
+      <file name="src/Phifty/Service/ViewService.php" role="php" md5sum="6918258bee6404baf6e772e4e1ce5db2"/>
+      <file name="src/Phifty/Service/WKHtmlToPdfService.php" role="php" md5sum="3a270489aca8c2b885cca6273491e130"/>
+      <file name="src/Phifty/Session.php" role="php" md5sum="4ec50005f81fa28b5dd0d90686309374"/>
+      <file name="src/Phifty/Singleton.php" role="php" md5sum="d267f431ca0f5182ca565694fb30ac92"/>
+      <file name="src/Phifty/Testing/AdminTestCase.php" role="php" md5sum="916e36237907975bd81fdf116baff1f5"/>
+      <file name="src/Phifty/Testing/CRUDTestCase.php" role="php" md5sum="ee9681a5f26278ad5f2f980324e56a7a"/>
+      <file name="src/Phifty/Testing/Selenium2TestCase.php" role="php" md5sum="d35aa10b986cba767dd0acffccfc68ab"/>
+      <file name="src/Phifty/UploadFile.php" role="php" md5sum="ccb72941b2ba95ffdf4e3867d7700e5e"/>
+      <file name="src/Phifty/Utils.php" role="php" md5sum="e1fff1837bfe282cca51f091a438fd48"/>
+      <file name="src/Phifty/View/Action.php" role="php" md5sum="eb9192606d394c47024c13e1608cb5d6"/>
+      <file name="src/Phifty/View/Engine.php" role="php" md5sum="6ec2628d4e3bf8b7e8a81ff6608f6e26"/>
+      <file name="src/Phifty/View/EngineInterface.php" role="php" md5sum="c48f6799602766f58ed2d384d5562d9e"/>
+      <file name="src/Phifty/View/Heredoc.php" role="php" md5sum="3d9177ce594974870e0e3c9c366efe91"/>
+      <file name="src/Phifty/View/Page.php" role="php" md5sum="037470eff30b87f4e6789fbf0eff9ae7"/>
+      <file name="src/Phifty/View/Php.php" role="php" md5sum="5ffa401b6f4c2632e8fd8bf3a3b5e453"/>
+      <file name="src/Phifty/View/Smarty.php" role="php" md5sum="7eaa4111a42f9437442e17f037bcae05"/>
+      <file name="src/Phifty/View/Twig.php" role="php" md5sum="052ebadbc4df25afec9bc837f48bf21a"/>
+      <file name="src/Phifty/View/TwigLight.php" role="php" md5sum="a9ed33d5ff4b2ff5784ff565f28580a4"/>
+      <file name="src/Phifty/View.php" role="php" md5sum="ab08f5c31247dd48d105f4b7f02dbd9f"/>
+      <file name="src/Phifty/Web/Pager.php" role="php" md5sum="de360f950a02b89d270f8d2de7364111"/>
+      <file name="src/Phifty/Web/PagerDisplay.php" role="php" md5sum="889c7f068b7212c57f06b9abad87f82a"/>
+      <file name="src/Phifty/Web/RegionPager.php" role="php" md5sum="7640fb01c56cf49a2a40f6cea016e82a"/>
+      <file name="src/Phifty/Web/RegionPagerDisplay.php" role="php" md5sum="1b6970faeaac19b9ec1033f5d2fca602"/>
+      <file name="src/Phifty/Web/Request.php" role="php" md5sum="566c16af648a79c53a638f6b7967e124"/>
+      <file name="src/Phifty/Web.php" role="php" md5sum="5c6a9da3de8115b08af8451a0981eda0"/>
+      <file name="src/Phifty/WebUtils.php" role="php" md5sum="25f49674f90f04a79b622a57d236248f"/>
+      <file name="src/ProcessPipe.php" role="php" md5sum="9863128a1f889cab2ba99af1ea07fdf7"/>
+      <file name="src/SiteMapKit/DOMContainer.php" role="php" md5sum="23c7335a5d7e3499a6a42060721bfd40"/>
+      <file name="src/SiteMapKit/Image.php" role="php" md5sum="dd4cb99a56550e7fc8cd71c5ad97038b"/>
+      <file name="src/SiteMapKit/SiteMap.php" role="php" md5sum="768ac1c36ce819475569f6ad912792a9"/>
+      <file name="src/SiteMapKit/SiteMapIndex.php" role="php" md5sum="0016eb16e0ed9276aceec1c96d4b8db3"/>
+      <file name="src/SiteMapKit/Updater.php" role="php" md5sum="7dd394ff5dc39eb10f4e9ee1b89703d9"/>
+      <file name="src/SiteMapKit/Url.php" role="php" md5sum="ad058b0e7c8013656460bc23ee9ff2bc"/>
+    </dir>
+  </contents>
+  <dependencies>
+    <required>
+      <php>
+        <min>5.3</min>
+      </php>
+      <pearinstaller>
+        <min>1.4</min>
+      </pearinstaller>
+      <package>
+        <name>Twig</name>
+        <channel>pear.twig-project.org</channel>
+        <max>1.11.0</max>
+      </package>
+      <package>
+        <name>CascadingAttribute</name>
+        <channel>pear.corneltek.com</channel>
+      </package>
+      <package>
+        <name>SessionKit</name>
+        <channel>pear.corneltek.com</channel>
+      </package>
+      <package>
+        <name>ConfigKit</name>
+        <channel>pear.corneltek.com</channel>
+        <min>1.0.2</min>
+      </package>
+      <package>
+        <name>CLIFramework</name>
+        <channel>pear.corneltek.com</channel>
+        <min>1.5.7</min>
+      </package>
+      <package>
+        <name>SerializerKit</name>
+        <channel>pear.corneltek.com</channel>
+      </package>
+      <package>
+        <name>GenPHP</name>
+        <channel>pear.corneltek.com</channel>
+      </package>
+      <package>
+        <name>CacheKit</name>
+        <channel>pear.corneltek.com</channel>
+      </package>
+    </required>
+  </dependencies>
+  <phprelease>
+    <filelist>
+      <install name="doc/.DS_Store" as=".DS_Store"/>
+      <install name="doc/Action.js.md" as="Action.js.md"/>
+      <install name="doc/Action.md" as="Action.md"/>
+      <install name="doc/Action2.md" as="Action2.md"/>
+      <install name="doc/Asset.md" as="Asset.md"/>
+      <install name="doc/code/conventions.md" as="code/conventions.md"/>
+      <install name="doc/code/standards.md" as="code/standards.md"/>
+      <install name="doc/collection.md" as="collection.md"/>
+      <install name="doc/cookbook/AdminMenu.md" as="cookbook/AdminMenu.md"/>
+      <install name="doc/Cookbook.md" as="Cookbook.md"/>
+      <install name="doc/CRUD.md" as="CRUD.md"/>
+      <install name="doc/CurrentUser.md" as="CurrentUser.md"/>
+      <install name="doc/database/conventions.md" as="database/conventions.md"/>
+      <install name="doc/development/documentation.md" as="development/documentation.md"/>
+      <install name="doc/development/Jenkins.md" as="development/Jenkins.md"/>
+      <install name="doc/development/ReleaseProcess.md" as="development/ReleaseProcess.md"/>
+      <install name="doc/Email.md" as="Email.md"/>
+      <install name="doc/Finder.md" as="Finder.md"/>
+      <install name="doc/getting_started/how_to_write_controller.md" as="getting_started/how_to_write_controller.md"/>
+      <install name="doc/getting_started/index.md" as="getting_started/index.md"/>
+      <install name="doc/getting_started/requirements.md" as="getting_started/requirements.md"/>
+      <install name="doc/getting_started/rewrite.md" as="getting_started/rewrite.md"/>
+      <install name="doc/getting_started/setup.md" as="getting_started/setup.md"/>
+      <install name="doc/getting_started/structure.md" as="getting_started/structure.md"/>
+      <install name="doc/HttpServer.md" as="HttpServer.md"/>
+      <install name="doc/index.md" as="index.md"/>
+      <install name="doc/Bundle.md" as="Bundle.md"/>
+      <install name="doc/Notification.md" as="Notification.md"/>
+      <install name="doc/pager.md" as="pager.md"/>
+      <install name="doc/Plan.md" as="Plan.md"/>
+      <install name="doc/plans/access_control.md" as="plans/access_control.md"/>
+      <install name="doc/plans/action.md" as="plans/action.md"/>
+      <install name="doc/plans/adminui.md" as="plans/adminui.md"/>
+      <install name="doc/plans/controller.md" as="plans/controller.md"/>
+      <install name="doc/plans/core_improvement.md" as="plans/core_improvement.md"/>
+      <install name="doc/plans/cropper.md" as="plans/cropper.md"/>
+      <install name="doc/plans/crud_chooser.md" as="plans/crud_chooser.md"/>
+      <install name="doc/plans/debug_toolbar.md" as="plans/debug_toolbar.md"/>
+      <install name="doc/plans/done/dynamic-menu.md" as="plans/done/dynamic-menu.md"/>
+      <install name="doc/plans/done/oauth.md" as="plans/done/oauth.md"/>
+      <install name="doc/plans/extjs.md" as="plans/extjs.md"/>
+      <install name="doc/plans/important/banner_improvement.md" as="plans/important/banner_improvement.md"/>
+      <install name="doc/plans/nested_form.md" as="plans/nested_form.md"/>
+      <install name="doc/plans/placeholder.md" as="plans/placeholder.md"/>
+      <install name="doc/plans/search_builder.md" as="plans/search_builder.md"/>
+      <install name="doc/plans/sitemap.md" as="plans/sitemap.md"/>
+      <install name="doc/Plugin.md" as="Plugin.md"/>
+      <install name="doc/plugins/product.md" as="plugins/product.md"/>
+      <install name="doc/preference.md" as="preference.md"/>
+      <install name="doc/Profiling.md" as="Profiling.md"/>
+      <install name="doc/services/Gearman.md" as="services/Gearman.md"/>
+      <install name="doc/Services.md" as="Services.md"/>
+      <install name="doc/testing.md" as="testing.md"/>
+      <install name="doc/Todo.md" as="Todo.md"/>
+      <install name="doc/upgrade/ctravel.md" as="upgrade/ctravel.md"/>
+      <install name="doc/upgrade/ibiyaya.md" as="upgrade/ibiyaya.md"/>
+      <install name="doc/View.md" as="View.md"/>
+      <install name="examples/excel_test.php" as="excel_test.php"/>
+      <install name="examples/gearman/client.php" as="gearman/client.php"/>
+      <install name="examples/gearman/worker.php" as="gearman/worker.php"/>
+      <install name="examples/gearman_test.php" as="gearman_test.php"/>
+      <install name="examples/geoip_test.php" as="geoip_test.php"/>
+      <install name="examples/getbrowser_test.php" as="getbrowser_test.php"/>
+      <install name="examples/mailer_test.php" as="mailer_test.php"/>
+      <install name="examples/mongodb_test.php" as="mongodb_test.php"/>
+      <install name="examples/pdf_export.php" as="pdf_export.php"/>
+      <install name="examples/swift_mailer.php" as="swift_mailer.php"/>
+      <install name="tests/_old/CRUDTest/Model/Foo.php" as="_old/CRUDTest/Model/Foo.php"/>
+      <install name="tests/_old/CRUDTest/Model/FooBase.php" as="_old/CRUDTest/Model/FooBase.php"/>
+      <install name="tests/_old/CRUDTest/Model/FooCollection.php" as="_old/CRUDTest/Model/FooCollection.php"/>
+      <install name="tests/_old/CRUDTest/Model/FooCollectionBase.php" as="_old/CRUDTest/Model/FooCollectionBase.php"/>
+      <install name="tests/_old/CRUDTest/Model/FooSchemaProxy.php" as="_old/CRUDTest/Model/FooSchemaProxy.php"/>
+      <install name="tests/_old/CRUDTest.php" as="_old/CRUDTest.php"/>
+      <install name="tests/_old/EmailTest.php" as="_old/EmailTest.php"/>
+      <install name="tests/_old/HeredocTest.php" as="_old/HeredocTest.php"/>
+      <install name="tests/_old/plugins/AdminUI/MenuTest.php" as="_old/plugins/AdminUI/MenuTest.php"/>
+      <install name="tests/_old/plugins/Contact/ContactTest.php" as="_old/plugins/Contact/ContactTest.php"/>
+      <install name="tests/_old/plugins/DMenu/DMenuTest.php" as="_old/plugins/DMenu/DMenuTest.php"/>
+      <install name="tests/_old/plugins/ImageData/CreateImageTest.php" as="_old/plugins/ImageData/CreateImageTest.php"/>
+      <install name="tests/_old/plugins/News/CreateNewsTest.php" as="_old/plugins/News/CreateNewsTest.php"/>
+      <install name="tests/_old/plugins/ProductTest.php" as="_old/plugins/ProductTest.php"/>
+      <install name="tests/_old/plugins/UrlTracker/UrlReplaceTest.php" as="_old/plugins/UrlTracker/UrlReplaceTest.php"/>
+      <install name="tests/ActionKit/ActionGeneratorTest.php" as="ActionKit/ActionGeneratorTest.php"/>
+      <install name="tests/ActionKit/ActionRunnerTest.php" as="ActionKit/ActionRunnerTest.php"/>
+      <install name="tests/ActionKit/ActionTest.php" as="ActionKit/ActionTest.php"/>
+      <install name="tests/ActionKit/ColumnConvertTest.php" as="ActionKit/ColumnConvertTest.php"/>
+      <install name="tests/ActionKit/CRUDTest.php" as="ActionKit/CRUDTest.php"/>
+      <install name="tests/ActionKit/Model/CRUDTest/FooUser.php" as="ActionKit/Model/CRUDTest/FooUser.php"/>
+      <install name="tests/ActionKit/Model/CRUDTest/FooUserCollection.php" as="ActionKit/Model/CRUDTest/FooUserCollection.php"/>
+      <install name="tests/ActionKit/Model/CRUDTest/FooUserCollectionBase.php" as="ActionKit/Model/CRUDTest/FooUserCollectionBase.php"/>
+      <install name="tests/ActionKit/Model/CRUDTest/FooUserSchemaProxy.php" as="ActionKit/Model/CRUDTest/FooUserSchemaProxy.php"/>
+      <install name="tests/ActionKit/ParamTest.php" as="ActionKit/ParamTest.php"/>
+      <install name="tests/ActionKit/View/StackViewTest.php" as="ActionKit/View/StackViewTest.php"/>
+      <install name="tests/bootstrap.php" as="bootstrap.php"/>
+      <install name="tests/data/404.png" as="data/404.png"/>
+      <install name="tests/data/angry-bird.png" as="data/angry-bird.png"/>
+      <install name="tests/data/cat.jpg" as="data/cat.jpg"/>
+      <install name="tests/data/email.xlsx" as="data/email.xlsx"/>
+      <install name="tests/data/goraster-crop.png" as="data/goraster-crop.png"/>
+      <install name="tests/data/goraster.png" as="data/goraster.png"/>
+      <install name="tests/data/street_names.txt" as="data/street_names.txt"/>
+      <install name="tests/data/test_mail/images/6165798128_62a0746471.jpg" as="data/test_mail/images/6165798128_62a0746471.jpg"/>
+      <install name="tests/data/test_mail/index.html" as="data/test_mail/index.html"/>
+      <install name="tests/data/test_mail/style.css" as="data/test_mail/style.css"/>
+      <install name="tests/data/test_mail/test_mail.zip" as="data/test_mail/test_mail.zip"/>
+      <install name="tests/functional/ImageDataTest.php" as="functional/ImageDataTest.php"/>
+      <install name="tests/functional/NewsCategoryTest.php" as="functional/NewsCategoryTest.php"/>
+      <install name="tests/functional/NewsTest.php" as="functional/NewsTest.php"/>
+      <install name="tests/functional/others/ContactGroupsTest_.php" as="functional/others/ContactGroupsTest_.php"/>
+      <install name="tests/functional/others/ContactsTest_.php" as="functional/others/ContactsTest_.php"/>
+      <install name="tests/functional/others/functionTest_.php" as="functional/others/functionTest_.php"/>
+      <install name="tests/functional/PageTest.php" as="functional/PageTest.php"/>
+      <install name="tests/functional/ProductTest.php" as="functional/ProductTest.php"/>
+      <install name="tests/I18NKit/data/messages.txt" as="I18NKit/data/messages.txt"/>
+      <install name="tests/I18NKit/Scanner/GettextPluginTest.php" as="I18NKit/Scanner/GettextPluginTest.php"/>
+      <install name="tests/I18NKit/ScannerTest.php" as="I18NKit/ScannerTest.php"/>
+      <install name="tests/InquiryCartTest.php" as="InquiryCartTest.php"/>
+      <install name="tests/Kendo/Acl/AclTest.php" as="Kendo/Acl/AclTest.php"/>
+      <install name="tests/Kendo/Acl/BaseRulesTest.php" as="Kendo/Acl/BaseRulesTest.php"/>
+      <install name="tests/Kendo/Acl/DatabaseRulesTest.php" as="Kendo/Acl/DatabaseRulesTest.php"/>
+      <install name="tests/Kendo/Acl/RuleLoaderTest.php" as="Kendo/Acl/RuleLoaderTest.php"/>
+      <install name="tests/Kendo/Model/AccessResourceTest.php" as="Kendo/Model/AccessResourceTest.php"/>
+      <install name="tests/MongoDB.php" as="MongoDB.php"/>
+      <install name="tests/Phifty/ClassUtilsTest.php" as="Phifty/ClassUtilsTest.php"/>
+      <install name="tests/Phifty/ControllerTest.php" as="Phifty/ControllerTest.php"/>
+      <install name="tests/Phifty/ExcelTest.php" as="Phifty/ExcelTest.php"/>
+      <install name="tests/Phifty/FileUtilsTest.php" as="Phifty/FileUtilsTest.php"/>
+      <install name="tests/Phifty/Http/BrowserClientTest.php" as="Phifty/Http/BrowserClientTest.php"/>
+      <install name="tests/Phifty/JsonStore/JsonStoreFileTest.php" as="Phifty/JsonStore/JsonStoreFileTest.php"/>
+      <install name="tests/Phifty/KernelTest.php" as="Phifty/KernelTest.php"/>
+      <install name="tests/Phifty/PluginManagerTest.php" as="Phifty/PluginManagerTest.php"/>
+      <install name="tests/Phifty/PluginTest.php" as="Phifty/PluginTest.php"/>
+      <install name="tests/Phifty/Security/CurrentUserTest.php" as="Phifty/Security/CurrentUserTest.php"/>
+      <install name="tests/Phifty/Service/ActionServiceTest.php" as="Phifty/Service/ActionServiceTest.php"/>
+      <install name="tests/Phifty/Service/CurrentUserServiceTest.php" as="Phifty/Service/CurrentUserServiceTest.php"/>
+      <install name="tests/Phifty/Service/RouterServiceTest.php" as="Phifty/Service/RouterServiceTest.php"/>
+      <install name="tests/Phifty/Service/ViewServiceTest.php" as="Phifty/Service/ViewServiceTest.php"/>
+      <install name="tests/Phifty/SessionTest.php" as="Phifty/SessionTest.php"/>
+      <install name="tests/Phifty/TwigLightTest.php" as="Phifty/TwigLightTest.php"/>
+      <install name="tests/Phifty/ViewTest.php" as="Phifty/ViewTest.php"/>
+      <install name="tests/plugins/News/ActionTest.php" as="plugins/News/ActionTest.php"/>
+      <install name="tests/plugins/Product/ActionTest.php" as="plugins/Product/ActionTest.php"/>
+      <install name="tests/plugins/User/UserRoleTest.php" as="plugins/User/UserRoleTest.php"/>
+      <install name="tests/plugins/User/UserTest.php" as="plugins/User/UserTest.php"/>
+      <install name="tests/ProcessPipeTest.php" as="ProcessPipeTest.php"/>
+      <install name="tests/screenshots/.empty" as="screenshots/.empty"/>
+      <install name="tests/screenshots/1347211839_9795.png" as="screenshots/1347211839_9795.png"/>
+      <install name="tests/screenshots/1347211872_8455.png" as="screenshots/1347211872_8455.png"/>
+      <install name="tests/screenshots/1347211997_9022.png" as="screenshots/1347211997_9022.png"/>
+      <install name="tests/screenshots/1347212018_8522.png" as="screenshots/1347212018_8522.png"/>
+      <install name="tests/screenshots/1347212164_3251.png" as="screenshots/1347212164_3251.png"/>
+      <install name="tests/screenshots/1347212340_2238.png" as="screenshots/1347212340_2238.png"/>
+      <install name="tests/screenshots/1347212542_0239.png" as="screenshots/1347212542_0239.png"/>
+      <install name="tests/screenshots/1347239281_3288.png" as="screenshots/1347239281_3288.png"/>
+      <install name="tests/screenshots/1347239449_882.png" as="screenshots/1347239449_882.png"/>
+      <install name="tests/screenshots/1347239736_1422.png" as="screenshots/1347239736_1422.png"/>
+      <install name="tests/screenshots/1347241685_5535.png" as="screenshots/1347241685_5535.png"/>
+      <install name="tests/screenshots/1347798552_0765.png" as="screenshots/1347798552_0765.png"/>
+      <install name="tests/screenshots/1347804380_8012.png" as="screenshots/1347804380_8012.png"/>
+      <install name="tests/screenshots/1347804407_0792.png" as="screenshots/1347804407_0792.png"/>
+      <install name="tests/screenshots/1347804447_6783.png" as="screenshots/1347804447_6783.png"/>
+      <install name="tests/screenshots/1347804461_3444.png" as="screenshots/1347804461_3444.png"/>
+      <install name="tests/screenshots/1347804518_7707.png" as="screenshots/1347804518_7707.png"/>
+      <install name="tests/screenshots/1347804531_9884.png" as="screenshots/1347804531_9884.png"/>
+      <install name="tests/screenshots/1347804828_3152.png" as="screenshots/1347804828_3152.png"/>
+      <install name="tests/screenshots/1347804937_1359.png" as="screenshots/1347804937_1359.png"/>
+      <install name="tests/screenshots/1347804948_7681.png" as="screenshots/1347804948_7681.png"/>
+      <install name="tests/screenshots/1347804963_6857.png" as="screenshots/1347804963_6857.png"/>
+      <install name="tests/screenshots/1347804997_419.png" as="screenshots/1347804997_419.png"/>
+      <install name="tests/screenshots/1347805007_1272.png" as="screenshots/1347805007_1272.png"/>
+      <install name="tests/screenshots/1347805043_976.png" as="screenshots/1347805043_976.png"/>
+      <install name="tests/screenshots/1347805055_5531.png" as="screenshots/1347805055_5531.png"/>
+      <install name="tests/screenshots/1347805159_6541.png" as="screenshots/1347805159_6541.png"/>
+      <install name="tests/screenshots/1347805210_3379.png" as="screenshots/1347805210_3379.png"/>
+      <install name="tests/screenshots/1347805225_9483.png" as="screenshots/1347805225_9483.png"/>
+      <install name="tests/screenshots/1347805248_7279.png" as="screenshots/1347805248_7279.png"/>
+      <install name="tests/screenshots/1347805339_5527.png" as="screenshots/1347805339_5527.png"/>
+      <install name="tests/screenshots/1347805484_4527.png" as="screenshots/1347805484_4527.png"/>
+      <install name="tests/screenshots/1347805548_1699.png" as="screenshots/1347805548_1699.png"/>
+      <install name="tests/screenshots/1347805692_7581.png" as="screenshots/1347805692_7581.png"/>
+      <install name="tests/screenshots/1347805724_7692.png" as="screenshots/1347805724_7692.png"/>
+      <install name="tests/screenshots/1347811143_7344.png" as="screenshots/1347811143_7344.png"/>
+      <install name="tests/screenshots/1347811645_3447.png" as="screenshots/1347811645_3447.png"/>
+      <install name="tests/screenshots/1347811925_5532.png" as="screenshots/1347811925_5532.png"/>
+      <install name="tests/screenshots/1347817182_3556.png" as="screenshots/1347817182_3556.png"/>
+      <install name="tests/screenshots/now.png" as="screenshots/now.png"/>
+      <install name="tests/selenium_helpers.php" as="selenium_helpers.php"/>
+      <install name="tests/SimpleImageTest.php" as="SimpleImageTest.php"/>
+      <install name="tests/SiteMapKit/SiteMapIndexTest.php" as="SiteMapKit/SiteMapIndexTest.php"/>
+      <install name="tests/SiteMapKit/SiteMapTest.php" as="SiteMapKit/SiteMapTest.php"/>
+      <install name="src/ActionKit/Action.php" as="ActionKit/Action.php"/>
+      <install name="src/ActionKit/ActionGenerator.php" as="ActionKit/ActionGenerator.php"/>
+      <install name="src/ActionKit/ActionRunner.php" as="ActionKit/ActionRunner.php"/>
+      <install name="src/ActionKit/ColumnConvert.php" as="ActionKit/ColumnConvert.php"/>
+      <install name="src/ActionKit/CRUD.php" as="ActionKit/CRUD.php"/>
+      <install name="src/ActionKit/EmailAction.php" as="ActionKit/EmailAction.php"/>
+      <install name="src/ActionKit/Exception/ActionException.php" as="ActionKit/Exception/ActionException.php"/>
+      <install name="src/ActionKit/FieldView/DivFieldView.php" as="ActionKit/FieldView/DivFieldView.php"/>
+      <install name="src/ActionKit/Param/File.php" as="ActionKit/Param/File.php"/>
+      <install name="src/ActionKit/Param/Image/CropAndScaleResize.php" as="ActionKit/Param/Image/CropAndScaleResize.php"/>
+      <install name="src/ActionKit/Param/Image/MaxHeightResize.php" as="ActionKit/Param/Image/MaxHeightResize.php"/>
+      <install name="src/ActionKit/Param/Image/MaxWidthResize.php" as="ActionKit/Param/Image/MaxWidthResize.php"/>
+      <install name="src/ActionKit/Param/Image/ScaleResize.php" as="ActionKit/Param/Image/ScaleResize.php"/>
+      <install name="src/ActionKit/Param/Image.php" as="ActionKit/Param/Image.php"/>
+      <install name="src/ActionKit/Param.php" as="ActionKit/Param.php"/>
+      <install name="src/ActionKit/RecordAction/BaseRecordAction.php" as="ActionKit/RecordAction/BaseRecordAction.php"/>
+      <install name="src/ActionKit/RecordAction/BulkDeleteRecordAction.php" as="ActionKit/RecordAction/BulkDeleteRecordAction.php"/>
+      <install name="src/ActionKit/RecordAction/BulkRecordAction.php" as="ActionKit/RecordAction/BulkRecordAction.php"/>
+      <install name="src/ActionKit/RecordAction/BulkZhConvertRecordAction.php" as="ActionKit/RecordAction/BulkZhConvertRecordAction.php"/>
+      <install name="src/ActionKit/RecordAction/CreateRecordAction.php" as="ActionKit/RecordAction/CreateRecordAction.php"/>
+      <install name="src/ActionKit/RecordAction/DeleteRecordAction.php" as="ActionKit/RecordAction/DeleteRecordAction.php"/>
+      <install name="src/ActionKit/RecordAction/UpdateRecordAction.php" as="ActionKit/RecordAction/UpdateRecordAction.php"/>
+      <install name="src/ActionKit/Result.php" as="ActionKit/Result.php"/>
+      <install name="src/ActionKit/View/BaseView.php" as="ActionKit/View/BaseView.php"/>
+      <install name="src/ActionKit/View/StackView.php" as="ActionKit/View/StackView.php"/>
+      <install name="src/ActionKit/View.php" as="ActionKit/View.php"/>
+      <install name="src/I18NKit/Exceptions/EncodingException.php" as="I18NKit/Exceptions/EncodingException.php"/>
+      <install name="src/I18NKit/Reader/FileReaderInterface.php" as="I18NKit/Reader/FileReaderInterface.php"/>
+      <install name="src/I18NKit/Reader/POFileReader.php" as="I18NKit/Reader/POFileReader.php"/>
+      <install name="src/I18NKit/Scanner/GettextPlugin.php" as="I18NKit/Scanner/GettextPlugin.php"/>
+      <install name="src/I18NKit/Scanner/PluginInterface.php" as="I18NKit/Scanner/PluginInterface.php"/>
+      <install name="src/I18NKit/Scanner.php" as="I18NKit/Scanner.php"/>
+      <install name="src/Kendo/Acl/AccessObserver.php" as="Kendo/Acl/AccessObserver.php"/>
+      <install name="src/Kendo/Acl/Acl.php" as="Kendo/Acl/Acl.php"/>
+      <install name="src/Kendo/Acl/BaseRules.php" as="Kendo/Acl/BaseRules.php"/>
+      <install name="src/Kendo/Acl/DatabaseRules.php" as="Kendo/Acl/DatabaseRules.php"/>
+      <install name="src/Kendo/Acl/MultiRoleInterface.php" as="Kendo/Acl/MultiRoleInterface.php"/>
+      <install name="src/Kendo/Acl/Resource.php" as="Kendo/Acl/Resource.php"/>
+      <install name="src/Kendo/Acl/Rule.php" as="Kendo/Acl/Rule.php"/>
+      <install name="src/Kendo/Acl/RuleLoader.php" as="Kendo/Acl/RuleLoader.php"/>
+      <install name="src/Kendo/Model/AccessControl.php" as="Kendo/Model/AccessControl.php"/>
+      <install name="src/Kendo/Model/AccessControlBase.php" as="Kendo/Model/AccessControlBase.php"/>
+      <install name="src/Kendo/Model/AccessControlCollection.php" as="Kendo/Model/AccessControlCollection.php"/>
+      <install name="src/Kendo/Model/AccessControlCollectionBase.php" as="Kendo/Model/AccessControlCollectionBase.php"/>
+      <install name="src/Kendo/Model/AccessControlSchema.php" as="Kendo/Model/AccessControlSchema.php"/>
+      <install name="src/Kendo/Model/AccessControlSchemaProxy.php" as="Kendo/Model/AccessControlSchemaProxy.php"/>
+      <install name="src/Kendo/Model/AccessResource.php" as="Kendo/Model/AccessResource.php"/>
+      <install name="src/Kendo/Model/AccessResourceBase.php" as="Kendo/Model/AccessResourceBase.php"/>
+      <install name="src/Kendo/Model/AccessResourceCollection.php" as="Kendo/Model/AccessResourceCollection.php"/>
+      <install name="src/Kendo/Model/AccessResourceCollectionBase.php" as="Kendo/Model/AccessResourceCollectionBase.php"/>
+      <install name="src/Kendo/Model/AccessResourceSchema.php" as="Kendo/Model/AccessResourceSchema.php"/>
+      <install name="src/Kendo/Model/AccessResourceSchemaProxy.php" as="Kendo/Model/AccessResourceSchemaProxy.php"/>
+      <install name="src/Kendo/Model/AccessRule.php" as="Kendo/Model/AccessRule.php"/>
+      <install name="src/Kendo/Model/AccessRuleBase.php" as="Kendo/Model/AccessRuleBase.php"/>
+      <install name="src/Kendo/Model/AccessRuleCollection.php" as="Kendo/Model/AccessRuleCollection.php"/>
+      <install name="src/Kendo/Model/AccessRuleCollectionBase.php" as="Kendo/Model/AccessRuleCollectionBase.php"/>
+      <install name="src/Kendo/Model/AccessRuleSchema.php" as="Kendo/Model/AccessRuleSchema.php"/>
+      <install name="src/Kendo/Model/AccessRuleSchemaProxy.php" as="Kendo/Model/AccessRuleSchemaProxy.php"/>
+      <install name="src/Phifty/Bootstrap.php" as="Phifty/Bootstrap.php"/>
+      <install name="src/Phifty/ClassUtils.php" as="Phifty/ClassUtils.php"/>
+      <install name="src/Phifty/Command/AssetCommand.php" as="Phifty/Command/AssetCommand.php"/>
+      <install name="src/Phifty/Command/AssetInitCommand.php" as="Phifty/Command/AssetInitCommand.php"/>
+      <install name="src/Phifty/Command/AssetInstallCommand.php" as="Phifty/Command/AssetInstallCommand.php"/>
+      <install name="src/Phifty/Command/BuildConfCommand.php" as="Phifty/Command/BuildConfCommand.php"/>
+      <install name="src/Phifty/Command/ConsoleCommand.php" as="Phifty/Command/ConsoleCommand.php"/>
+      <install name="src/Phifty/Command/CreateCommand.php" as="Phifty/Command/CreateCommand.php"/>
+      <install name="src/Phifty/Command/ExportCommand.php" as="Phifty/Command/ExportCommand.php"/>
+      <install name="src/Phifty/Command/Generate/GenerateActionCommand.php" as="Phifty/Command/Generate/GenerateActionCommand.php"/>
+      <install name="src/Phifty/Command/Generate/GenerateControllerCommand.php" as="Phifty/Command/Generate/GenerateControllerCommand.php"/>
+      <install name="src/Phifty/Command/Generate/GenerateModelCommand.php" as="Phifty/Command/Generate/GenerateModelCommand.php"/>
+      <install name="src/Phifty/Command/Generate/GenerateTestCommand.php" as="Phifty/Command/Generate/GenerateTestCommand.php"/>
+      <install name="src/Phifty/Command/GenerateCommand.php" as="Phifty/Command/GenerateCommand.php"/>
+      <install name="src/Phifty/Command/InitCommand.php" as="Phifty/Command/InitCommand.php"/>
+      <install name="src/Phifty/Command/Locale.php" as="Phifty/Command/Locale.php"/>
+      <install name="src/Phifty/Command/LocaleCommand.php" as="Phifty/Command/LocaleCommand.php"/>
+      <install name="src/Phifty/Command/MigrationCheckCommand.php" as="Phifty/Command/MigrationCheckCommand.php"/>
+      <install name="src/Phifty/Command/RequirementCommand.php" as="Phifty/Command/RequirementCommand.php"/>
+      <install name="src/Phifty/Command/RouterCommand.php" as="Phifty/Command/RouterCommand.php"/>
+      <install name="src/Phifty/Command/ServerCommand.php" as="Phifty/Command/ServerCommand.php"/>
+      <install name="src/Phifty/Console.php" as="Phifty/Console.php"/>
+      <install name="src/Phifty/Controller.php" as="Phifty/Controller.php"/>
+      <install name="src/Phifty/Email.php" as="Phifty/Email.php"/>
+      <install name="src/Phifty/Environment/CommandLine.php" as="Phifty/Environment/CommandLine.php"/>
+      <install name="src/Phifty/Environment/Development.php" as="Phifty/Environment/Development.php"/>
+      <install name="src/Phifty/Environment/Production.php" as="Phifty/Environment/Production.php"/>
+      <install name="src/Phifty/Excel/ExcelExporter.php" as="Phifty/Excel/ExcelExporter.php"/>
+      <install name="src/Phifty/Excel/ExcelUtils.php" as="Phifty/Excel/ExcelUtils.php"/>
+      <install name="src/Phifty/ExcelExporter.php" as="Phifty/ExcelExporter.php"/>
+      <install name="src/Phifty/ExceptionDisplay.php" as="Phifty/ExceptionDisplay.php"/>
+      <install name="src/Phifty/FileUtils.php" as="Phifty/FileUtils.php"/>
+      <install name="src/Phifty/Flavors/action/Generator.php" as="Phifty/Flavors/action/Generator.php"/>
+      <install name="src/Phifty/Flavors/action/Resource/Action.php.twig" as="Phifty/Flavors/action/Resource/Action.php.twig"/>
+      <install name="src/Phifty/Flavors/controller/Generator.php" as="Phifty/Flavors/controller/Generator.php"/>
+      <install name="src/Phifty/Flavors/controller/Resource/Controller.php.twig" as="Phifty/Flavors/controller/Resource/Controller.php.twig"/>
+      <install name="src/Phifty/Flavors/plugin/Generator.php" as="Phifty/Flavors/plugin/Generator.php"/>
+      <install name="src/Phifty/Flavors/schema/Generator.php" as="Phifty/Flavors/schema/Generator.php"/>
+      <install name="src/Phifty/Flavors/schema/Resource/Schema.php.twig" as="Phifty/Flavors/schema/Resource/Schema.php.twig"/>
+      <install name="src/Phifty/Html5UploadHandler.php" as="Phifty/Html5UploadHandler.php"/>
+      <install name="src/Phifty/Http/Browscap.php" as="Phifty/Http/Browscap.php"/>
+      <install name="src/Phifty/Http/BrowserClient.php" as="Phifty/Http/BrowserClient.php"/>
+      <install name="src/Phifty/Importer.php" as="Phifty/Importer.php"/>
+      <install name="src/Phifty/Inflector.php" as="Phifty/Inflector.php"/>
+      <install name="src/Phifty/JsonStore/FileJsonModel.php" as="Phifty/JsonStore/FileJsonModel.php"/>
+      <install name="src/Phifty/JsonStore/FileJsonStore.php" as="Phifty/JsonStore/FileJsonStore.php"/>
+      <install name="src/Phifty/Kernel.php" as="Phifty/Kernel.php"/>
+      <install name="src/Phifty/Locale.php" as="Phifty/Locale.php"/>
+      <install name="src/Phifty/Logger.php" as="Phifty/Logger.php"/>
+      <install name="src/Phifty/Bundle.php" as="Phifty/Bundle.php"/>
+      <install name="src/Phifty/Model/Column.php" as="Phifty/Model/Column.php"/>
+      <install name="src/Phifty/Model/Mixin/I18NSchema.php" as="Phifty/Model/Mixin/I18NSchema.php"/>
+      <install name="src/Phifty/Model/Mixin/MetadataSchema.php" as="Phifty/Model/Mixin/MetadataSchema.php"/>
+      <install name="src/Phifty/Model.php" as="Phifty/Model.php"/>
+      <install name="src/Phifty/Notification/NotificationCenter.php" as="Phifty/Notification/NotificationCenter.php"/>
+      <install name="src/Phifty/Notification/NotificationServer.php" as="Phifty/Notification/NotificationServer.php"/>
+      <install name="src/Phifty/Notification/NotificationSubscriber.php" as="Phifty/Notification/NotificationSubscriber.php"/>
+      <install name="src/Phifty/Notification/NotificationTopic.php" as="Phifty/Notification/NotificationTopic.php"/>
+      <install name="src/Phifty/Plugin/Plugin.php" as="Phifty/Plugin/Plugin.php"/>
+      <install name="src/Phifty/Plugin/PluginManager.php" as="Phifty/Plugin/PluginManager.php"/>
+      <install name="src/Phifty/Pygmentize.php" as="Phifty/Pygmentize.php"/>
+      <install name="src/Phifty/Region.php" as="Phifty/Region.php"/>
+      <install name="src/Phifty/Routing/CRUDHandler.php" as="Phifty/Routing/CRUDHandler.php"/>
+      <install name="src/Phifty/Routing/ExpandableController.php" as="Phifty/Routing/ExpandableController.php"/>
+      <install name="src/Phifty/Routing/Route/ControllerRoute.php" as="Phifty/Routing/Route/ControllerRoute.php"/>
+      <install name="src/Phifty/Routing/Route.php" as="Phifty/Routing/Route.php"/>
+      <install name="src/Phifty/Routing/TemplateController.php" as="Phifty/Routing/TemplateController.php"/>
+      <install name="src/Phifty/SchemaLoader.php" as="Phifty/SchemaLoader.php"/>
+      <install name="src/Phifty/Security/CurrentUser.php" as="Phifty/Security/CurrentUser.php"/>
+      <install name="src/Phifty/Security/CurrentUserRole.php" as="Phifty/Security/CurrentUserRole.php"/>
+      <install name="src/Phifty/Service/ActionService.php" as="Phifty/Service/ActionService.php"/>
+      <install name="src/Phifty/Service/AssetService.php" as="Phifty/Service/AssetService.php"/>
+      <install name="src/Phifty/Service/BaseService.php" as="Phifty/Service/BaseService.php"/>
+      <install name="src/Phifty/Service/CacheService.php" as="Phifty/Service/CacheService.php"/>
+      <install name="src/Phifty/Service/ClassLoaderService.php" as="Phifty/Service/ClassLoaderService.php"/>
+      <install name="src/Phifty/Service/ConfigService.php" as="Phifty/Service/ConfigService.php"/>
+      <install name="src/Phifty/Service/CoreService.php" as="Phifty/Service/CoreService.php"/>
+      <install name="src/Phifty/Service/CurrentUserService.php" as="Phifty/Service/CurrentUserService.php"/>
+      <install name="src/Phifty/Service/DatabaseService.php" as="Phifty/Service/DatabaseService.php"/>
+      <install name="src/Phifty/Service/EventService.php" as="Phifty/Service/EventService.php"/>
+      <install name="src/Phifty/Service/FirePHPService.php" as="Phifty/Service/FirePHPService.php"/>
+      <install name="src/Phifty/Service/GearmanService.php" as="Phifty/Service/GearmanService.php"/>
+      <install name="src/Phifty/Service/KendoService.php" as="Phifty/Service/KendoService.php"/>
+      <install name="src/Phifty/Service/LibraryService.php" as="Phifty/Service/LibraryService.php"/>
+      <install name="src/Phifty/Service/LocaleService.php" as="Phifty/Service/LocaleService.php"/>
+      <install name="src/Phifty/Service/MailerService.php" as="Phifty/Service/MailerService.php"/>
+      <install name="src/Phifty/Service/MemcacheService.php" as="Phifty/Service/MemcacheService.php"/>
+      <install name="src/Phifty/Service/MongodbService.php" as="Phifty/Service/MongodbService.php"/>
+      <install name="src/Phifty/Service/PluginService.php" as="Phifty/Service/PluginService.php"/>
+      <install name="src/Phifty/Service/RouterService.php" as="Phifty/Service/RouterService.php"/>
+      <install name="src/Phifty/Service/ServiceInterface.php" as="Phifty/Service/ServiceInterface.php"/>
+      <install name="src/Phifty/Service/SessionService.php" as="Phifty/Service/SessionService.php"/>
+      <install name="src/Phifty/Service/TwigService.php" as="Phifty/Service/TwigService.php"/>
+      <install name="src/Phifty/Service/ViewService.php" as="Phifty/Service/ViewService.php"/>
+      <install name="src/Phifty/Service/WKHtmlToPdfService.php" as="Phifty/Service/WKHtmlToPdfService.php"/>
+      <install name="src/Phifty/Session.php" as="Phifty/Session.php"/>
+      <install name="src/Phifty/Singleton.php" as="Phifty/Singleton.php"/>
+      <install name="src/Phifty/Testing/AdminTestCase.php" as="Phifty/Testing/AdminTestCase.php"/>
+      <install name="src/Phifty/Testing/CRUDTestCase.php" as="Phifty/Testing/CRUDTestCase.php"/>
+      <install name="src/Phifty/Testing/Selenium2TestCase.php" as="Phifty/Testing/Selenium2TestCase.php"/>
+      <install name="src/Phifty/UploadFile.php" as="Phifty/UploadFile.php"/>
+      <install name="src/Phifty/Utils.php" as="Phifty/Utils.php"/>
+      <install name="src/Phifty/View/Action.php" as="Phifty/View/Action.php"/>
+      <install name="src/Phifty/View/Engine.php" as="Phifty/View/Engine.php"/>
+      <install name="src/Phifty/View/EngineInterface.php" as="Phifty/View/EngineInterface.php"/>
+      <install name="src/Phifty/View/Heredoc.php" as="Phifty/View/Heredoc.php"/>
+      <install name="src/Phifty/View/Page.php" as="Phifty/View/Page.php"/>
+      <install name="src/Phifty/View/Php.php" as="Phifty/View/Php.php"/>
+      <install name="src/Phifty/View/Smarty.php" as="Phifty/View/Smarty.php"/>
+      <install name="src/Phifty/View/Twig.php" as="Phifty/View/Twig.php"/>
+      <install name="src/Phifty/View/TwigLight.php" as="Phifty/View/TwigLight.php"/>
+      <install name="src/Phifty/View.php" as="Phifty/View.php"/>
+      <install name="src/Phifty/Web/Pager.php" as="Phifty/Web/Pager.php"/>
+      <install name="src/Phifty/Web/PagerDisplay.php" as="Phifty/Web/PagerDisplay.php"/>
+      <install name="src/Phifty/Web/RegionPager.php" as="Phifty/Web/RegionPager.php"/>
+      <install name="src/Phifty/Web/RegionPagerDisplay.php" as="Phifty/Web/RegionPagerDisplay.php"/>
+      <install name="src/Phifty/Web/Request.php" as="Phifty/Web/Request.php"/>
+      <install name="src/Phifty/Web.php" as="Phifty/Web.php"/>
+      <install name="src/Phifty/WebUtils.php" as="Phifty/WebUtils.php"/>
+      <install name="src/ProcessPipe.php" as="ProcessPipe.php"/>
+      <install name="src/SiteMapKit/DOMContainer.php" as="SiteMapKit/DOMContainer.php"/>
+      <install name="src/SiteMapKit/Image.php" as="SiteMapKit/Image.php"/>
+      <install name="src/SiteMapKit/SiteMap.php" as="SiteMapKit/SiteMap.php"/>
+      <install name="src/SiteMapKit/SiteMapIndex.php" as="SiteMapKit/SiteMapIndex.php"/>
+      <install name="src/SiteMapKit/Updater.php" as="SiteMapKit/Updater.php"/>
+      <install name="src/SiteMapKit/Url.php" as="SiteMapKit/Url.php"/>
+    </filelist>
+  </phprelease>
+</package>

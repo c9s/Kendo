@@ -1,0 +1,21 @@
+{
+    "name": "corneltek\/kendo",
+    "version": "1.0.1",
+    "require-dev": {
+        "corneltek\/phpunit-testmore": "dev-master",
+        "corneltek\/universal": "dev-master",
+        "twig\/twig": "~1.12"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yo-An Lin",
+            "email": "cornelius.howl@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Kendo": "src"
+        }
+    }
+}
