@@ -3,17 +3,42 @@ namespace Kendo\Acl;
 
 class Rule 
 {
+
+    /**
+     * @var string
+     */
     public $role;
+
+    /**
+     * @var string
+     */
     public $resource;
+
+    /*
+     * @var string 
+     */
     public $operation;
 
     /**
-     * Description
+     * @var string rule description
      */
     public $desc;
+
+    /**
+     * @var boolean allow or disallow
+     */
     public $allow = false;
 
-    public function __construct($role,$resource,$operation,$allow) {
+
+
+    /**
+     *
+     *
+     * @param string $role Role identifier
+     * @param string $resource  Resource identifier
+     * @param string $operation Operation identifier
+     */
+    public function __construct($role, $resource, $operation, $allow) {
         $this->role = $role;
         $this->resource = $resource;
         $this->operation = array( 'id' => $operation );
