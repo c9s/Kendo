@@ -7,6 +7,7 @@ use Kendo\Model\AccessRuleCollection;
 use Kendo\Model\AccessControl;
 use Kendo\Model\AccessControlCollection as ACCollection;
 use Kendo\Acl\Rule;
+use Kendo\Acl\Resource;
 use Exception;
 
 /**
@@ -42,8 +43,9 @@ abstract class DatabaseRules extends BaseRules
             'operation' => $rule->operation['id'],
             'description' => $rule->desc,
         );
-        if( isset($rule->operation['label'] ) )
+        if (isset($rule->operation['label'] )) {
             $args['operation_label'] = $rule->operation['label'];
+        }
         return $args;
     }
 
@@ -55,8 +57,9 @@ abstract class DatabaseRules extends BaseRules
         // sync resource operation table
         $ar = new AccessRule;
         $ret = $ar->createOrUpdate( $this->getRuleRecordArguments($rule) ,array('resource','operation'));
-        if( ! $ret->success )
+        if (! $ret->success) {
             throw new $ret->exception;
+        }
 
         $ac = new AccessControl;
         $ret = $ac->loadOrCreate(array( 
@@ -64,14 +67,15 @@ abstract class DatabaseRules extends BaseRules
             'role' => $rule->role,
             'allow' => $rule->allow,
         ));
-        if( ! $ret->success )
+        if (! $ret->success) {
             throw new $ret->exception;
+        }
 
         // override default allow values
         $rule->allow = $ac->allow;
     }
 
-    public function syncResource($res)
+    public function syncResource(Resource $res)
     {
         $resource = new AccessResource;
         $ret = $resource->createOrUpdate( array(
@@ -79,13 +83,15 @@ abstract class DatabaseRules extends BaseRules
             'label' => $res->label,
             'rules_class' => get_class($this),
         ),array('name'));
-        if( ! $ret->success )
+
+        if (! $ret->success) {
             throw $ret->exception;
+        }
     }
 
     public function buildAndSync() {
         // load rules from database
-        if( ! $this->load() ) {
+        if (! $this->load()) {
             $this->build();  // initialize rules from code
             $this->write();  // write back to database
         }
@@ -113,17 +119,18 @@ abstract class DatabaseRules extends BaseRules
     public function load() 
     {
         $resources = $this->getResourceRecords();
-        foreach( $resources as $resource ) {
+        foreach ($resources as $resource) {
             $res = $this->resource($resource->name);
-            if( $resource->label )
+            if ($resource->label) {
                 $res->label($resource->label);
+            }
         }
 
         $rules = $this->getAccessRuleRecords();
         $loaded = false;
-        foreach($rules as $rule) {
+        foreach ($rules as $rule) {
             $control = $rule->control;
-            if( $control->allow ) {
+            if ($control->allow) {
                 $this->addAllowRule($control->role,$rule->resource,$rule->operation);
             } else {
                 $this->addDenyRule($control->role,$rule->resource,$rule->operation);
@@ -136,14 +143,14 @@ abstract class DatabaseRules extends BaseRules
     public function clean() 
     {
         $rules = $this->getAccessRuleRecords();
-        foreach( $rules as $rule ) {
+        foreach ($rules as $rule) {
             $rule->control->delete();
             $rule->delete();
         }
     }
 
     public function write() {
-        foreach( $this->resources as $res ) {
+        foreach ($this->resources as $res) {
             $this->syncResource($res);
         }
         foreach( $this->rules as $rule ) {
