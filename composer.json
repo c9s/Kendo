@@ -4,8 +4,8 @@
     "require-dev": {
         "corneltek\/phpunit-testmore": "dev-master",
         "corneltek\/universal": "dev-master",
-        "corneltek\/lazyrecord": "dev-master",
-        "twig\/twig": "~1"
+        "corneltek\/lazyrecord": "*",
+        "twig\/twig": "*"
     },
     "license": "MIT",
     "authors": [
