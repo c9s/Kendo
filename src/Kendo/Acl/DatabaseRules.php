@@ -6,6 +6,7 @@ use Kendo\Model\AccessRule;
 use Kendo\Model\AccessRuleCollection;
 use Kendo\Model\AccessControl;
 use Kendo\Model\AccessControlCollection as ACCollection;
+use Kendo\Acl\Rule;
 use Exception;
 
 /**
@@ -18,8 +19,7 @@ abstract class DatabaseRules extends BaseRules
     public function __construct() 
     {
         $this->cacheSupport = extension_loaded('apc');
-        if( $this->cacheEnable && $this->cacheSupport ) 
-        {
+        if ($this->cacheEnable && $this->cacheSupport) {
             $key = get_class($this);
             if( $cache = apc_fetch($key) ) {
                 $this->import($cache);
@@ -29,9 +29,7 @@ abstract class DatabaseRules extends BaseRules
                 $this->buildAndSync();
                 apc_store($key,$this->export(), $this->cacheExpiry);
             }
-        } 
-        elseif( $this->autoSync ) 
-        {
+        } elseif ($this->autoSync) {
             $this->buildAndSync();
         }
     }

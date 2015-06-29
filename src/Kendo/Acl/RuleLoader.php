@@ -11,9 +11,9 @@ class RuleLoader
     public $allowUndefinedResource = true;
 
     public function load($rule) {
-        if( is_string($rule) ) {
+        if (is_string($rule) ) {
             $class = str_replace('::','\\',$rule);
-            if( ! class_exists($class,true) ) {
+            if (! class_exists($class,true)) {
                 throw new Exception("Rule class $class not found.");
             }
             return $this->rules[] = new $class;
@@ -26,15 +26,14 @@ class RuleLoader
     {
         $foundResource = false;
         foreach( $this->rules as $rule ) {
-            if($rule->hasResource($resource))
-            {
+            if ($rule->hasResource($resource)) {
                 $foundResource = true;
                 $result = $rule->authorize($role,$resource,$operation);
-                if( $result === true ) {
+                if ($result === true) {
                     return true;
-                } elseif( $result === false ) {
+                } elseif ($result === false) {
                     return false;
-                } elseif( $result === null ) {
+                } elseif ($result === null) {
                     // continue
                 }
             }
