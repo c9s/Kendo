@@ -117,20 +117,19 @@
 
   <exec executable="lazy">
     <arg value="-q"/>
-    <arg value="build-schema"/>
+    <arg value="schema"/>
+    <arg value="build"/>
+    <arg value="src"/>
   </exec>
 
 
   <!-- rebuild database -->
   <exec executable="lazy">
     <arg value="-q"/>
-    <arg value="build-sql"/>
+    <arg value="sql"/>
     <arg value="--rebuild"/>
-  </exec>
-
-  <exec executable="lazy">
-    <arg value="-q"/>
-    <arg value="build-basedata"/>
+    <arg value="--basedata"/>
+    <arg value="src"/>
   </exec>
 
  </target>
