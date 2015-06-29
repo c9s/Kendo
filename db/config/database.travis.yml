@@ -1,0 +1,13 @@
+---
+bootstrap:
+  - vendor/autoload.php
+schema:
+  auto_id: true
+seeds:
+data_sources:
+  default:
+    driver: mysql
+    host: localhost
+    database: kendo_test
+    user: root
+    pass: qwer1234
