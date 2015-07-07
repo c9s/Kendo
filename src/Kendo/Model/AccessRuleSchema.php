@@ -24,6 +24,8 @@ class AccessRuleSchema extends SchemaDeclare
             ->text();
 
         $this->belongsTo('control','Kendo\\Model\\AccessControlSchema','rule_id','id');
+
+        $this->belongsTo('resource','Kendo\\Model\\AccessResourceSchema','name','resource');
     }
 }
 
