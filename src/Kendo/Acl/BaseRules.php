@@ -48,7 +48,7 @@ abstract class BaseRules
         }
     }
 
-    abstract function build();
+    abstract public function build();
 
     public function resource($resource)
     {
