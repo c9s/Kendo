@@ -15,8 +15,8 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "Kendo": "src"
+        "psr-4": {
+            "Kendo\\": "src/Kendo/"
         }
     }
 }
