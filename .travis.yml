@@ -2,19 +2,21 @@ services:
   - mysql
 language: php
 php:
-  - 5.4
-  - 5.5
-  - 5.6
+- 5.4
+- 5.5
+- 5.6
+
+install:
+- composer self-update
+- composer require satooshi/php-coveralls:dev-master --no-update --dev
+- composer install
+- mysql -e 'create database kendo_test;'
 
 before_script:
-  - mysql -e 'create database kendo_test;'
-  - phpenv rehash
-  - composer self-update
-  - composer require satooshi/php-coveralls:dev-master --no-update --dev
-  - composer install --prefer-source
-  - php vendor/bin/lazy build-conf db/config/database.travis.yml
-  - php vendor/bin/lazy schema build -f src
-  - php vendor/bin/lazy sql --rebuild src
+- phpenv rehash
+- php vendor/bin/lazy build-conf db/config/database.travis.yml
+- php vendor/bin/lazy schema build -f src
+- php vendor/bin/lazy sql --rebuild src
 
 script: "phpunit -c phpunit-ci.xml"
 
