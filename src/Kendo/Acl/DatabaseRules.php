@@ -22,11 +22,11 @@ abstract class DatabaseRules extends BaseRules
         $this->cacheSupport = extension_loaded('apc');
         if ($this->cacheEnable && $this->cacheSupport) {
             $key = get_class($this);
-            if( $cache = apc_fetch($key) ) {
+            if ($cache = apc_fetch($key) ) {
                 $this->import($cache);
                 $this->cacheLoaded = true;
                 return;
-            } elseif( $this->autoSync ) {
+            } elseif ($this->autoSync) {
                 $this->buildAndSync();
                 apc_store($key,$this->export(), $this->cacheExpiry);
             }
@@ -35,7 +35,7 @@ abstract class DatabaseRules extends BaseRules
         }
     }
 
-    public function getRuleRecordArguments($rule)
+    public function getRuleRecordArguments(Rule $rule)
     {
         $args = array( 
             'rules_class' => get_class($this),
@@ -53,7 +53,7 @@ abstract class DatabaseRules extends BaseRules
     /**
      * Sync Rule item to database.
      */
-    public function syncRule($rule) {
+    public function syncRule(Rule $rule) {
         // sync resource operation table
         $ar = new AccessRule;
         $ret = $ar->createOrUpdate( $this->getRuleRecordArguments($rule) ,array('resource','operation'));
@@ -62,11 +62,11 @@ abstract class DatabaseRules extends BaseRules
         }
 
         $ac = new AccessControl;
-        $ret = $ac->loadOrCreate(array( 
+        $ret = $ac->createOrUpdate(array( 
             'rule_id' => $ar->id,
             'role' => $rule->role,
             'allow' => $rule->allow,
-        ));
+        ), [ 'rule_id', 'role' ]);
         if (! $ret->success) {
             throw new $ret->exception;
         }
@@ -89,12 +89,12 @@ abstract class DatabaseRules extends BaseRules
         }
     }
 
+    /**
+     * load rules from database
+     */
     public function buildAndSync() {
-        // load rules from database
-        if (! $this->load()) {
-            $this->build();  // initialize rules from code
-            $this->write();  // write back to database
-        }
+        $this->build();  // initialize rules from code
+        $this->write();  // write back to database
     }
 
     public function getAccessRuleRecords()
@@ -157,16 +157,6 @@ abstract class DatabaseRules extends BaseRules
             $this->syncRule($rule);
         }
     }
-
-    /*
-    function build() {
-        $this->resource( 'users' )
-            ->label('User Management');
-
-        $this->add('admin','users','create',true)
-            ->label( 'Create User' );
-    }
-    */
 
 }
 
