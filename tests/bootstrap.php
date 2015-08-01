@@ -1,5 +1,23 @@
 <?php
+use LazyRecord\Schema\SchemaGenerator;
+use LazyRecord\ConfigLoader;
+use CLIFramework\Logger;
+
 $loader = require 'vendor/autoload.php';
-$configLoader = new LazyRecord\ConfigLoader;
-$configLoader->load( 'config/database.yml');
-$configLoader->init();
+$config = new LazyRecord\ConfigLoader;
+$config->load( 'config/database.yml');
+$config->init();
+
+
+$logger = new Logger;
+$logger->info("Building schema class files...");
+
+// build schema class files
+$schemas = array(
+    new \Kendo\Model\AccessControlSchema,
+    new \Kendo\Model\AccessResourceSchema,
+    new \Kendo\Model\AccessRuleSchema,
+);
+$g = new \LazyRecord\Schema\SchemaGenerator($config, $logger);
+$g->setForceUpdate(true);
+$g->generate($schemas);
