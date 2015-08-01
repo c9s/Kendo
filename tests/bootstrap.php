@@ -5,7 +5,7 @@ use CLIFramework\Logger;
 
 $loader = require 'vendor/autoload.php';
 $config = new LazyRecord\ConfigLoader;
-$config->load( 'config/database.yml');
+$config->load('db/config/database.testing.yml');
 $config->init();
 
 
