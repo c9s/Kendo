@@ -21,7 +21,6 @@ class DatabaseRulesTest extends \PHPUnit_Framework_TestCase
 
     public function testDatabaseRulesWithApc()
     {
-
         if (!ini_get('apc.enable_cli')) {
             skip("You must enable apc.enable_cli to test this");
         }

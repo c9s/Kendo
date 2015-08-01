@@ -10,18 +10,16 @@ class AccessControlBase
     const table = 'access_controls';
     const read_source_id = 'default';
     const write_source_id = 'default';
-    const primary_key = 'id';
+    const primary_key = NULL;
     public static $column_names = array (
       0 => 'role',
       1 => 'rule_id',
       2 => 'allow',
-      3 => 'id',
     );
     public static $column_hash = array (
       'role' => 1,
       'rule_id' => 1,
       'allow' => 1,
-      'id' => 1,
     );
     public static $mixin_classes = array (
     );
@@ -48,12 +46,6 @@ class AccessControlBase
     {
         if (isset($this->_data['allow'])) {
             return $this->_data['allow'];
-        }
-    }
-    public function getId()
-    {
-        if (isset($this->_data['id'])) {
-            return $this->_data['id'];
         }
     }
 }

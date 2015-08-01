@@ -9,8 +9,9 @@ class Resource
     function __construct($name,$label = null)
     {
         $this->name = $name;
-        if( $label )
+        if ($label) {
             $this->label = $label;
+        }
     }
 
     public function name($name) {

@@ -10,14 +10,13 @@ class AccessRuleBase
     const table = 'access_rules';
     const read_source_id = 'default';
     const write_source_id = 'default';
-    const primary_key = 'id';
+    const primary_key = NULL;
     public static $column_names = array (
       0 => 'rules_class',
       1 => 'resource',
       2 => 'operation',
       3 => 'operation_label',
       4 => 'description',
-      5 => 'id',
     );
     public static $column_hash = array (
       'rules_class' => 1,
@@ -25,7 +24,6 @@ class AccessRuleBase
       'operation' => 1,
       'operation_label' => 1,
       'description' => 1,
-      'id' => 1,
     );
     public static $mixin_classes = array (
     );
@@ -64,12 +62,6 @@ class AccessRuleBase
     {
         if (isset($this->_data['description'])) {
             return $this->_data['description'];
-        }
-    }
-    public function getId()
-    {
-        if (isset($this->_data['id'])) {
-            return $this->_data['id'];
         }
     }
 }
