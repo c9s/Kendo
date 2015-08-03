@@ -2,17 +2,48 @@
 New API Proposal
 ======================
 
+SchemaAuthLoader
+----------------
+SchemaAuthLoader loads results from authentication schema modules:
 
-Authorize
+```php
+use Kendo\AuthLoader\SchemaAuthLoader;
+$loader = new SchemaAuthLoader;
+$loader->load(new FooAuthModule);
+$loader->load(new BarAuthModule);
+```
+
+PDOAuthLoader
+------------------
+use Kendo\AuthLoader\PDOAuthLoader;
+
+AuthPDOLoader loads results from database:
+
+```php
+$loader = new AuthPDOLoader($dbh);
+```
+
+
+DatabaseDumpper
+----------------
+
+```php
+use Kendo\AuthLoader\DatabaseDumper;
+$dumpper = new DatabaseDumper($loader, $config);
+$success = $dumpper->dump();
+```
+
+
+Authenticator
 --------------
 
 ```php
+use Kendo\Authenticator\Authenticator;
+
 $user = new User;
 
 // Load AuthModule dynamically
-$authorizor = new Authenticator;
-$authorizor->load(new FooAuthModule);
-$authorizor->load(new BarAuthModule);
+$authorizor = new Authenticator($loader);
 
 // Authorize
 if ($authorizor->can($user,'create','book')) {
@@ -20,13 +51,26 @@ if ($authorizor->can($user,'create','book')) {
 }
 ```
 
+
+```php
+use Kendo\Authenticator\APCAuthenticator;
+
+$authorizor = new APCAuthenticator($loader, [ 'namespace' => 'myapp_' ]);
+
+// we can cache the authentication result in APC
+if ($authorizor->can($user, 'create', 'book')) {
+
+}
+```
+
+
+
+
 AuthenticatorDumpper
 ---------------------
 
 ```php
-$authorizor = new AuthenticatorDumpper;
-$authorizor->load(new FooAuthModule);
-$authorizor->load(new BarAuthModule);
+$authorizor = new AuthenticatorDumpper($loader);
 $authorizor->dump('CachedAuthenticator');
 
 $authorizor = new CachedAuthenticator;
@@ -34,6 +78,15 @@ if ($authorizor->can($user, 'create', 'book')) {
 
 }
 ```
+
+DatabaseRuleAuthenticator
+-------------------------
+
+```php
+
+```
+
+
 
 
 
