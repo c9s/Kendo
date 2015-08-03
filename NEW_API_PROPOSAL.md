@@ -9,14 +9,38 @@ Authorize
 ```php
 $user = new User;
 
-
+// Load AuthModule dynamically
 $authorizor = new Authenticator;
 $authorizor->load(new FooAuthModule);
 $authorizor->load(new BarAuthModule);
+
+// Authorize
 if ($authorizor->can($user,'create','book')) {
 
 }
 ```
+
+AuthenticatorDumpper
+---------------------
+
+```php
+$authorizor = new AuthenticatorDumpper;
+$authorizor->load(new FooAuthModule);
+$authorizor->load(new BarAuthModule);
+$authorizor->dump('CachedAuthenticator');
+
+$authorizor = new CachedAuthenticator;
+if ($authorizor->can($user, 'create', 'book')) {
+
+}
+```
+
+
+
+
+
+
+
 
 
 AuthModule
@@ -66,28 +90,25 @@ class FooAuthModule
             ->byRole('admin');
 
         $this->rule(CAN_NOT, 'create', 'book')
-            ->byUserId(1);
-
-        $this->rule(CAN_NOT, 'create', 'book')
             ->byUserId(1)
+            ->byIdentifier(1)
+            ;
+
+        // Expand the same rule to differnet user and role
+        $this->rule(CAN_NOT, 'create', 'book')
+            ->byIdentifier(1)
             ->byRole('admin');
 
+        // Expand the same rule to differnet user and role
+        $this->rule(CAN_NOT, 'create', 'book')
+            ->byIdentifier('c9s');
 
-        // define some default rules
-        $this->ruleByRole('admin', CAN, 'create', 'book');
-        $this->ruleByRole('admin', CAN, 'update', 'book');
-        $this->ruleByRole('admin', CAN_NOT, 'delete', 'book');
+        $this->rule(CAN_NOT, 'create', 'book')
+            ->byIdentifiers(['c9s', 'azole', '....']);
 
-        $this->ruleByUser('user-identifier', CAN, 'create', 'book');
-        $this->ruleByUser('c9s', CAN, 'update', 'book');
-        $this->ruleByUser('azole', CAN_NOT, 'delete', 'book');
-
-        // We can use user id primary key if we don't have identifiers
-        $this->ruleByUser('1', CAN_NOT, 'delete', 'book');
-        $this->ruleByUser('2', CAN_NOT, 'delete', 'book');
-        $this->ruleByUser('3', CAN_NOT, 'delete', 'book');
+        $this->rule(CAN_NOT, 'create', 'book')
+            ->byIdentifiers('c9s', 'azole', '....');
     }
-
 }
 ```
 
