@@ -17,6 +17,12 @@ class RuleDefinition
         $this->definition = $definition;
     }
 
+    public function actor($identifier)
+    {
+    }
+
+
+
     /**
      * Define roles used in the rule
      */
@@ -44,7 +50,6 @@ class RuleDefinition
             }
         }
         return $this;
-
     }
 
     public function can($operations, $resources)

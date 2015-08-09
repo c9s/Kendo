@@ -1,6 +1,7 @@
 <?php
 namespace Kendo\Definition;
-use Kendo\Definition\RoleDefinition;
+// use Kendo\Definition\RoleDefinition;
+use Kendo\Definition\ActorDefinition;
 use Kendo\Definition\ResourceDefinition;
 use Kendo\Definition\RuleDefinition;
 
@@ -9,9 +10,9 @@ abstract class Definition
     abstract public function schema();
 
     /**
-     * @var array $roles
+     * @var 
      */
-    protected $roles = array();
+    protected $actors = array();
 
     /**
      * @var array provided resources
@@ -32,20 +33,20 @@ abstract class Definition
         $this->schema();
     }
 
-    public function role($identifier)
+    public function actor($identifier, $label = null)
     {
-        if (isset($this->roles[ $identifier ])) {
-            return $this->roles[ $identifier ];
+        if (isset($this->actors[ $identifier ])) {
+            return $this->actors[ $identifier ];
         }
-        return $this->roles[ $identifier ] = new RoleDefinition($identifier);
+        return $this->actors[ $identifier ] = new ActorDefinition($identifier, $label);
     }
 
-    public function resource($identifier)
+    public function resource($identifier, $label = null)
     {
         if (isset($this->resources[ $identifier ])) {
             return $this->resources[ $identifier ];
         }
-        return $this->resources[ $identifier ] = new ResourceDefinition($identifier);
+        return $this->resources[ $identifier ] = new ResourceDefinition($identifier, $label);
     }
 
 
@@ -76,30 +77,6 @@ abstract class Definition
     {
         return $this->rules;
     }
-
-
-    /**
-     * Returns role definition objects.
-     *
-     * @return RoleDefinition[]
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-
-    /**
-     * Returns user definition objects.
-     *
-     * @return UserDefinition[]
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    // XXX: validate resource operations for each users
 
 
     /*

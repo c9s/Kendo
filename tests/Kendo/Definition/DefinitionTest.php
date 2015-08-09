@@ -15,10 +15,10 @@ class FooDefinition extends Definition
 {
     public function schema()
     {
-        $this->role('admin');
+        $this->actor('user', 'User')
+            ->roles('admin', 'user', 'customer');
 
-        $this->role('user');
-
+        /*
         $this->rule()
             ->roles(['admin', 'user'])
             ->can(['create', 'update'], 'book')
@@ -41,6 +41,7 @@ class FooDefinition extends Definition
             ->users([$user1])
             ->can(['create', 'update'], 'book')
             ;
+         */
     }
 }
 
