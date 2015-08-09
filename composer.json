@@ -15,6 +15,7 @@
         }
     ],
     "autoload": {
+        "files": [ "src/Kendo/Constants.php" ],
         "psr-4": {
             "Kendo\\": "src/Kendo/"
         }

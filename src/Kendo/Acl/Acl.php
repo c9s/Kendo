@@ -9,6 +9,7 @@ use InvalidArgumentException;
 class Acl
 {
     public $loader;
+
     public $observers = array();
 
     public function __construct(RuleLoader $loader)
@@ -53,7 +54,7 @@ class Acl
     public function authorize($user,$resource,$operation) 
     {
         $allowed = $this->can($user,$resource,$operation);
-        if($allowed) {
+        if ($allowed) {
             $this->notifyAllow($user,$resource,$operation);
         } else {
             $this->notifyDeny($user,$resource,$operation);
@@ -65,18 +66,19 @@ class Acl
     /**
      * Simply checks permisssion
      */
-    public function can($user,$resource,$operation)
+    public function can($user, $resource, $operation)
     {
-        if( is_string($user) ) {
+        if (is_string($user)) {
             $role = $user;
-            if( true === $this->loader->authorize($role,$resource,$operation) ) 
+            if (true === $this->loader->authorize($role,$resource,$operation)) {
                 return true;
+            }
             return false;
-        }
-        elseif( $user instanceof MultiRoleInterface || method_exists($user,'getRoles') ) {
-            foreach( $user->getRoles() as $role ) {
-                if( true === $this->loader->authorize($role,$resource,$operation) )
+        } else if ($user instanceof MultiRoleInterface || method_exists($user,'getRoles')) {
+            foreach ($user->getRoles() as $role) {
+                if (true === $this->loader->authorize($role,$resource,$operation)) {
                     return true;
+                }
             }
             return false;
         }
@@ -91,8 +93,9 @@ class Acl
     static public function getInstance($loader = null)
     {
         static $instance;
-        if( $instance )
+        if ($instance) {
             return $instance;
+        }
         return $instance = new self($loader);
     }
 }

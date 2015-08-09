@@ -13,11 +13,14 @@ $logger = new Logger;
 $logger->info("Building schema class files...");
 
 // build schema class files
+/*
 $schemas = array(
     new \Kendo\Model\AccessControlSchema,
     new \Kendo\Model\AccessResourceSchema,
     new \Kendo\Model\AccessRuleSchema,
 );
+*/
+$schemas = array();
 $g = new \LazyRecord\Schema\SchemaGenerator($config, $logger);
 $g->setForceUpdate(true);
 $g->generate($schemas);

@@ -2,20 +2,28 @@
 New API Proposal
 ======================
 
-SchemaAuthLoader
+DefinitionLoader
 ----------------
-SchemaAuthLoader loads results from authentication schema modules:
+DefinitionLoader loads results from authentication schema modules:
 
 ```php
-use Kendo\AuthLoader\SchemaAuthLoader;
-$loader = new SchemaAuthLoader;
-$loader->load(new FooAuthModule);
-$loader->load(new BarAuthModule);
+use Kendo\Definition\DefinitionLoader;
+$loader = new DefinitionLoader;
+$loader->load(new FooAuthDefinition);
+$loader->load(new BarAuthDefinition);
 ```
+
+RuleImporter
+------------------
+RuleImporter imports definitions into database:
+
+
+
+
 
 PDOAuthLoader
 ------------------
-use Kendo\AuthLoader\PDOAuthLoader;
+use Kendo\RuleLoader\PDORuleLoader;
 
 AuthPDOLoader loads results from database:
 
@@ -28,8 +36,8 @@ DatabaseDumpper
 ----------------
 
 ```php
-use Kendo\AuthLoader\DatabaseDumper;
-$dumpper = new DatabaseDumper($loader, $config);
+use Kendo\DefinitionImporter\DatabaseImporter;
+$dumpper = new DatabaseImporter($loader, $config);
 $success = $dumpper->dump();
 ```
 
@@ -93,77 +101,6 @@ DatabaseRuleAuthenticator
 
 
 
-
-
-
-AuthModule
---------------
-
-```php
-class FooAuthModule
-{
-    public function resource()
-    {
-        return [
-            'user' => _('user'),
-            'book' => _('book'),
-            'author' => _('author'),
-            'settings' => _('settings'),
-        ];
-    }
-
-    public function roles()
-    {
-        return [
-            'admin',
-            'user',
-        ];
-    }
-
-    public function rules()
-    {
-
-
-    }
-
-    public function schema()
-    {
-        // define roles
-        $this->role('admin');
-        $this->role('user');
-
-        $this->op('create', 'create resource');
-        $this->op('print', 'print resource');
-        $this->op('export', 'export resource');
-
-        $this->rule(CAN, 'create', 'book')
-            ->byRole('admin');
-
-        $this->rule(CAN_NOT, 'create', 'book')
-            ->byRole('admin');
-
-        $this->rule(CAN_NOT, 'create', 'book')
-            ->byUserId(1)
-            ->byIdentifier(1)
-            ;
-
-        // Expand the same rule to differnet user and role
-        $this->rule(CAN_NOT, 'create', 'book')
-            ->byIdentifier(1)
-            ->byRole('admin');
-
-        // Expand the same rule to differnet user and role
-        $this->rule(CAN_NOT, 'create', 'book')
-            ->byIdentifier('c9s');
-
-        $this->rule(CAN_NOT, 'create', 'book')
-            ->byIdentifiers(['c9s', 'azole', '....']);
-
-        $this->rule(CAN_NOT, 'create', 'book')
-            ->byIdentifiers('c9s', 'azole', '....');
-    }
-}
-```
 
 
 
