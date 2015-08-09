@@ -4,9 +4,9 @@ use Kendo\Definition\Definition;
 
 class RuleDefinition
 {
-    protected $roles = array();
-
     protected $users = array();
+
+    protected $roles = array();
 
     protected $permissions = array();
 

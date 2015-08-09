@@ -81,7 +81,7 @@ abstract class Definition
     /**
      * Returns role definition objects.
      *
-     * @return Role[]
+     * @return RoleDefinition[]
      */
     public function getRoles()
     {
@@ -92,7 +92,7 @@ abstract class Definition
     /**
      * Returns user definition objects.
      *
-     * @return User[]
+     * @return UserDefinition[]
      */
     public function getUsers()
     {
