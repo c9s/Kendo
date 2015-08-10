@@ -72,6 +72,7 @@ class RuleMatcher
             return;
         }
 
+        // TODO: pre-compute the operation mask to improve the performance
         $opControlList = $rule[$resourceIdentifier];
         foreach ($opControlList as $opControl) {
             if ($opControl[0] & $operation) {
