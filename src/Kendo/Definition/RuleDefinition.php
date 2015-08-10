@@ -4,10 +4,19 @@ use Kendo\Definition\Definition;
 
 class RuleDefinition
 {
-    protected $users = array();
+    /**
+     * @var ActorDefinition The actor object specified for the rule
+     */
+    protected $actor;
 
+    /**
+     * @var RoleDefinition[ identifier ]
+     */
     protected $roles = array();
 
+    /**
+     * @var array[  ]
+     */
     protected $permissions = array();
 
     protected $definition;
@@ -19,9 +28,9 @@ class RuleDefinition
 
     public function actor($identifier)
     {
+        $this->actor = $this->definition->findActorByIdentifier($identifier);
+        return $this;
     }
-
-
 
     /**
      * Define roles used in the rule
@@ -39,22 +48,15 @@ class RuleDefinition
         return $this;
     }
 
-    public function users()
-    {
-        $args = func_get_args();
-        foreach ($args as $arg) {
-            if (is_array($arg)) {
-                $this->users = array_merge($this->users, $arg);
-            } else {
-                $this->users[] = $arg;
-            }
-        }
-        return $this;
-    }
-
     public function can($operations, $resources)
     {
-        $this->permissions[] = [ 'operations' => $operations, 'resources' => $resources ];
+        if (is_array($resources)) {
+            foreach ($resources as $resourceIdentifier) {
+                $this->permissions[$resourceIdentifier] = (array) $operations;
+            }
+        } else {
+            $this->permissions[$resources] = (array) $operations;
+        }
         return $this;
     }
 
