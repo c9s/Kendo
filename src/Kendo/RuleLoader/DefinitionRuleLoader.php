@@ -2,6 +2,7 @@
 namespace Kendo\RuleLoader;
 use Kendo\DefinitionStorage;
 use Kendo\RuleLoader\RuleLoader;
+use Kendo\Definition\RuleDefinition;
 use SplObjectStorage;
 
 class DefinitionRuleLoader implements RuleLoader
@@ -13,11 +14,7 @@ class DefinitionRuleLoader implements RuleLoader
      *
      * role == 0   -- without role restriction
      */
-    // protected $accessRules = array();
-
-    protected $allowRules = array();
-
-    protected $denyRules = array();
+    protected $accessRules = array();
 
     public function __construct()
     {
@@ -25,17 +22,10 @@ class DefinitionRuleLoader implements RuleLoader
     }
 
 
-    public function getDenyRulesByActorIdentifier($actorIdentifier)
+    public function getAccessRulesByActorIdentifier($actorIdentifier)
     {
-        if ($this->denyRules[ $actorIdentifier ]) {
-            return $this->denyRules[ $actorIdentifier ];
-        }
-    }
-
-    public function getAllowRulesByActorIdentifier($actorIdentifier)
-    {
-        if ($this->allowRules[ $actorIdentifier ]) {
-            return $this->allowRules[ $actorIdentifier ];
+        if ($this->accessRules[ $actorIdentifier ]) {
+            return $this->accessRules[ $actorIdentifier ];
         }
     }
 
@@ -52,52 +42,45 @@ class DefinitionRuleLoader implements RuleLoader
         return $all;
     }
 
+    protected function expandRulePermissions(RuleDefinition $rule)
+    {
+        // the actor definition
+        $actor = $rule->getActor();
+        $permissions = $rule->getPermissions();
+        foreach ($permissions as $resource => $permissionControls) {
+
+            foreach ($permissionControls as $permissionControl) {
+
+                $allow = $permissionControl['allow'];
+
+                foreach ($permissionControl['operations'] as $op) {
+
+                    if ($roles = $rule->getRoles()) {
+                        foreach ($roles as $role) {
+                            $this->accessRules[$actor->getIdentifier()][$role][$resource][] = [$op, $allow];
+                        }
+                    } else {
+                        $this->accessRules[ $actor->getIdentifier() ][0][$resource][] = [$op, $allow];
+                    }
+
+                }
+            }
+
+        }
+    }
+
     public function load(DefinitionStorage $storage)
     {
         // merge definition objects
         $this->definitionStorage->addAll($storage);
         foreach ($storage as $definition) {
 
-            $allowRules = $definition->getAllowRuleDefinitions();
-            foreach ($allowRules as $rule) {
-                $actor = $rule->getActor();
-                $permissions = $rule->getPermissions();
-
-                foreach ($permissions as $resource => $operations) {
-                    if ($roles = $rule->getRoles()) {
-                        foreach ($roles as $role) {
-                            $this->allowRules[$actor->getIdentifier()][$role][$resource] = $operations;
-                        }
-                    } else {
-                        $this->allowRules[ $actor->getIdentifier() ][0][$resource] = $operations;
-                    }
-                }
+            $rules = $definition->getRuleDefinitions();
+            foreach ($rules as $rule) {
+                $this->expandRulePermissions($rule);
             }
-
-
-            $denyRules = $definition->getAllowRuleDefinitions();
-            foreach ($denyRules as $rule) {
-                $actor = $rule->getActor();
-                $permissions = $rule->getPermissions();
-
-                foreach ($permissions as $resource => $operations) {
-                    if ($roles = $rule->getRoles()) {
-                        foreach ($roles as $role) {
-                            $this->denyRules[$actor->getIdentifier()][$role][$resource] = $operations;
-                        }
-                    } else {
-                        $this->denyRules[ $actor->getIdentifier() ][0][$resource] = $operations;
-                    }
-                }
-            }
-
         }
-        return [
-            'allow' => $allow,
-            'deny'  => $deny,
-        ];
     }
-
 }
 
 

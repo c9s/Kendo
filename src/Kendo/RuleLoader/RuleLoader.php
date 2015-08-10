@@ -7,8 +7,6 @@ interface RuleLoader
 {
     public function getAccessRulesByActorIdentifier($actorIdentifier);
 
-    public function getDenyRulesByActorIdentifier($actorIdentifier);
-
     public function getActorDefinitions();
 
 }

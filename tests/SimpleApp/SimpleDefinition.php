@@ -29,12 +29,12 @@ class SimpleDefinition extends Definition
 
         $this->rule()
             ->actor('user')
-                ->role('user')
-                ->can([Op::VIEW, Op::SEARCH], 'products');
-
-        $this->rule()
-            ->actor('user')
                 ->role('customer')
                 ->can([Op::VIEW], 'products');
+
+        // all user actor can view and search
+        $this->rule()
+            ->actor('user')
+                ->can([Op::VIEW, Op::SEARCH], 'products');
     }
 }

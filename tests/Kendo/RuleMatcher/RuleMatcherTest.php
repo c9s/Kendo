@@ -7,11 +7,27 @@ use Kendo\RuleMatcher\RuleMatcher;
 use Kendo\Operation\CommonOperation;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
 
-class ActorIdentifierProviderUser implements ActorIdentifierProvider
+class CustomerUser implements ActorIdentifierProvider
+{
+    public function getActorIdentifier()
+    {
+        return 'customer';
+    }
+}
+
+class NormalUser implements ActorIdentifierProvider
 {
     public function getActorIdentifier()
     {
         return 'user';
+    }
+}
+
+class AdminUser implements ActorIdentifierProvider
+{
+    public function getActorIdentifier()
+    {
+        return 'admin';
     }
 }
 
@@ -23,12 +39,13 @@ class RuleMatcherTest extends PHPUnit_Framework_TestCase
         $storage->add(new SimpleDefinition);
 
         $loader = new DefinitionRuleLoader;
-        $accessControlList = $loader->load($storage);
-        $this->assertNotEmpty($accessControlList);
+        $loader->load($storage);
 
-        $actor = new ActorIdentifierProviderUser;
+        $actor = new NormalUser;
         $matcher = new RuleMatcher($loader);
-        $rule = $matcher->match($actor, CommonOperation::CREATE, 'books');
+        $rule = $matcher->match($actor, CommonOperation::VIEW, 'products');
+        var_dump($rule);
+        $this->assertNotNull($rule, 'common user can view products');
     }
 }
 

@@ -1,8 +1,9 @@
 <?php
 namespace Kendo\RuleMatcher;
 use Kendo\RuleLoader\RuleLoader;
-use Kendo\Provider\ActorIdentifierProvider;
-use Kendo\Provider\RoleIdentifierProvider;
+use Kendo\IdentifierProvider\ActorIdentifierProvider;
+use Kendo\IdentifierProvider\RoleIdentifierProvider;
+use Kendo\Context;
 use LogicException;
 
 class RuleMatcher
@@ -10,12 +11,14 @@ class RuleMatcher
 
     protected $loader;
 
-    public function __construct(RuleLoader $loader)
+    protected $context;
+
+    public function __construct(RuleLoader $loader, Contenxt $context = null)
     {
         $this->loader = $loader;
     }
 
-    public function match($actor, $operation, $context)
+    public function match($actor, $operation, $resourceIdentifier, Context $context = null)
     {
         $actorDefinitions = $this->loader->getActorDefinitions();
 
@@ -30,50 +33,59 @@ class RuleMatcher
             }
         }
 
-
-        $accessRules = null;
+        $actorIdentifier = null;
 
         if ($matchedActorDefinition) {
+            
+            $actorIdentifier = $matchedActorDefinition->identifier;
 
-            $accessRules = $this->loader->getAccessRulesByActorIdentifier($matchedActorDefinition->identifier);
 
         } else if ($actor instanceof ActorIdentifierProvider) {
 
-            $accessRules = $this->loader->getAccessRulesByActorIdentifier($actor->getActorIdentifier());
+            $actorIdentifier = $actor->getActorIdentifier();
+
+        } else {
+
+            throw new LogicException("Actor identifier is required. please implement ActorIdentifierProvider interface.");
 
         }
 
-        if ($accessRules) {
-
-            foreach ($accessRules as $rule) {
-
-                foreach ($rule as $role => $resources) {
-
-                    if (isset($resources[$resource])) {
-                        $allowedOperations = $resources[$resource];
-
-                        foreach ($allowedOperations as $op) {
-
-                        }
-                    }
-
-                }
-
-                var_dump($rule);
-            }
+        $accessRules = $this->loader->getAccessRulesByActorIdentifier($actorIdentifier);
 
 
+        $role = 0;
+        if ($actor instanceof RoleIdentifierProvider) {
+            $role = $actor->getRoleIdentifier();
+        }
+
+        if (empty($accessRules)) {
+            return null;
+        }
+
+        // If rules defined for the actor (with or without role identifier)
+        if (!isset($accessRules[$role])) {
             return;
         }
 
-            // } else {
-            // throw new LogicException('Actor identifier is required for the rules');
-            // provide an option to raise error if the actor identifer is not found.
-        $allAccessRules = $this->loader->getAllAccessRules();
-
-        foreach ($allAccessRules as $rule) {
-            var_dump($rule);
+        $rule = $accessRules[$role];
+        if (!isset($rule[$resourceIdentifier])) {
+            return;
         }
+
+        $opControlList = $rule[$resourceIdentifier];
+        foreach ($opControlList as $opControl) {
+            if ($opControl[0] & $operation) {
+                return [
+                    'actor' => $actor,
+                    'role' => $role,
+                    'res' => $resourceIdentifier,
+                    'op' => $operation,
+                    'allow' => $opControl[1],
+                    'mask' => $opControl[0],
+                ];
+            }
+        }
+        return null;
     }
 }
 

@@ -20,6 +20,7 @@ class RuleDefinition
      */
     protected $permissions = array();
 
+
     protected $definition;
 
     public function __construct(Definition $definition)
@@ -74,13 +75,33 @@ class RuleDefinition
     {
         if (is_array($resources)) {
             foreach ($resources as $resourceIdentifier) {
-                $this->permissions[$resourceIdentifier] = (array) $operations;
+                $this->permissions[$resourceIdentifier][] = [ 'resource' => $resourceIdentifier, 'operations' => (array) $operations, 'allow' => true ];
             }
         } else {
-            $this->permissions[$resources] = (array) $operations;
+            $this->permissions[$resources][] = [ 'operations' => (array) $operations, 'allow' => true ];
         }
         return $this;
     }
+
+    /**
+     *
+     * @param array $operations
+     * @param array $resources
+     *
+     * @return RuleDefinition
+     */
+    public function cant($operations, $resources)
+    {
+        if (is_array($resources)) {
+            foreach ($resources as $resourceIdentifier) {
+                $this->permissions[$resourceIdentifier][] = [ 'operations' => (array) $operations, 'allow' => false ];
+            }
+        } else {
+            $this->permissions[$resourceIdentifier][] = [ 'operations' => (array) $operations, 'allow' => false ];
+        }
+        return $this;
+    }
+
 
 
     /**
@@ -92,13 +113,16 @@ class RuleDefinition
     }
 
     /**
-     * @return array[resource]operations Return the permissions of this rule.
+     * @return array[resource]operations[] Return the permissions of this rule.
      */
     public function getPermissions()
     {
         return $this->permissions;
     }
 
+    /**
+     * @var string[] Return rule identifiers
+     */
     public function getRoles()
     {
         return $this->roles;

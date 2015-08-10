@@ -12,19 +12,7 @@ class DefinitionRuleLoaderTest extends PHPUnit_Framework_TestCase
         $storage->add(new SimpleDefinition);
 
         $loader = new DefinitionRuleLoader;
-        $accessControlList = $loader->load($storage);
-        $this->assertNotEmpty($accessControlList);
-    }
-
-    public function testGetAllAccessControlList()
-    {
-        $storage = new DefinitionStorage;
-        $storage->add(new SimpleDefinition);
-
-        $loader = new DefinitionRuleLoader;
         $loader->load($storage);
-        $listAll = $loader->getAllAccessRules();
-        $this->assertNotEmpty($listAll);
     }
 
     public function testGetAccessControlListByActorIdentifier()
