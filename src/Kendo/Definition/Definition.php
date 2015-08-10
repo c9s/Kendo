@@ -24,6 +24,21 @@ abstract class Definition
      */
     protected $rules = array();
 
+
+
+    /**
+     * @var RuleDefinition[] contains allow rules
+     */
+    protected $allowRules = array();
+
+
+    /**
+     * @var RuleDefinition[] contains deny rules
+     */
+    protected $denyRules = array();
+
+
+
     protected $rulesByIdentifier = array();
 
 
@@ -71,17 +86,15 @@ abstract class Definition
      *
      * @return RuleDefinition
      */
-    public function rule($identifier = null)
+    public function allow()
     {
-        if ($identifier && isset($this->rulesByIdentifier[$identifier] )) {
-            return  $this->rulesByIdentifier[$identifier];
-        }
+        return $this->allowRules[] = new RuleDefinition($this);
+    }
 
-        $rule = new RuleDefinition($this);
-        if ($identifier) {
-            $this->rulesByIdentifier[ $identifier ] = $rule;
-        }
-        return $this->rules[] = $rule;
+
+    public function deny()
+    {
+        return $this->denyRules[] = new RuleDefinition($this);
     }
 
     public function getActorDefinitions()
@@ -95,13 +108,24 @@ abstract class Definition
     }
 
     /**
-     * Returns rule definition objects
+     * Returns allow rule definition objects
      *
      * @return RuleDefinition[]
      */
-    public function getRuleDefinitions()
+    public function getAllowRuleDefinitions()
     {
-        return $this->rules;
+        return $this->allowRules;
     }
+
+    /**
+     * Returns deny rule definition objects
+     *
+     * @return RuleDefinition[]
+     */
+    public function getDenyRuleDefinitions()
+    {
+        return $this->denyRules;
+    }
+
 }
 

@@ -6,7 +6,6 @@ use SplObjectStorage;
 
 class DefinitionRuleLoader implements RuleLoader
 {
-
     protected $definitionStorage;
 
     /**
@@ -14,7 +13,11 @@ class DefinitionRuleLoader implements RuleLoader
      *
      * role == 0   -- without role restriction
      */
-    protected $accessRules = array();
+    // protected $accessRules = array();
+
+    protected $allowRules = array();
+
+    protected $denyRules = array();
 
     public function __construct()
     {
@@ -22,15 +25,17 @@ class DefinitionRuleLoader implements RuleLoader
     }
 
 
-    public function getAllAccessRules()
+    public function getDenyRulesByActorIdentifier($actorIdentifier)
     {
-        return $this->accessRules;
+        if ($this->denyRules[ $actorIdentifier ]) {
+            return $this->denyRules[ $actorIdentifier ];
+        }
     }
 
-    public function getAccessRulesByActorIdentifier($actorIdentifier)
+    public function getAllowRulesByActorIdentifier($actorIdentifier)
     {
-        if ($this->accessRules[ $actorIdentifier ]) {
-            return $this->accessRules[ $actorIdentifier ];
+        if ($this->allowRules[ $actorIdentifier ]) {
+            return $this->allowRules[ $actorIdentifier ];
         }
     }
 
@@ -52,29 +57,45 @@ class DefinitionRuleLoader implements RuleLoader
         // merge definition objects
         $this->definitionStorage->addAll($storage);
         foreach ($storage as $definition) {
-            // Expand access control list
-            $rules = $definition->getRuleDefinitions();
-            foreach ($rules as $rule) {
+
+            $allowRules = $definition->getAllowRuleDefinitions();
+            foreach ($allowRules as $rule) {
                 $actor = $rule->getActor();
                 $permissions = $rule->getPermissions();
 
-                foreach ($permissions as $resource => $operations)
-                {
+                foreach ($permissions as $resource => $operations) {
                     if ($roles = $rule->getRoles()) {
-
                         foreach ($roles as $role) {
-                            $this->accessRules[$actor->getIdentifier()][$role][$resource] = $operations;
+                            $this->allowRules[$actor->getIdentifier()][$role][$resource] = $operations;
                         }
-
                     } else {
-
-                        $this->accessRules[ $actor->getIdentifier() ][0][$resource] = $operations;
-
+                        $this->allowRules[ $actor->getIdentifier() ][0][$resource] = $operations;
                     }
                 }
             }
+
+
+            $denyRules = $definition->getAllowRuleDefinitions();
+            foreach ($denyRules as $rule) {
+                $actor = $rule->getActor();
+                $permissions = $rule->getPermissions();
+
+                foreach ($permissions as $resource => $operations) {
+                    if ($roles = $rule->getRoles()) {
+                        foreach ($roles as $role) {
+                            $this->denyRules[$actor->getIdentifier()][$role][$resource] = $operations;
+                        }
+                    } else {
+                        $this->denyRules[ $actor->getIdentifier() ][0][$resource] = $operations;
+                    }
+                }
+            }
+
         }
-        return $this->accessRules;
+        return [
+            'allow' => $allow,
+            'deny'  => $deny,
+        ];
     }
 
 }
