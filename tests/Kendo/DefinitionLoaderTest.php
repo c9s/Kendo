@@ -1,6 +1,6 @@
 <?php
-use Kendo\RuleLoader\RuleLoader;
 use Kendo\Definition\Definition;
+use Kendo\DefinitionLoader;
 use Kendo\Operation\CommonOperation as Op;
 
 class SimpleDefinition extends Definition
@@ -38,11 +38,11 @@ class SimpleDefinition extends Definition
     }
 }
 
-class RuleLoaderTest extends PHPUnit_Framework_TestCase
+class DefinitionLoaderTest extends PHPUnit_Framework_TestCase
 {
-    public function testRuleLoader()
+    public function testDefinitionLoader()
     {
-        $loader = new RuleLoader;
+        $loader = new DefinitionLoader;
         $loader->load(new SimpleDefinition);
     }
 }

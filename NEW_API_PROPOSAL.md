@@ -16,12 +16,13 @@ $loader->add(new BarAuthDefinition);
 $rules = $loader->expandRules();
 ```
 
-RuleImporter
+RuleExporter
 ------------------
-RuleImporter imports definitions into database:
+RuleExporter export definitions into database:
 
-- PDORuleImporter: import rules into database
-- APCRuleImporter: import rules into apc
+- FileCacheRuleExporter: Import rules into cache file.
+- PDORuleExporter: Import rules into database
+- APCRuleExporter: Import rules into apc
 
 RuleLoader
 ------------------

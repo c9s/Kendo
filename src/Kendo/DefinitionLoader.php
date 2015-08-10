@@ -1,9 +1,9 @@
 <?php
-namespace Kendo\RuleLoader;
+namespace Kendo;
 use Kendo\Definition\Definition;
 use SplObjectStorage;
 
-class RuleLoader
+class DefinitionLoader
 {
     /**
      * @var SplObjectStorage
