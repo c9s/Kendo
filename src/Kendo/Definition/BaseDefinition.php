@@ -15,7 +15,7 @@ abstract class BaseDefinition
 
     public function getIdentifier()
     {
-        return $this->identifiers;
+        return $this->identifier;
     }
 
     public function getLabel()

@@ -1,7 +1,7 @@
 <?php
 namespace Kendo\Definition;
 
-class ActorDefinition
+class ActorDefinition extends BaseDefinition
 {
     /**
      * Roles of an actor

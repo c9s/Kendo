@@ -103,15 +103,6 @@ class RuleDefinition
     {
         return $this->roles;
     }
-
-    public function byRoles()
-    { 
-        return !empty($this->roles);
-    }
-
-
-
-
 }
 
 
