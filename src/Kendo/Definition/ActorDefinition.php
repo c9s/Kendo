@@ -1,12 +1,21 @@
 <?php
 namespace Kendo\Definition;
 
+
+/**
+ * Data object for actor definition
+ */
 class ActorDefinition extends BaseDefinition
 {
     /**
+     * @var string the instance class name. used for detecting actors
+     */
+    public $instanceClass;
+
+    /**
      * Roles of an actor
      */
-    protected $roles = array();
+    public $roles = array();
 
     /**
      * Define roles of an actor
@@ -24,6 +33,15 @@ class ActorDefinition extends BaseDefinition
         return $this;
     }
 
+
+    public function instanceBy($instanceClass)
+    {
+        return $instanceClass;
+    }
+
+    /**
+     * @return string[] Return role identifiers
+     */
     public function getRoles()
     {
         return $this->roles;
