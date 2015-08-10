@@ -1,13 +1,16 @@
 <?php
 use Kendo\DefinitionStorage;
 use SimpleApp\SimpleDefinition;
+use Kendo\RuleLoader\RuleLoader;
 
-class DefinitionStorageTest extends PHPUnit_Framework_TestCase
+class RuleLoaderTest extends PHPUnit_Framework_TestCase
 {
-    public function testDefinitionStorage()
+    public function test()
     {
         $loader = new DefinitionStorage;
         $loader->add(new SimpleDefinition);
+
+        $ruleLoader = new RuleLoader($loader);
     }
 }
 

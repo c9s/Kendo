@@ -4,6 +4,9 @@ use LazyRecord\ConfigLoader;
 use CLIFramework\Logger;
 
 $loader = require 'vendor/autoload.php';
+// Add fallback directory for looking up class files
+$loader->add(null, 'tests');
+
 $config = new LazyRecord\ConfigLoader;
 $config->load('db/config/database.testing.yml');
 $config->init();

@@ -2,13 +2,13 @@
 New API Proposal
 ======================
 
-DefinitionLoader
+DefinitionStorage
 ----------------
-DefinitionLoader loads results from authentication schema modules:
+DefinitionStorage loads results from authentication schema modules:
 
 ```php
-use Kendo\Definition\DefinitionLoader;
-$loader = new DefinitionLoader;
+use Kendo\Definition\DefinitionStorage;
+$loader = new DefinitionStorage;
 $loader->add(new FooAuthDefinition);
 $loader->add(new BarAuthDefinition);
 
