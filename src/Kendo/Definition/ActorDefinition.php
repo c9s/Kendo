@@ -9,17 +9,6 @@ class ActorDefinition
     protected $roles = array();
 
     /**
-     * Specify target record identifiers
-     */
-    protected $recordIds = array();
-
-
-    public function only($recordIds)
-    {
-        $this->recordIds = $recordIds;
-    }
-
-    /**
      * Define roles of an actor
      */
     public function roles()
