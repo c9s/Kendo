@@ -52,10 +52,21 @@ class RuleLoader
 
                 }
             }
-
-
         }
     }
+
+    public function getAllAccessControlList()
+    {
+        return $this->accessControlList;
+    }
+
+    public function getAccessControlListByActorIdentifier($actorIdentifier)
+    {
+        if ($this->accessControlList[ $actorIdentifier ]) {
+            return $this->accessControlList[ $actorIdentifier ];
+        }
+    }
+
 }
 
 
