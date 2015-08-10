@@ -9,37 +9,60 @@ DefinitionLoader loads results from authentication schema modules:
 ```php
 use Kendo\Definition\DefinitionLoader;
 $loader = new DefinitionLoader;
-$loader->load(new FooAuthDefinition);
-$loader->load(new BarAuthDefinition);
+$loader->add(new FooAuthDefinition);
+$loader->add(new BarAuthDefinition);
+
+// Return flat array that contains rules.
+$rules = $loader->expandRules();
 ```
 
 RuleImporter
 ------------------
 RuleImporter imports definitions into database:
 
+- PDORuleImporter: import rules into database
+- APCRuleImporter: import rules into apc
 
-
-
-
-PDOAuthLoader
+RuleLoader
 ------------------
-use Kendo\RuleLoader\PDORuleLoader;
 
-AuthPDOLoader loads results from database:
+- RuleLoader: the basic rule loader, load the rules from definition loader directly.
+- PDORuleLoader: load the rules from database through PDO.
+- APCRuleLoader: load the rules from APC cache.
+
+
+RuleMatcher
+------------------
+
+- DenyFirstRuleMatcher: Find the first deny rule that matches the current if the rule matches.
+- AllowFirstRuleMatcher: Find the first allow rule that matches the current criteria.
+
+
+Authorizer
+------------------
 
 ```php
-$loader = new AuthPDOLoader($dbh);
+$authorizer = new Authorizer($ruleLoader, $ruleMatcher);
+
+// Pass $user as an actor. $op as the operation, $resource as the resource
+if (false === $authorizer->authorize($user, $op, $resource, $ret)) {
+
+}
+```
+
+```php
+    public function authorize($actor, $op, $resource, & $ret) {
+        $actorDefinitions = $this->getActorDefinitions();
+        foreach ($actorDefinitions as $actorDefinition) {
+            if ($actor instanceof $actorDefinition->class) {
+                // get the access controll list for the actor
+            }
+        }
+
+    }
 ```
 
 
-DatabaseDumpper
-----------------
-
-```php
-use Kendo\DefinitionImporter\DatabaseImporter;
-$dumpper = new DatabaseImporter($loader, $config);
-$success = $dumpper->dump();
-```
 
 
 Authenticator

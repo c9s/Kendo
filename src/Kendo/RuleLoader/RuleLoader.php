@@ -5,11 +5,10 @@ use SplObjectStorage;
 
 class RuleLoader
 {
-
     /**
      * @var SplObjectStorage
      */
-    protected $definitions;
+    protected $definitionObjects;
 
     /**
      * @array accessControlList[actor][role][resource] = [ CREATE, UPDATE, DELETE ];
@@ -18,19 +17,20 @@ class RuleLoader
      */
     protected $accessControlList = array();
 
-
-
-    public function __construct()
+    public function __construct(array $defs = array())
     {
-        $this->definitions = new SplObjectStorage;
+        $this->definitionObjects = new SplObjectStorage;
+        foreach ($defs as $def) {
+            $this->load($def);
+        }
     }
 
     public function load(Definition $definition)
     {
-        if ($this->definitions->contains($definition)) {
+        if ($this->definitionObjects->contains($definition)) {
             return false;
         }
-        $this->definitions->attach($definition);
+        $this->definitionObjects->attach($definition);
 
         // Expand access control list
         $rules = $definition->getRules();
