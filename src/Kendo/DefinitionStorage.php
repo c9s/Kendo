@@ -5,12 +5,6 @@ use SplObjectStorage;
 
 class DefinitionStorage extends SplObjectStorage
 {
-    /**
-     * @var SplObjectStorage
-     */
-    protected $definitionObjects;
-
-
     public function __construct(array $defs = array())
     {
         foreach ($defs as $def) {
@@ -25,7 +19,6 @@ class DefinitionStorage extends SplObjectStorage
         }
         $this->attach($definition);
     }
-
 }
 
 
