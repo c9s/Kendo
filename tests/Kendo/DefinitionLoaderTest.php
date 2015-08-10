@@ -7,7 +7,8 @@ class DefinitionStorageTest extends PHPUnit_Framework_TestCase
     public function testDefinitionStorage()
     {
         $loader = new DefinitionStorage;
-        $loader->add(new SimpleDefinition);
+        $loader->add($a = new SimpleDefinition);
+        $loader->detach($a);
     }
 }
 

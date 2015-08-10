@@ -5,12 +5,36 @@ use Kendo\RuleLoader\RuleLoader;
 
 class RuleLoaderTest extends PHPUnit_Framework_TestCase
 {
-    public function test()
+    public function testSimpleLoad()
     {
-        $loader = new DefinitionStorage;
-        $loader->add(new SimpleDefinition);
+        $storage = new DefinitionStorage;
+        $storage->add(new SimpleDefinition);
 
-        $ruleLoader = new RuleLoader($loader);
+        $loader = new RuleLoader;
+        $accessControlList = $loader->load($storage);
+        $this->assertNotEmpty($accessControlList);
+    }
+
+    public function testGetAllAccessControlList()
+    {
+        $storage = new DefinitionStorage;
+        $storage->add(new SimpleDefinition);
+
+        $loader = new RuleLoader;
+        $loader->load($storage);
+        $listAll = $loader->getAllAccessControlList();
+        $this->assertNotEmpty($listAll);
+    }
+
+    public function testGetAccessControlListByActorIdentifier()
+    {
+        $storage = new DefinitionStorage;
+        $storage->add(new SimpleDefinition);
+
+        $loader = new RuleLoader;
+        $loader->load($storage);
+        $userAccessControlList = $loader->getAccessControlListByActorIdentifier('user');
+        $this->assertNotEmpty($userAccessControlList);
     }
 }
 
