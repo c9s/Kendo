@@ -1,6 +1,7 @@
 <?php
 namespace Kendo\Definition;
 use Kendo\Definition\Definition;
+use Exception;
 
 class RuleDefinition
 {
@@ -26,9 +27,17 @@ class RuleDefinition
         $this->definition = $definition;
     }
 
+    /**
+     * Define the actor of this rule.
+     *
+     * @param string $identifier
+     */
     public function actor($identifier)
     {
         $this->actor = $this->definition->findActorByIdentifier($identifier);
+        if (!$this->actor) {
+            throw new Exception("Actor $identifier not found.");
+        }
         return $this;
     }
 
@@ -48,6 +57,13 @@ class RuleDefinition
         return $this;
     }
 
+    /**
+     *
+     * @param array $operations
+     * @param array $resources
+     *
+     * @return RuleDefinition
+     */
     public function can($operations, $resources)
     {
         if (is_array($resources)) {
@@ -60,25 +76,26 @@ class RuleDefinition
         return $this;
     }
 
+
+    /**
+     * @return ActorDefinition
+     */
+    public function getActor()
+    {
+        return $this->actor;
+    }
+
+    /**
+     * @return array[resource]operations Return the permissions of this rule.
+     */
     public function getPermissions()
     {
         return $this->permissions;
     }
 
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
     public function getRoles()
     {
         return $this->roles;
-    }
-
-
-    public function byUsers()
-    { 
-        return !empty($this->users);
     }
 
     public function byRoles()

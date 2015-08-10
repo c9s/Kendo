@@ -1,7 +1,7 @@
 <?php
 namespace Kendo\Operation;
 
-class CRUDOperation
+class CommonOperation
 {
     const CREATE = 1001;
     const UPDATE = 1002;

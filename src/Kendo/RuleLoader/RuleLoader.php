@@ -33,6 +33,8 @@ class RuleLoader
         // Build control list
         $rules = $definition->getRules();
         foreach ($rules as $rule) {
+            $actor = $rule->getActor();
+            $permissions = $rule->getPermissions();
         }
     }
 }
