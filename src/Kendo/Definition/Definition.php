@@ -38,8 +38,24 @@ abstract class Definition
         if (isset($this->actors[ $identifier ])) {
             return $this->actors[ $identifier ];
         }
-        return $this->actors[ $identifier ] = new ActorDefinition($identifier, $label);
+        return $this->actors[$identifier] = new ActorDefinition($identifier, $label);
     }
+
+    public function findActorByIdentifier($identifier)
+    {
+        if (isset($this->actors[ $identifier ])) {
+            return $this->actors[ $identifier ];
+        }
+    }
+
+    public function findResourceByIdentifier($identifier)
+    {
+        if (isset($this->resources[ $identifier ])) {
+            return $this->resources[ $identifier ];
+        }
+    }
+
+
 
     public function resource($identifier, $label = null)
     {
@@ -77,27 +93,5 @@ abstract class Definition
     {
         return $this->rules;
     }
-
-
-    /*
-    public function expandRules()
-    {
-        $expandedRules = array();
-        foreach ($this->rules as $rule) {
-
-            if ($rule->byUsers()) {
-
-                // the returned user can be user objects
-                foreach ($rule->getUsers() as $user) {
-                    // $expandedRules[] = 
-                }
-
-
-            } else if ($rule->byRoles()) {
-
-            }
-        }
-    }
-    */
 }
 
