@@ -41,6 +41,12 @@ class RuleDefinition
         return $this;
     }
 
+    public function role($roleIdentifier)
+    {
+        $this->roles[] = $roleIdentifier;
+        return $this;
+    }
+
     /**
      * Define roles used in the rule
      */
