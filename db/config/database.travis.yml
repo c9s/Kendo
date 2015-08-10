@@ -10,4 +10,3 @@ data_sources:
     host: localhost
     database: kendo_test
     user: root
-    pass: qwer1234
