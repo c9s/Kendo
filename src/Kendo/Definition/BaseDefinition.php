@@ -3,9 +3,9 @@ namespace Kendo\Definition;
 
 abstract class BaseDefinition
 {
-    protected $identifier;
+    public $identifier;
 
-    protected $label;
+    public $label;
 
     public function __construct($identifier, $label = null)
     {

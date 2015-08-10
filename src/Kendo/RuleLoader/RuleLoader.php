@@ -3,4 +3,11 @@ namespace Kendo\RuleLoader;
 use Kendo\DefinitionStorage;
 use SplObjectStorage;
 
-interface RuleLoader {  }
+interface RuleLoader
+{
+    public function getAccessRulesByActorIdentifier($actorIdentifier);
+
+    public function getAllAccessRules();
+
+    public function getActorDefinitions();
+}

@@ -23,7 +23,7 @@ class DefinitionRuleLoaderTest extends PHPUnit_Framework_TestCase
 
         $loader = new DefinitionRuleLoader;
         $loader->load($storage);
-        $listAll = $loader->getAllAccessControlList();
+        $listAll = $loader->getAllAccessRules();
         $this->assertNotEmpty($listAll);
     }
 
@@ -34,7 +34,7 @@ class DefinitionRuleLoaderTest extends PHPUnit_Framework_TestCase
 
         $loader = new DefinitionRuleLoader;
         $loader->load($storage);
-        $userAccessControlList = $loader->getAccessControlListByActorIdentifier('user');
+        $userAccessControlList = $loader->getAccessRulesByActorIdentifier('user');
         $this->assertNotEmpty($userAccessControlList);
     }
 }

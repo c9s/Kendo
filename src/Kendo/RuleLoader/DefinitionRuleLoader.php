@@ -6,35 +6,54 @@ use SplObjectStorage;
 
 class DefinitionRuleLoader implements RuleLoader
 {
+
+    protected $definitionStorage;
+
     /**
-     * @var array accessControlList[actor][role][resource] = [ CREATE, UPDATE, DELETE ];
+     * @var array accessRules[actor][role][resource] = [ CREATE, UPDATE, DELETE ];
      *
      * role == 0   -- without role restriction
      */
-    protected $accessControlList = array();
-
+    protected $accessRules = array();
 
     public function __construct()
     {
+        $this->definitionStorage = new DefinitionStorage;
     }
 
-    public function getAllAccessControlList()
+
+    public function getAllAccessRules()
     {
-        return $this->accessControlList;
+        return $this->accessRules;
     }
 
-    public function getAccessControlListByActorIdentifier($actorIdentifier)
+    public function getAccessRulesByActorIdentifier($actorIdentifier)
     {
-        if ($this->accessControlList[ $actorIdentifier ]) {
-            return $this->accessControlList[ $actorIdentifier ];
+        if ($this->accessRules[ $actorIdentifier ]) {
+            return $this->accessRules[ $actorIdentifier ];
         }
+    }
+
+    public function getActorDefinitions()
+    {
+        $all = array();
+        foreach ($this->definitionStorage as $definition) {
+            if ($actors = $definition->getActorDefinitions()) {
+                if (!empty($actors)) {
+                    $all = array_merge($all, $actors);
+                }
+            }
+        }
+        return $all;
     }
 
     public function load(DefinitionStorage $storage)
     {
+        // merge definition objects
+        $this->definitionStorage->addAll($storage);
         foreach ($storage as $definition) {
             // Expand access control list
-            $rules = $definition->getRules();
+            $rules = $definition->getRuleDefinitions();
             foreach ($rules as $rule) {
                 $actor = $rule->getActor();
                 $permissions = $rule->getPermissions();
@@ -44,18 +63,18 @@ class DefinitionRuleLoader implements RuleLoader
                     if ($roles = $rule->getRoles()) {
 
                         foreach ($roles as $role) {
-                            $this->accessControlList[$actor->getIdentifier()][$role][$resource] = $operations;
+                            $this->accessRules[$actor->getIdentifier()][$role][$resource] = $operations;
                         }
 
                     } else {
 
-                        $this->accessControlList[ $actor->getIdentifier() ][0][$resource] = $operations;
+                        $this->accessRules[ $actor->getIdentifier() ][0][$resource] = $operations;
 
                     }
                 }
             }
         }
-        return $this->accessControlList;
+        return $this->accessRules;
     }
 
 }

@@ -84,12 +84,22 @@ abstract class Definition
         return $this->rules[] = $rule;
     }
 
+    public function getActorDefinitions()
+    {
+        return $this->actors;
+    }
+
+    public function getResourceDefinitions()
+    {
+        return $this->resources;
+    }
+
     /**
      * Returns rule definition objects
      *
      * @return RuleDefinition[]
      */
-    public function getRules()
+    public function getRuleDefinitions()
     {
         return $this->rules;
     }
