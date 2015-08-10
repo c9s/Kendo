@@ -2,15 +2,16 @@
 use Kendo\DefinitionStorage;
 use SimpleApp\SimpleDefinition;
 use Kendo\RuleLoader\RuleLoader;
+use Kendo\RuleLoader\DefinitionRuleLoader;
 
-class RuleLoaderTest extends PHPUnit_Framework_TestCase
+class DefinitionRuleLoaderTest extends PHPUnit_Framework_TestCase
 {
     public function testSimpleLoad()
     {
         $storage = new DefinitionStorage;
         $storage->add(new SimpleDefinition);
 
-        $loader = new RuleLoader;
+        $loader = new DefinitionRuleLoader;
         $accessControlList = $loader->load($storage);
         $this->assertNotEmpty($accessControlList);
     }
@@ -20,7 +21,7 @@ class RuleLoaderTest extends PHPUnit_Framework_TestCase
         $storage = new DefinitionStorage;
         $storage->add(new SimpleDefinition);
 
-        $loader = new RuleLoader;
+        $loader = new DefinitionRuleLoader;
         $loader->load($storage);
         $listAll = $loader->getAllAccessControlList();
         $this->assertNotEmpty($listAll);
@@ -31,7 +32,7 @@ class RuleLoaderTest extends PHPUnit_Framework_TestCase
         $storage = new DefinitionStorage;
         $storage->add(new SimpleDefinition);
 
-        $loader = new RuleLoader;
+        $loader = new DefinitionRuleLoader;
         $loader->load($storage);
         $userAccessControlList = $loader->getAccessControlListByActorIdentifier('user');
         $this->assertNotEmpty($userAccessControlList);
