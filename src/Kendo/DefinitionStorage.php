@@ -13,7 +13,6 @@ class DefinitionStorage extends SplObjectStorage
 
     public function __construct(array $defs = array())
     {
-        $this->definitionObjects = new SplObjectStorage;
         foreach ($defs as $def) {
             $this->attach($def);
         }
