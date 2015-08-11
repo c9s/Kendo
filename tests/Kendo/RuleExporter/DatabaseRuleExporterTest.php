@@ -12,10 +12,25 @@ use Kendo\IdentifierProvider\ActorIdentifierProvider;
 use Kendo\Operation\CommonOperation as Op;
 
 use Kendo\RuleExporter\DatabaseRuleExporter;
+use LazyRecord\Testing\ModelTestCase;
 
-class DatabaseRuleExporterTest extends PHPUnit_Framework_TestCase
+class DatabaseRuleExporterTest extends ModelTestCase
 {
-    public function test()
+    public $driver = 'sqlite';
+
+    public function getModels()
+    {
+        return [
+            new \Kendo\Model\ActorSchema,
+            new \Kendo\Model\RoleSchema,
+            new \Kendo\Model\ResourceSchema,
+            new \Kendo\Model\OperationSchema,
+            new \Kendo\Model\AccessRuleSchema,
+            ];
+    }
+
+
+    public function testExport()
     {
         $storage = new DefinitionStorage;
         $storage->add(new SimpleDefinition);
