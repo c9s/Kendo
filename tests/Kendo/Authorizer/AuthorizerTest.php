@@ -13,15 +13,13 @@ use Kendo\Operation\CommonOperation as Op;
 
 class AuthorizerTest extends PHPUnit_Framework_TestCase
 {
-    public function testRuleMatcherChain()
+    public function testAuthorizeThroughAccessRuleMatcher()
     {
         $storage = new DefinitionStorage;
         $storage->add(new SimpleDefinition);
 
         $loader = new DefinitionRuleLoader;
         $loader->load($storage);
-
-
 
         $authorizer = new Authorizer;
 

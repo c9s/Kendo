@@ -4,7 +4,16 @@ use LazyRecord\Schema\DeclareSchema;
 
 class ResourceSchema extends DeclareSchema
 {
-    public function schema() {
+    public function schema() 
+    {
+        $this->column('id')
+            ->primary()
+            ->autoIncrement()
+            ->unsigned()
+            ->isa('int')
+            ->integer()
+            ->notNull()
+            ;
 
         $this->column('name')
             ->varchar(64)
@@ -16,8 +25,6 @@ class ResourceSchema extends DeclareSchema
 
         $this->column('description')
             ->text();
-
-        $this->many('access_rules','Kendo\\Model\\AccessRuleSchema','resource','name');
     }
 
 
