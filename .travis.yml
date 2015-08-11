@@ -18,9 +18,10 @@ before_script:
 - php vendor/bin/lazy schema build -f src
 - php vendor/bin/lazy sql --rebuild src
 
-script: "phpunit -c phpunit-ci.xml"
+script:
+- phpunit -c phpunit.xml.dist
 
-after_script:
+after_success:
   - php vendor/bin/coveralls -v
 
 cache:
