@@ -51,6 +51,11 @@ class DefinitionRuleLoader implements RuleLoader
         return $this->definedActors;
     }
 
+    public function getOperationDefinitions()
+    {
+        return $this->definedOperations;
+    }
+
     protected function expandRulePermissions(RuleDefinition $rule)
     {
         // the actor definition
