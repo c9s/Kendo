@@ -97,7 +97,7 @@ class RuleDefinition
                 $this->permissions[$resourceIdentifier][] = [ 'operations' => (array) $operations, 'allow' => false ];
             }
         } else {
-            $this->permissions[$resourceIdentifier][] = [ 'operations' => (array) $operations, 'allow' => false ];
+            $this->permissions[$resources][] = [ 'operations' => (array) $operations, 'allow' => false ];
         }
         return $this;
     }
