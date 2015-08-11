@@ -1,17 +1,14 @@
 <?php
 namespace Kendo\Definition;
+use Kendo\Definition\BaseDefinition;
 
-class ResourceDefinition
+class ResourceDefinition extends BaseDefinition
 {
-    protected $identifier;
-
     protected $operations = array();
 
-    public function __construct($identifier)
-    {
-        $this->identifier = $identifier;
-    }
-
+    /**
+     * operations method defines available operations of this resource
+     */
     public function operations($opertions)
     {
         $args = func_get_args();
