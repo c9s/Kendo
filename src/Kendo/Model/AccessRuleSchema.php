@@ -29,7 +29,7 @@ class AccessRuleSchema extends SchemaDeclare
             ->null()
             ;
 
-        // oepration bit mask
+        // oepration bit mask (saved for quick access & filtering)
         $this->column('operation_bitmask')
             ->integer()
             ->required();
