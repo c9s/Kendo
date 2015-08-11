@@ -51,7 +51,7 @@ class RuleMatcher
 
         } else {
 
-            throw new LogicException("Can't recognize actor, identifier provider interface is not implemented.");
+            throw new LogicException("Can't recognise actor, identifier provider interface is not implemented.");
 
         }
 
@@ -87,7 +87,7 @@ class RuleMatcher
 
         } else {
 
-            throw new LogicException("Can't recognize resource, identifier provider interface is not implemented.");
+            throw new LogicException("Can't recognise resource, identifier provider interface is not implemented.");
 
         }
 
