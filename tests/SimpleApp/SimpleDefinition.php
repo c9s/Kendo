@@ -8,6 +8,10 @@ class SimpleDefinition extends Definition
 {
     public function schema()
     {
+        $this->resource('books', 'Book');
+        $this->resource('products', 'Product');
+
+
         // The basic actor - user
         $this->actor('user', 'User')
             ->roles('admin', 'member', 'customer');
