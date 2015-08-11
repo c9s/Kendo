@@ -3,6 +3,8 @@ namespace Kendo\RuleMatcher;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
 use Kendo\IdentifierProvider\RoleIdentifierProvider;
+use Kendo\IdentifierProvider\ResourceIdentifierProvider;
+use Kendo\IdentifierProvider\GeneralIdentifierProvider;
 use Kendo\Context;
 use LogicException;
 
@@ -18,7 +20,7 @@ class RuleMatcher
         $this->loader = $loader;
     }
 
-    public function match($actor, $operation, $resourceIdentifier, Context $context = null)
+    public function match($actor, $operation, $resource, Context $context = null)
     {
         $actorDefinitions = $this->loader->getActorDefinitions();
 
@@ -43,9 +45,13 @@ class RuleMatcher
 
             $actorIdentifier = $actor->getActorIdentifier();
 
+        } else if ($actor instanceof GeneralIdentifierProvider) {
+
+            $actorIdentifier = $actor->getIdentifier();
+
         } else {
 
-            throw new LogicException("Actor identifier is required. please implement ActorIdentifierProvider interface.");
+            throw new LogicException("Can't recognize actor, identifier provider interface is not implemented.");
 
         }
 
@@ -64,6 +70,25 @@ class RuleMatcher
         // If rules defined for the actor (with or without role identifier)
         if (!isset($accessRules[$role])) {
             return null;
+        }
+
+        $resourceIdentifier = null;
+        if (is_string($resource)) {
+
+            $resourceIdentifier = $resource;
+
+        } else if ($resource instanceof ResourceIdentifierProvider) {
+
+            $resourceIdentifier = $resource->getResourceIdentifier();
+
+        } else if ($resource instanceof GeneralIdentifierProvider) {
+
+            $resourceIdentifier = $resource->getIdentifier();
+
+        } else {
+
+            throw new LogicException("Can't recognize resource, identifier provider interface is not implemented.");
+
         }
 
         $rule = $accessRules[$role];
