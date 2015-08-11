@@ -18,6 +18,9 @@ class SimpleDefinition extends Definition
         // Actor without roles
         $this->actor('store', 'Store');
 
+        // Define available operations
+        $this->operations(new \Kendo\Operation\CommonOperation);
+
         $this->rule()
             ->actor('user')->role('admin')
                 ->can([Op::CREATE, Op::UPDATE, Op::DELETE], 'books');

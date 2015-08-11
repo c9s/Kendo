@@ -75,13 +75,13 @@ class RuleMatcher
         $opControlList = $rule[$resourceIdentifier];
         foreach ($opControlList as $opControl) {
             if ($opControl[0] & $operation) {
-                return [
+                return (object) [
                     'actor' => $actor,
-                    'role' => $role,
-                    'res' => $resourceIdentifier,
-                    'op' => $operation,
+                    'role'  => $role,
+                    'resource'   => $resourceIdentifier,
+                    'operation'    => $operation,
                     'allow' => $opControl[1],
-                    'mask' => $opControl[0],
+                    'mask'  => $opControl[0],
                 ];
             }
         }

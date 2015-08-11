@@ -4,18 +4,36 @@ namespace Kendo\Definition;
 use Kendo\Definition\ActorDefinition;
 use Kendo\Definition\ResourceDefinition;
 use Kendo\Definition\RuleDefinition;
+use Kendo\Operation\OperationList;
+use Exception;
+use ReflectionClass;
 
 abstract class Definition
 {
     abstract public function schema();
 
     /**
-     * @var 
+     * @var ActorDefinition[ identifier ]
      */
     protected $actors = array();
 
+
     /**
-     * @var array provided resources
+     * @var OperationDefinition[ bitmask ]
+     *
+     * Override this property to have a predefined operations, e.g.
+     *
+     *     protected $operations = [
+     *          ExtraOp::Print => 'Print',
+     *          ExtraOp::Export => 'Export',
+     *     ];
+     *
+     */
+    protected $operations = array();
+
+
+    /**
+     * @var ResourceDefinition[identifier] resources provided by this definition
      */
     protected $resources = array();
 
@@ -23,8 +41,6 @@ abstract class Definition
      * The default rules of a definition
      */
     protected $rules = array();
-
-    protected $rulesByIdentifier = array();
 
 
     public function __construct()
@@ -55,6 +71,37 @@ abstract class Definition
         }
     }
 
+    public function operation($bitmask, $label)
+    {
+        if (isset($this->operations[ $bitmask ])) {
+            throw new Exception("operation $label ($bitmask) is already defined.");
+        }
+        $op = new OperationDefinition($bitmask, $label);
+        $this->operations[ $bitmask ] = $op;
+        return $this;
+    }
+
+    /**
+     * Register an operation list.
+     */
+    public function operations($operations)
+    {
+        if (method_exists($operations, 'export')) {
+            $constants = $operations->export();
+            foreach ($constants as $constantValue => $constantName) {
+                $this->operation($constantValue, $constantName);
+            }
+        } else {
+            // Fetch constant information by using ReflectionClass
+            $refClass = new ReflectionClass($operations);
+            $constants = $refClass->getConstants();
+            foreach ($constants as $constantName => $constantValue) {
+                // TODO: split underscore into words
+                $this->operation($constantValue, ucfirst(strtolower($constantName)));
+            }
+        }
+        return $this;
+    }
 
 
     public function resource($identifier, $label = null)
@@ -79,6 +126,11 @@ abstract class Definition
     public function getActorDefinitions()
     {
         return $this->actors;
+    }
+
+    public function getOperationDefinitions()
+    {
+        return $this->operations;
     }
 
     public function getResourceDefinitions()

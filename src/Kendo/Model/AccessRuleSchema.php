@@ -6,12 +6,28 @@ class AccessRuleSchema extends SchemaDeclare
 {
     public function schema() 
     {
-        $this->column('rules_class')
-            ->varchar(64);
+        // actor identifier
+        $this->column('actor_id')
+            ->refer('Kendo\\Model\\ActorSchema')
+            ->integer();
 
-        $this->column('resource')
-            ->varchar(64)
+        $this->column('role_id')
+            ->refer('Kendo\\Model\\RoleSchema')
+            ->integer()
+            ->null()
+            ;
+
+        $this->column('actor_record_id')
+            ->integer();
+
+        $this->column('resource_id')
+            ->integer()
             ->required();
+
+        $this->column('resource_record_id')
+            ->integer()
+            ->null()
+            ;
 
         $this->column('operation')
             ->varchar(64)
@@ -20,12 +36,8 @@ class AccessRuleSchema extends SchemaDeclare
         $this->column('operation_label')
             ->varchar(128);
 
-        $this->column('description')
-            ->text();
-
-        $this->belongsTo('control','Kendo\\Model\\AccessControlSchema','rule_id','id');
-
-        $this->belongsTo('resource','Kendo\\Model\\AccessResourceSchema','name','resource');
+        $this->belongsTo('resource','Kendo\\Model\\ResourceSchema','id','resource_id');
+        $this->belongsTo('actor','Kendo\\Model\\ActorSchema','id','actor_id');
     }
 }
 

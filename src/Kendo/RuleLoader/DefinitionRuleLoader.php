@@ -4,10 +4,17 @@ use Kendo\DefinitionStorage;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\Definition\RuleDefinition;
 use SplObjectStorage;
+use LogicException;
 
 class DefinitionRuleLoader implements RuleLoader
 {
     protected $definitionStorage;
+
+    protected $definedActors = array();
+
+    protected $definedOperations = array();
+
+    protected $definedResources = array();
 
     /**
      * @var array accessRules[actor][role][resource] = [ CREATE, UPDATE, DELETE ];
@@ -74,10 +81,38 @@ class DefinitionRuleLoader implements RuleLoader
         $this->definitionStorage->addAll($storage);
         foreach ($storage as $definition) {
 
+            if ($actors = $definition->getActorDefinitions()) {
+                foreach ($actors as $actor) {
+                    if (isset($this->definedActors[$actor->identifier])) {
+                        throw new LogicException("Actor {$actor->identifier} is already defined.");
+                    }
+                    $this->definedActors[$actor->identifier] = $actor;
+                }
+            }
+
+            if ($resources = $definition->getResourceDefinitions()) {
+                foreach ($resources as $resource) {
+                    if (isset($this->definedResources[$resource->identifier])) {
+                        throw new LogicException("Resource {$resource->identifier} is already defined.");
+                    }
+                    $this->definedResources[$resource->identifier] = $resource;
+                }
+            }
+
+            if ($ops = $definition->getOperationDefinitions()) {
+                foreach ($ops as $op) {
+                    if (isset($this->definedOperations[$op->bitmask])) {
+                        throw new LogicException("Operation {$op->label} is already defined.");
+                    }
+                    $this->definedOperations[$op->bitmask] = $op;
+                }
+            }
+
             $rules = $definition->getRuleDefinitions();
             foreach ($rules as $rule) {
                 $this->expandRulePermissions($rule);
             }
+
         }
     }
 }

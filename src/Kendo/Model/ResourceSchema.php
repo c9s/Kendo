@@ -1,12 +1,10 @@
 <?php
 namespace Kendo\Model;
-use LazyRecord\Schema\SchemaDeclare;
+use LazyRecord\Schema\DeclareSchema;
 
-class AccessResourceSchema extends SchemaDeclare
+class ResourceSchema extends DeclareSchema
 {
     public function schema() {
-        $this->column('rules_class')
-            ->varchar(64);
 
         $this->column('name')
             ->varchar(64)
