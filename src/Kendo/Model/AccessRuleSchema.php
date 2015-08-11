@@ -37,6 +37,7 @@ class AccessRuleSchema extends SchemaDeclare
             ->varchar(128);
 
         $this->belongsTo('resource','Kendo\\Model\\ResourceSchema','id','resource_id');
+
         $this->belongsTo('actor','Kendo\\Model\\ActorSchema','id','actor_id');
     }
 }

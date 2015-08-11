@@ -73,7 +73,7 @@ abstract class Definition
 
     public function operation($bitmask, $label)
     {
-        if (isset($this->operations[ $bitmask ])) {
+        if (isset($this->operations[$bitmask])) {
             throw new Exception("operation $label ($bitmask) is already defined.");
         }
         $op = new OperationDefinition($bitmask, $label);

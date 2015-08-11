@@ -44,8 +44,10 @@ class RuleMatcherTest extends PHPUnit_Framework_TestCase
         $actor = new NormalUser;
         $matcher = new RuleMatcher($loader);
         $rule = $matcher->match($actor, CommonOperation::VIEW, 'products');
-        var_dump($rule);
         $this->assertNotNull($rule, 'common user can view products');
+        $this->assertTrue($rule->allow);
+        $this->assertEquals(0, $rule->role);
+        $this->assertEquals('products', $rule->resource);
     }
 }
 

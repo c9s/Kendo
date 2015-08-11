@@ -12,18 +12,22 @@ class AccessRuleBase
     const write_source_id = 'default';
     const primary_key = NULL;
     public static $column_names = array (
-      0 => 'rules_class',
-      1 => 'resource',
-      2 => 'operation',
-      3 => 'operation_label',
-      4 => 'description',
+      0 => 'actor_id',
+      1 => 'role_id',
+      2 => 'actor_record_id',
+      3 => 'resource_id',
+      4 => 'resource_record_id',
+      5 => 'operation',
+      6 => 'operation_label',
     );
     public static $column_hash = array (
-      'rules_class' => 1,
-      'resource' => 1,
+      'actor_id' => 1,
+      'role_id' => 1,
+      'actor_record_id' => 1,
+      'resource_id' => 1,
+      'resource_record_id' => 1,
       'operation' => 1,
       'operation_label' => 1,
-      'description' => 1,
     );
     public static $mixin_classes = array (
     );
@@ -34,34 +38,32 @@ class AccessRuleBase
         }
         return $this->_schema = \LazyRecord\Schema\SchemaLoader::load('Kendo\\Model\\AccessRuleSchemaProxy');
     }
-    public function getRulesClass()
+    public function getActorId()
     {
-        if (isset($this->_data['rules_class'])) {
-            return $this->_data['rules_class'];
-        }
+            return $this->get('actor_id');
     }
-    public function getResource()
+    public function getRoleId()
     {
-        if (isset($this->_data['resource'])) {
-            return $this->_data['resource'];
-        }
+            return $this->get('role_id');
+    }
+    public function getActorRecordId()
+    {
+            return $this->get('actor_record_id');
+    }
+    public function getResourceId()
+    {
+            return $this->get('resource_id');
+    }
+    public function getResourceRecordId()
+    {
+            return $this->get('resource_record_id');
     }
     public function getOperation()
     {
-        if (isset($this->_data['operation'])) {
-            return $this->_data['operation'];
-        }
+            return $this->get('operation');
     }
     public function getOperationLabel()
     {
-        if (isset($this->_data['operation_label'])) {
-            return $this->_data['operation_label'];
-        }
-    }
-    public function getDescription()
-    {
-        if (isset($this->_data['description'])) {
-            return $this->_data['description'];
-        }
+            return $this->get('operation_label');
     }
 }
