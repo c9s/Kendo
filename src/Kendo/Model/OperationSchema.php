@@ -2,14 +2,14 @@
 namespace Kendo\Model;
 use LazyRecord\Schema\DeclareSchema;
 
-class ResourceSchema extends DeclareSchema
+class OperationSchema extends DeclareSchema
 {
-    public function schema() 
+    public function schema()
     {
-        $this->table('access_resources');
+        $this->table('access_operations');
 
-        $this->column('identifier')
-            ->varchar(64)
+        $this->column('bitmask')
+            ->integer()
             ->unique()
             ->required();
 
@@ -22,5 +22,8 @@ class ResourceSchema extends DeclareSchema
 
 
 }
+
+
+
 
 

@@ -29,14 +29,18 @@ class AccessRuleSchema extends SchemaDeclare
             ->null()
             ;
 
-        $this->column('operation')
-            ->varchar(64)
+        // oepration bit mask
+        $this->column('operation_bitmask')
+            ->integer()
             ->required();
 
-        $this->column('operation_label')
-            ->varchar(128);
+        $this->column('operation_id')
+            ->integer()
+            ->required();
 
         $this->belongsTo('resource','Kendo\\Model\\ResourceSchema','id','resource_id');
+
+        $this->belongsTo('operation','Kendo\\Model\\OperationSchema','id','operation_id');
 
         $this->belongsTo('actor','Kendo\\Model\\ActorSchema','id','actor_id');
     }

@@ -18,6 +18,8 @@ $logger->info("Building schema class files...");
 $schemas = array(
     new \Kendo\Model\ActorSchema,
     new \Kendo\Model\RoleSchema,
+    new \Kendo\Model\ResourceSchema,
+    new \Kendo\Model\OperationSchema,
     new \Kendo\Model\AccessRuleSchema,
 );
 $g = new \LazyRecord\Schema\SchemaGenerator($config, $logger);
