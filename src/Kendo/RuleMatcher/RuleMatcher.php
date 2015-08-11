@@ -39,7 +39,6 @@ class RuleMatcher
             
             $actorIdentifier = $matchedActorDefinition->identifier;
 
-
         } else if ($actor instanceof ActorIdentifierProvider) {
 
             $actorIdentifier = $actor->getActorIdentifier();
@@ -64,12 +63,12 @@ class RuleMatcher
 
         // If rules defined for the actor (with or without role identifier)
         if (!isset($accessRules[$role])) {
-            return;
+            return null;
         }
 
         $rule = $accessRules[$role];
         if (!isset($rule[$resourceIdentifier])) {
-            return;
+            return null;
         }
 
         // TODO: pre-compute the operation mask to improve the performance

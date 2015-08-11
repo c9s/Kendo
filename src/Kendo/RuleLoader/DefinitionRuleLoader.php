@@ -21,7 +21,6 @@ class DefinitionRuleLoader implements RuleLoader
         $this->definitionStorage = new DefinitionStorage;
     }
 
-
     public function getAccessRulesByActorIdentifier($actorIdentifier)
     {
         if ($this->accessRules[ $actorIdentifier ]) {
