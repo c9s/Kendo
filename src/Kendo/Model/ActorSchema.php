@@ -8,6 +8,7 @@ class ActorSchema extends DeclareSchema
     {
         $this->column('identifier')
             ->varchar(32)
+            ->unique()
             ->required()
             ;
 
