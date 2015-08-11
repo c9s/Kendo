@@ -7,23 +7,19 @@ $loader = require 'vendor/autoload.php';
 // Add fallback directory for looking up class files
 $loader->add(null, 'tests');
 
-$config = new LazyRecord\ConfigLoader;
-$config->load('db/config/database.testing.yml');
-$config->init();
+$config = ConfigLoader::getInstance();
+$config->loadFromSymbol(true);
 
 
 $logger = new Logger;
 $logger->info("Building schema class files...");
 
 // build schema class files
-/*
 $schemas = array(
-    new \Kendo\Model\AccessControlSchema,
-    new \Kendo\Model\AccessResourceSchema,
+    new \Kendo\Model\ActorSchema,
+    new \Kendo\Model\RoleSchema,
     new \Kendo\Model\AccessRuleSchema,
 );
-*/
-$schemas = array();
 $g = new \LazyRecord\Schema\SchemaGenerator($config, $logger);
 $g->setForceUpdate(true);
 $g->generate($schemas);

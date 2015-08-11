@@ -6,15 +6,6 @@ class RoleSchema extends DeclareSchema
 {
     public function schema() 
     {
-        $this->column('id')
-            ->primary()
-            ->autoIncrement()
-            ->unsigned()
-            ->isa('int')
-            ->integer()
-            ->notNull()
-            ;
-
         $this->column('actor_id')
             ->refer('Kendo\\Model\\ActorSchema')
             ->integer();

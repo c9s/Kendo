@@ -10,7 +10,7 @@ class AccessRuleBase
     const table = 'access_rules';
     const read_source_id = 'default';
     const write_source_id = 'default';
-    const primary_key = NULL;
+    const primary_key = 'id';
     public static $column_names = array (
       0 => 'actor_id',
       1 => 'role_id',
@@ -19,6 +19,7 @@ class AccessRuleBase
       4 => 'resource_record_id',
       5 => 'operation',
       6 => 'operation_label',
+      7 => 'id',
     );
     public static $column_hash = array (
       'actor_id' => 1,
@@ -28,6 +29,7 @@ class AccessRuleBase
       'resource_record_id' => 1,
       'operation' => 1,
       'operation_label' => 1,
+      'id' => 1,
     );
     public static $mixin_classes = array (
     );
@@ -65,5 +67,9 @@ class AccessRuleBase
     public function getOperationLabel()
     {
             return $this->get('operation_label');
+    }
+    public function getId()
+    {
+            return $this->get('id');
     }
 }

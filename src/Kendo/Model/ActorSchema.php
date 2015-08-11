@@ -6,15 +6,6 @@ class ActorSchema extends DeclareSchema
 {
     public function schema() 
     {
-        $this->column('id')
-            ->primary()
-            ->autoIncrement()
-            ->unsigned()
-            ->isa('int')
-            ->integer()
-            ->notNull()
-            ;
-
         $this->column('identifier')
             ->varchar(32)
             ->required()
@@ -28,6 +19,8 @@ class ActorSchema extends DeclareSchema
         $this->column('description')
             ->text()
             ;
+
+        $this->many('roles', 'Kendo\\Model\\RoleSchema', 'actor_id', 'id');
     }
 }
 

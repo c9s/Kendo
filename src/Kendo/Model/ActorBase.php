@@ -12,16 +12,16 @@ class ActorBase
     const write_source_id = 'default';
     const primary_key = 'id';
     public static $column_names = array (
-      0 => 'id',
-      1 => 'identifier',
-      2 => 'label',
-      3 => 'description',
+      0 => 'identifier',
+      1 => 'label',
+      2 => 'description',
+      3 => 'id',
     );
     public static $column_hash = array (
-      'id' => 1,
       'identifier' => 1,
       'label' => 1,
       'description' => 1,
+      'id' => 1,
     );
     public static $mixin_classes = array (
     );
@@ -31,10 +31,6 @@ class ActorBase
            return $this->_schema;
         }
         return $this->_schema = \LazyRecord\Schema\SchemaLoader::load('Kendo\\Model\\ActorSchemaProxy');
-    }
-    public function getId()
-    {
-            return $this->get('id');
     }
     public function getIdentifier()
     {
@@ -47,5 +43,9 @@ class ActorBase
     public function getDescription()
     {
             return $this->get('description');
+    }
+    public function getId()
+    {
+            return $this->get('id');
     }
 }

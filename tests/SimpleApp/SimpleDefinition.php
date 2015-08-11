@@ -19,7 +19,7 @@ class SimpleDefinition extends Definition
         $this->actor('store', 'Store');
 
         // Define available operations
-        $this->operations(new \Kendo\Operation\CommonOperation);
+        $this->operations(new Op);
 
         $this->rule()
             ->actor('user')->role('admin')

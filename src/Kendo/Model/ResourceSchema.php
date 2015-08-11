@@ -6,16 +6,7 @@ class ResourceSchema extends DeclareSchema
 {
     public function schema() 
     {
-        $this->column('id')
-            ->primary()
-            ->autoIncrement()
-            ->unsigned()
-            ->isa('int')
-            ->integer()
-            ->notNull()
-            ;
-
-        $this->column('name')
+        $this->column('identifier')
             ->varchar(64)
             ->unique()
             ->required();

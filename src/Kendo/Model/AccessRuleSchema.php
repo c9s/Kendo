@@ -6,15 +6,6 @@ class AccessRuleSchema extends SchemaDeclare
 {
     public function schema() 
     {
-        $this->column('id')
-            ->primary()
-            ->autoIncrement()
-            ->unsigned()
-            ->isa('int')
-            ->integer()
-            ->notNull()
-            ;
-
         // actor identifier
         $this->column('actor_id')
             ->refer('Kendo\\Model\\ActorSchema')
