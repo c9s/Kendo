@@ -11,4 +11,6 @@ interface RuleLoader
 
     public function getResourceDefinitions();
 
+    public function getOperationDefinitions();
+
 }
