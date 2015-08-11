@@ -1,35 +1,12 @@
 <?php
 use Kendo\DefinitionStorage;
 use SimpleApp\SimpleDefinition;
+use SimpleApp\User\NormalUser;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\DefinitionRuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;
 use Kendo\Operation\CommonOperation;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
-
-class CustomerUser implements ActorIdentifierProvider
-{
-    public function getActorIdentifier()
-    {
-        return 'customer';
-    }
-}
-
-class NormalUser implements ActorIdentifierProvider
-{
-    public function getActorIdentifier()
-    {
-        return 'user';
-    }
-}
-
-class AdminUser implements ActorIdentifierProvider
-{
-    public function getActorIdentifier()
-    {
-        return 'admin';
-    }
-}
 
 class AccessRuleMatcherTest extends PHPUnit_Framework_TestCase
 {

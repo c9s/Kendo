@@ -6,6 +6,10 @@ use Kendo\Definition\RuleDefinition;
 use SplObjectStorage;
 use LogicException;
 
+
+/**
+ * DefinitionRuleLoader loads definitions from schema and build up the access rules.
+ */
 class DefinitionRuleLoader implements RuleLoader
 {
     protected $definitionStorage;
@@ -23,9 +27,9 @@ class DefinitionRuleLoader implements RuleLoader
      */
     protected $accessRules = array();
 
-    public function __construct()
+    public function __construct(DefinitionStorage $storage = null)
     {
-        $this->definitionStorage = new DefinitionStorage;
+        $this->definitionStorage = $storage ?: new DefinitionStorage;
     }
 
     public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
@@ -37,17 +41,14 @@ class DefinitionRuleLoader implements RuleLoader
         }
     }
 
+    public function getResourceDefinitions()
+    {
+        return $this->definedResources;
+    }
+
     public function getActorDefinitions()
     {
-        $all = array();
-        foreach ($this->definitionStorage as $definition) {
-            if ($actors = $definition->getActorDefinitions()) {
-                if (!empty($actors)) {
-                    $all = array_merge($all, $actors);
-                }
-            }
-        }
-        return $all;
+        return $this->definedActors;
     }
 
     protected function expandRulePermissions(RuleDefinition $rule)

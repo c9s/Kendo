@@ -8,4 +8,7 @@ interface RuleLoader
     public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = 0);
 
     public function getActorDefinitions();
+
+    public function getResourceDefinitions();
+
 }

@@ -16,15 +16,16 @@ class AccessRuleMatcher implements RuleMatcher
 
     protected $context;
 
-    public function __construct(RuleLoader $loader, Contenxt $context = null)
+    public function __construct(RuleLoader $loader, Context $context = null)
     {
         $this->loader = $loader;
+        $this->context = $context;
     }
 
     public function match($actor, $operation, $resource, Context $context = null)
     {
         $actorDefinitions = $this->loader->getActorDefinitions();
-
+        $currentContext = $context ?: $this->context;
 
         $matchedActorDefinition = null;
         foreach ($actorDefinitions as $actorDefinition) {
