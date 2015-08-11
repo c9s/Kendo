@@ -1,6 +1,6 @@
 <?php
 namespace Kendo\Definition;
-
+use Kendo\Definition\RoleDefinition;
 
 /**
  * Data object for actor definition
@@ -25,14 +25,25 @@ class ActorDefinition extends BaseDefinition
         $args = func_get_args();
         foreach ($args as $arg) {
             if (is_array($arg)) {
-                $this->roles = array_merge($this->roles, $arg);
+                foreach ($arg as $roleIdentifier) {
+                    if (is_array($roleIdentifier)) {
+                        $this->roles[$roleIdentifier] = new RoleDefinition($roleIdentifier[0], $roleIdentifier[1]);
+                    } else {
+                        $this->roles[$roleIdentifier] = new RoleDefinition($roleIdentifier, $roleIdentifier);
+                    }
+                }
             } else {
-                $this->roles[] = $arg;
+                $this->roles[$arg] = new RoleDefinition($arg);
             }
         }
         return $this;
     }
 
+    public function role($roleIdentifier, $roleLabel)
+    {
+        $this->roles[$roleIdentifier] = new RoleDefinition($roleIdentifier, $roleLabel);
+        return $this;
+    }
 
     public function instanceBy($instanceClass)
     {
@@ -42,7 +53,7 @@ class ActorDefinition extends BaseDefinition
     /**
      * @return string[] Return role identifiers
      */
-    public function getRoles()
+    public function getRoleDefinitions()
     {
         return $this->roles;
     }

@@ -38,6 +38,11 @@ class AccessRuleSchema extends SchemaDeclare
             ->integer()
             ->required();
 
+        $this->column('allow')
+            ->boolean()
+            ->notNull()
+            ->required();
+
         $this->belongsTo('resource','Kendo\\Model\\ResourceSchema','id','resource_id');
 
         $this->belongsTo('operation','Kendo\\Model\\OperationSchema','id','operation_id');

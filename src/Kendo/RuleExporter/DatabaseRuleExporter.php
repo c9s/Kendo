@@ -48,13 +48,13 @@ class DatabaseRuleExporter
             $ret = $actorRecord->load([ 'identifier' => $actorDefinition->identifier ]);
             $this->assertResultSuccess($ret);
 
-            if ($roles = $actorDefinition->getRoles()) {
-                foreach ($roles as $role) {
+            if ($roles = $actorDefinition->getRoleDefinitions()) {
+                foreach ($roles as $roleDefinition) {
                     $roleRecord = new ActorRecord;
                     $ret = $roleRecord->createOrUpdate([
                         'identifier' => $roleDefinition->identifier,
-                        'label' => $roleDefinition->label,
-                        'actor_id' => $actorRecord->id,
+                        'label'      => $roleDefinition->label,
+                        'actor_id'   => $actorRecord->id,
                     ], 'identifier');
                     $this->assertResultSuccess($ret);
                     $roleRecords[$roleRecord->identifier] = $roleRecord;
@@ -101,6 +101,9 @@ class DatabaseRuleExporter
         $actorDefinitions    = $this->loader->getActorDefinitions();
         $actorRecords = $this->exportActorRecords($actorDefinitions);
 
+        $actorDefinitions    = $this->loader->getActorDefinitions();
+        $roleRecords = $this->exportRoleRecords($actorDefinitions);
+
         $resourceDefinitions = $this->loader->getResourceDefinitions();
         $resourceRecords = $this->exportResourceRecords($resourceDefinitions);
 
@@ -108,8 +111,9 @@ class DatabaseRuleExporter
         $operationRecords = $this->exportOperationRecords($operationDefinitions);
 
         foreach ($actorDefinitions as $actorDefinition) {
-            if ($roles = $actorDefinition->getRoles()) {
-                foreach ($roles as $roleIdentifier) {
+            if ($roleDefinitions = $actorDefinition->getRoleDefinitions()) {
+                foreach ($roleDefinitions as $roleDefinition) {
+                    $roleIdentifier = $roleDefinition->identifier;
                     $accessRules = $this->loader->getAccessRulesByActorIdentifier($actorDefinition->identifier, $roleIdentifier);
                     foreach ($accessRules as $resourceIdentifier => $permissions) {
                         foreach ($permissions as list($opBit, $allow)) {
@@ -118,12 +122,21 @@ class DatabaseRuleExporter
                             $ruleRecord = new AccessRuleRecord;
                             $ret = $ruleRecord->createOrUpdate([
                                 'actor_id'          => $actorRecords[ $actorDefinition->identifier ]->id,
+                                // 'actor_record_id' => ...
+
+                                'role_id' => $roleRecords[ $roleIdentifier ]->id,
+
                                 'resource_id'       => $resourceRecords[ $resourceIdentifier ]->id,
+
+                                // 'resource_record_id' => ...
                                 'operation_bitmask' => $opBit,
                                 'operation_id'      => $operationRecords[$opBit]->id,
+
                                 'allow'             => $allow,
                             ], [ 'actor_id', 'resource_id', 'operation_id' ]);
+
                             $this->assertResultSuccess($ret);
+
 
                             // echo "Actor '", $actorDefinition->identifier, "' with role '", $roleIdentifier, "' " , $op->label, " " , $resourceIdentifier, ($allow ? " is" : " is not"), " allowed.\n";
                             // var_dump( $op );

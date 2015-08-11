@@ -11,10 +11,12 @@ class SimpleDefinition extends Definition
         $this->resource('books', 'Book');
         $this->resource('products', 'Product');
 
-
         // The basic actor - user
         $this->actor('user', 'User')
-            ->roles('admin', 'member', 'customer');
+            ->role('admin', 'Administrator')
+            ->role('member', 'Member')
+            ->role('customer', 'Customer')
+            ;
 
         // Actor without roles
         $this->actor('bank', 'Bank');

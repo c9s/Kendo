@@ -1,21 +1,15 @@
 <?php
 namespace Kendo\Definition;
+use Kendo\Definition\BaseDefinition;
 
-class RoleDefinition
+class RoleDefinition extends BaseDefinition
 {
-    protected $identifier;
-
     /**
      * Allowed operations
      *
      * A role can be strict with some operations (this rule is applied to all reousrces)
      */
     protected $operations = array();
-
-    public function __construct($identifier)
-    {
-        $this->identifier = $identifier;
-    }
 
     public function operations($opertions)
     {
