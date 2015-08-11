@@ -117,10 +117,11 @@ class DatabaseRuleExporter
 
                             $ruleRecord = new AccessRuleRecord;
                             $ret = $ruleRecord->createOrUpdate([
-                                'actor_id'    => $actorRecords[ $actorDefinition->identifier ]->id,
-                                'resource_id' => $resourceRecords[ $resourceIdentifier ]->id,
+                                'actor_id'          => $actorRecords[ $actorDefinition->identifier ]->id,
+                                'resource_id'       => $resourceRecords[ $resourceIdentifier ]->id,
                                 'operation_bitmask' => $opBit,
-                                'operation_id' => $operationRecords[$opBit]->id,
+                                'operation_id'      => $operationRecords[$opBit]->id,
+                                'allow'             => $allow,
                             ], [ 'actor_id', 'resource_id', 'operation_id' ]);
                             $this->assertResultSuccess($ret);
 
