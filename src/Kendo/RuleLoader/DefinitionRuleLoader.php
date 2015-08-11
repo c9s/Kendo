@@ -28,10 +28,12 @@ class DefinitionRuleLoader implements RuleLoader
         $this->definitionStorage = new DefinitionStorage;
     }
 
-    public function getAccessRulesByActorIdentifier($actorIdentifier)
+    public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
     {
-        if ($this->accessRules[ $actorIdentifier ]) {
-            return $this->accessRules[ $actorIdentifier ];
+        if ($roleIdentifier && isset($this->accessRules[ $actorIdentifier ][ $roleIdentifier ])) {
+            return $this->accessRules[ $actorIdentifier ][ $roleIdentifier ];
+        } else if (isset($this->accessRules[ $actorIdentifier ][0])) {
+            return $this->accessRules[ $actorIdentifier ][0];
         }
     }
 

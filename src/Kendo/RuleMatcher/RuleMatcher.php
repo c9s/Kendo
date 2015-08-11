@@ -55,20 +55,14 @@ class RuleMatcher
 
         }
 
-        $accessRules = $this->loader->getAccessRulesByActorIdentifier($actorIdentifier);
-
-
         $role = 0;
         if ($actor instanceof RoleIdentifierProvider) {
             $role = $actor->getRoleIdentifier();
         }
 
-        if (empty($accessRules)) {
-            return null;
-        }
+        $accessRules = $this->loader->getAccessRulesByActorIdentifier($actorIdentifier, $role);
 
-        // If rules defined for the actor (with or without role identifier)
-        if (!isset($accessRules[$role])) {
+        if ($accessRules === null || empty($accessRules)) {
             return null;
         }
 
@@ -91,15 +85,15 @@ class RuleMatcher
 
         }
 
-        $rule = $accessRules[$role];
-        if (!isset($rule[$resourceIdentifier])) {
+        if (!isset($accessRules[$resourceIdentifier])) {
             return null;
         }
 
         // TODO: pre-compute the operation mask to improve the performance
-        $opControlList = $rule[$resourceIdentifier];
+        $opControlList = $accessRules[$resourceIdentifier];
         foreach ($opControlList as $opControl) {
             if ($opControl[0] & $operation) {
+                // XXX: should return Authentication object here
                 return (object) [
                     'actor' => $actor,
                     'role'  => $role,
