@@ -51,6 +51,12 @@ class DatabaseRuleExporterTest extends ModelTestCase
 
         $actors = new ActorCollection;
         $this->assertCount(3, $actors);
+        foreach ($actors as $actor) {
+            $this->assertNotEmpty($actor);
+            $this->assertNotNull($actor->id);
+
+            // $this->assertNotEmpty($actor->roles);
+        }
 
         $resources = new ResourceCollection;
         $this->assertCount(2, $resources);
