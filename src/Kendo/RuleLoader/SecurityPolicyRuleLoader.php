@@ -14,10 +14,19 @@ class SecurityPolicyRuleLoader implements RuleLoader
 {
     protected $definitionStorage;
 
+    /**
+     * @var ActorDefinition[identifier]
+     */
     protected $definedActors = array();
 
+    /**
+     * @var OperationDefinition[identifier]
+     */
     protected $definedOperations = array();
 
+    /**
+     * @var ResourceDefinition[identifier]
+     */
     protected $definedResources = array();
 
     /**
@@ -27,9 +36,9 @@ class SecurityPolicyRuleLoader implements RuleLoader
      */
     protected $accessRules = array();
 
-    public function __construct(SecurityPolicyModule $storage = null)
+    public function __construct(SplObjectStorage $storage = null)
     {
-        $this->definitionStorage = $storage ?: new SecurityPolicyModule;
+        $this->definitionStorage = $storage ?: new SplObjectStorage;
     }
 
     public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
