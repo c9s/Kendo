@@ -90,6 +90,7 @@ class PDORuleLoader implements RuleLoader
             if (!isset($this->definedRoles[$roleIdentifier])) {
                 throw new Exception("Role '$roleIdentifier' not found, undefined role identifier '$roleIdentifier' or inexisted role record.");
             }
+            $requiredRole = $this->definedRoles[$roleIdentifier];
         }
 
         if ($requiredRole) {
@@ -111,7 +112,7 @@ class PDORuleLoader implements RuleLoader
                 LEFT JOIN access_resources res ON (ar.resource_id = res.id)
                 LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
                 LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)
-                WHERE ar.actor_id = ? 
+                WHERE ar.actor_id = ? AND ar.role_id IS NULL
             ');
             $stm->execute([$requiredActor->id]);
         }

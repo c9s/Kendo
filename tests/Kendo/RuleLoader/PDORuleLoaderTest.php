@@ -66,19 +66,7 @@ class PDORuleLoaderTest extends ModelTestCase
         $this->assertNotEmpty($rules);
         $this->assertCount(2, $rules, 'two resources');
         $this->assertCount(3, $rules['books'], '3 rules on books');
-
-        /*
-        $rules = new AccessRuleCollection;
-        $this->assertCount(4, $rules);
-
-        $actors = new ActorCollection;
-        $this->assertCount(3, $actors);
-        foreach ($actors as $actor) {
-            $this->assertNotEmpty($actor);
-            $this->assertNotNull($actor->id);
-        }
-        */
-
+        $this->assertCount(3, $rules['products'], '3 rules on books');
     }
 }
 
