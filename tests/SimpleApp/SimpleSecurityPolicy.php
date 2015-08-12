@@ -8,8 +8,14 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
 {
     public function schema()
     {
-        $this->resource('books', 'Book')->operations(new GeneralOperation);
-        $this->resource('products', 'Product')->operations(new GeneralOperation);
+        // Define global available operations
+        $this->operations(new GeneralOperation);
+
+        $this->resource('books', 'Book')
+            ->operations([ GeneralOperation::CREATE, GeneralOperation::UPDATE ]);
+
+        $this->resource('products', 'Product')
+            ->operations(new GeneralOperation);
 
         // The basic actor - user
         $this->actor('user', 'User')
@@ -24,8 +30,6 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
         // Actor without roles
         $this->actor('store', 'Store');
 
-        // Define global available operations
-        $this->operations(new GeneralOperation);
 
         $this->rule()
             ->actor('user')->role('admin')
