@@ -161,8 +161,8 @@ class DatabaseRuleExporter
                             $this->assertResultSuccess($ret);
 
                             $controlRecord = new AccessControlRecord;
-                            $ret = $controlRecord->updateOrCreate([
-                                'rule_id' => $rule->id,
+                            $ret = $controlRecord->createOrUpdate([
+                                'rule_id' => $ruleRecord->id,
                                 'allow' => $allow,
 
                                 // TODO: support extra attributes later.
@@ -200,8 +200,8 @@ class DatabaseRuleExporter
 
 
                         $controlRecord = new AccessControlRecord;
-                        $ret = $controlRecord->updateOrCreate([
-                            'rule_id' => $rule->id,
+                        $ret = $controlRecord->createOrUpdate([
+                            'rule_id' => $ruleRecord->id,
                             'allow' => $allow,
 
                             // TODO: support extra attributes later.

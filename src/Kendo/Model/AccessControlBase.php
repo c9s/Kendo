@@ -13,17 +13,15 @@ class AccessControlBase
     const primary_key = 'id';
     public static $column_names = array (
       0 => 'rule_id',
-      1 => 'actor_id',
-      2 => 'actor_record_id',
-      3 => 'role_id',
-      4 => 'allow',
-      5 => 'id',
+      1 => 'actor_record_id',
+      2 => 'resource_record_id',
+      3 => 'allow',
+      4 => 'id',
     );
     public static $column_hash = array (
       'rule_id' => 1,
-      'actor_id' => 1,
       'actor_record_id' => 1,
-      'role_id' => 1,
+      'resource_record_id' => 1,
       'allow' => 1,
       'id' => 1,
     );
@@ -40,17 +38,13 @@ class AccessControlBase
     {
             return $this->get('rule_id');
     }
-    public function getActorId()
-    {
-            return $this->get('actor_id');
-    }
     public function getActorRecordId()
     {
             return $this->get('actor_record_id');
     }
-    public function getRoleId()
+    public function getResourceRecordId()
     {
-            return $this->get('role_id');
+            return $this->get('resource_record_id');
     }
     public function getAllow()
     {
