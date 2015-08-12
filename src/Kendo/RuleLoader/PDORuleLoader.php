@@ -71,6 +71,10 @@ class PDORuleLoader implements RuleLoader
     public function getAccessRulesByActorIdentifier($actorIdentifier, $role = 0)
     {
 
+
+
+
+
     }
 
     public function getActorDefinitions()

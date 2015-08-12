@@ -7,7 +7,7 @@ use SimpleApp\User\NormalUser;
 
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\PDORuleLoader;
-use Kendo\RuleLoader\SecurityPolicyRuleLoader;
+use Kendo\RuleLoader\SchemaRuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;
 
 use Kendo\Operation\GeneralOperation;
@@ -40,7 +40,7 @@ class PDORuleLoaderTest extends ModelTestCase
     {
         $storage = new SecurityPolicyModule;
         $storage->add(new SimpleSecurityPolicy);
-        $loader = new SecurityPolicyRuleLoader;
+        $loader = new SchemaRuleLoader;
         $loader->load($storage);
 
         $exporter = new DatabaseRuleExporter($loader);
@@ -72,9 +72,7 @@ class PDORuleLoaderTest extends ModelTestCase
             $this->assertNotEmpty($actor);
             $this->assertNotNull($actor->id);
         }
-         */
-
-
+        */
 
     }
 }

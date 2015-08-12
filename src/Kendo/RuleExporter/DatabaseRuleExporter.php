@@ -1,6 +1,6 @@
 <?php
 namespace Kendo\RuleExporter;
-use Kendo\RuleLoader\SecurityPolicyRuleLoader;
+use Kendo\RuleLoader\SchemaRuleLoader;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\Model\AccessRule as AccessRuleRecord;
 use Kendo\Model\AccessControl as AccessControlRecord;

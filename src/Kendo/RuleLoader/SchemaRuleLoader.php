@@ -1,6 +1,7 @@
 <?php
 namespace Kendo\RuleLoader;
 use Kendo\SecurityPolicy\SecurityPolicyModule;
+use Kendo\SecurityPolicy\SecurityPolicySchema;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\Definition\RuleDefinition;
 use SplObjectStorage;
@@ -8,9 +9,9 @@ use LogicException;
 
 
 /**
- * SecurityPolicyRuleLoader loads definitions from schema and build up the access rules.
+ * SchemaRuleLoader loads definitions from schema and build up the access rules.
  */
-class SecurityPolicyRuleLoader implements RuleLoader
+class SchemaRuleLoader implements RuleLoader
 {
     protected $policyModule;
 
