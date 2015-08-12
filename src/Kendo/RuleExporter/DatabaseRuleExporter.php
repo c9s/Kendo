@@ -174,8 +174,10 @@ class DatabaseRuleExporter
                         }
                     }
                 }
-            } else if ($accessRules = $this->loader->getAccessRulesByActorIdentifier($actorDefinition->identifier)) {
+            }
 
+            // Export rules without roles
+            if ($accessRules = $this->loader->getAccessRulesByActorIdentifier($actorDefinition->identifier)) {
                 foreach ($accessRules as $resourceIdentifier => $permissions) {
                     foreach ($permissions as list($opBit, $allow)) {
 

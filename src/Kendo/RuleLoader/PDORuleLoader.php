@@ -81,7 +81,7 @@ class PDORuleLoader implements RuleLoader
 
     }
 
-    public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
+    public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = 0)
     {
         $requiredActor = $this->definedActors[$actorIdentifier];
 
@@ -94,6 +94,7 @@ class PDORuleLoader implements RuleLoader
         }
 
         if ($requiredRole) {
+            // echo "Query with required role {$requiredRole->id}\n";
             $stm = $this->conn->prepare('
                 SELECT ar.id, ar.actor_id, ar.role_id, ar.resource_id, ar.operation_id, ar.operation_bitmask, ar.allow
                         , res.identifier as resource_identifier, res.label as resource_label
@@ -124,6 +125,10 @@ class PDORuleLoader implements RuleLoader
                 boolval($rule->allow),
             ];
         }
+        /*
+        echo "PDO Rules for $actorIdentifier with $roleIdentifier: \n";
+        var_dump($rules); 
+         */
         return $rules;
     }
 

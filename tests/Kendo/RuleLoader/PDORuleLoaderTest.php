@@ -4,6 +4,7 @@ use LazyRecord\Testing\ModelTestCase;
 
 use SimpleApp\SimpleSecurityPolicy;
 use SimpleApp\User\NormalUser;
+use SimpleApp\User\AdminUser;
 
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\PDORuleLoader;
@@ -67,6 +68,18 @@ class PDORuleLoaderTest extends ModelTestCase
         $this->assertCount(2, $rules, 'two resources');
         $this->assertCount(3, $rules['books'], '3 rules on books');
         $this->assertCount(3, $rules['products'], '3 rules on books');
+
+        $rules = $loader->getAccessRulesByActorIdentifier('user');
+        $this->assertNotEmpty($rules);
+
+
+        $matcher = new AccessRuleMatcher($loader);
+        $actor = new NormalUser;
+        $rule = $matcher->match($actor, GeneralOperation::VIEW, 'products');
+        $this->assertNotNull($rule, 'common user can view products');
+        $this->assertTrue($rule->allow);
+        $this->assertEquals(0, $rule->role);
+        $this->assertEquals('products', $rule->resource);
     }
 }
 

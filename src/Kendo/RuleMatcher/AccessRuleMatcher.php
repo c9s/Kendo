@@ -62,11 +62,6 @@ class AccessRuleMatcher implements RuleMatcher
             $role = $actor->getRoleIdentifier();
         }
 
-        $accessRules = $this->loader->getAccessRulesByActorIdentifier($actorIdentifier, $role);
-
-        if ($accessRules === null || empty($accessRules)) {
-            return null;
-        }
 
         $resourceIdentifier = null;
         if (is_string($resource)) {
@@ -85,6 +80,12 @@ class AccessRuleMatcher implements RuleMatcher
 
             throw new LogicException("Can't recognise resource, identifier provider interface is not implemented.");
 
+        }
+
+
+        $accessRules = $this->loader->getAccessRulesByActorIdentifier($actorIdentifier, $role);
+        if ($accessRules === null || empty($accessRules)) {
+            return null;
         }
 
         if (!isset($accessRules[$resourceIdentifier])) {
