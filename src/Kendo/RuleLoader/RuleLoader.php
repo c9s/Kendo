@@ -1,6 +1,6 @@
 <?php
 namespace Kendo\RuleLoader;
-use Kendo\SecurityPolicyModule;
+use Kendo\SecurityPolicy\SecurityPolicyModule;
 use SplObjectStorage;
 
 interface RuleLoader

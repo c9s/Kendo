@@ -1,7 +1,7 @@
 <?php
 namespace SimpleApp;
 use Kendo\SecurityPolicy\RBACSecurityPolicySchema;
-use Kendo\SecurityPolicyModule;
+use Kendo\SecurityPolicy\SecurityPolicyModule;
 use Kendo\Operation\CommonOperation as Op;
 
 class SimpleSecurityPolicy extends RBACSecurityPolicySchema

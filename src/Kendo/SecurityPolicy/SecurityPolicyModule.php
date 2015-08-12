@@ -1,5 +1,5 @@
 <?php
-namespace Kendo;
+namespace Kendo\SecurityPolicy;
 use Kendo\SecurityPolicy\RBACSecurityPolicySchema;
 use SplObjectStorage;
 

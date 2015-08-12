@@ -1,5 +1,5 @@
 <?php
-use Kendo\SecurityPolicyModule;
+use Kendo\SecurityPolicy\SecurityPolicyModule;
 use SimpleApp\SimpleSecurityPolicy;
 use SimpleApp\User\NormalUser;
 

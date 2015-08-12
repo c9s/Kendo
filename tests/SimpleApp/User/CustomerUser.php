@@ -1,6 +1,6 @@
 <?php
 namespace SimpleApp\User;
-use Kendo\SecurityPolicyModule;
+use Kendo\SecurityPolicy\SecurityPolicyModule;
 use SimpleApp\SimpleSecurityPolicy;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\DefinitionRuleLoader;
