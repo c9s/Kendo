@@ -6,6 +6,8 @@ class ActorSchema extends DeclareSchema
 {
     public function schema() 
     {
+        $this->table('access_actors');
+
         $this->column('identifier')
             ->varchar(32)
             ->unique()

@@ -7,7 +7,7 @@ class ActorBase
     const schema_proxy_class = 'Kendo\\Model\\ActorSchemaProxy';
     const collection_class = 'Kendo\\Model\\ActorCollection';
     const model_class = 'Kendo\\Model\\Actor';
-    const table = 'actors';
+    const table = 'access_actors';
     const read_source_id = 'default';
     const write_source_id = 'default';
     const primary_key = 'id';

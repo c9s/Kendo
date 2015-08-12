@@ -1,5 +1,4 @@
 <?php
-use Kendo\SecurityPolicy\SecurityPolicyModule;
 use SimpleApp\SimpleSecurityPolicy;
 use SimpleApp\User\NormalUser;
 
@@ -9,14 +8,15 @@ use Kendo\RuleMatcher\AccessRuleMatcher;
 
 use Kendo\Operation\GeneralOperation;
 use Kendo\Authorizer\Authorizer;
-use Kendo\IdentifierProvider\ActorIdentifierProvider;
+use Kendo\SecurityPolicy\SecurityPolicyModule;
 
 use Kendo\RuleExporter\DatabaseRuleExporter;
-use LazyRecord\Testing\ModelTestCase;
 
 use Kendo\Model\AccessRuleCollection;
 use Kendo\Model\ActorCollection;
 use Kendo\Model\ResourceCollection;
+
+use LazyRecord\Testing\ModelTestCase;
 
 class DatabaseRuleExporterTest extends ModelTestCase
 {
@@ -30,7 +30,8 @@ class DatabaseRuleExporterTest extends ModelTestCase
             new \Kendo\Model\ResourceSchema,
             new \Kendo\Model\OperationSchema,
             new \Kendo\Model\AccessRuleSchema,
-            ];
+            new \Kendo\Model\AccessControlSchema,
+        ];
     }
 
 
@@ -38,16 +39,14 @@ class DatabaseRuleExporterTest extends ModelTestCase
     {
         $storage = new SecurityPolicyModule;
         $storage->add(new SimpleSecurityPolicy);
-
         $loader = new SecurityPolicyRuleLoader;
         $loader->load($storage);
-
         $exporter = new DatabaseRuleExporter($loader);
         $exporter->export();
 
 
         $rules = new AccessRuleCollection;
-        $this->assertCount(4, $rules);
+        $this->assertCount(10, $rules);
 
         $actors = new ActorCollection;
         $this->assertCount(3, $actors);

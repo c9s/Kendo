@@ -3,14 +3,28 @@ namespace Kendo\Definition;
 
 class BaseDefinition
 {
+    /**
+     * @var id is used for PDO fetched object
+     */
+    public $id;
+
     public $identifier;
 
     public $label;
 
-    public function __construct($identifier, $label = null)
+    public $description;
+
+    public function __construct($identifier = null, $label = null)
     {
-        $this->identifier = $identifier;
-        $this->label = $label ?: $identifier;
+        if ($identifier) {
+            $this->identifier = $identifier;
+        }
+        if ($label) {
+            $this->label = $label;
+        }
+        if ($this->id) {
+            $this->id = intval($this->id);
+        }
     }
 
     public function getIdentifier()

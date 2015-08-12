@@ -89,9 +89,10 @@ class DatabaseRuleExporter
         foreach ($definitions as $operationDefinition) {
             $operationRecord = new OperationRecord;
             $ret = $operationRecord->createOrUpdate([
-                'bitmask' => $operationDefinition->bitmask,
-                'label' => $operationDefinition->label,
-            ], 'identifier');
+                'bitmask'     => $operationDefinition->bitmask,
+                'description' => $operationDefinition->description,
+                'label'       => $operationDefinition->label,
+            ], ['bitmask']);
             $this->assertResultSuccess($ret);
             $operationRecords[$operationRecord->bitmask] = $operationRecord;
         }

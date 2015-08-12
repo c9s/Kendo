@@ -5,14 +5,31 @@ use Exception;
 
 class OperationDefinition
 {
+    /**
+     * @var integer id is used for fetched object from PDO
+     */
+    public $id;
+
     public $bitmask;
 
     public $label;
 
-    public function __construct($bitmask, $label)
+    public $description;
+
+    public function __construct($bitmask = null, $label = null)
     {
-        $this->bitmask = $bitmask;
-        $this->label = $label;
+        if ($bitmask) {
+            $this->bitmask = $bitmask;
+        }
+        if ($label) {
+            $this->label = $label;
+        }
+        if ($this->id) {
+            $this->id = intval($this->id);
+        }
+        if ($this->bitmask) {
+            $this->bitmask = intval($this->bitmask);
+        }
     }
 }
 
