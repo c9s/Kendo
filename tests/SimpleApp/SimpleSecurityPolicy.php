@@ -8,8 +8,9 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
 {
     public function schema()
     {
-        // Define global available operations
-        $this->operations(new GeneralOperation);
+        // Define global available operations,
+        // When resource didn't defined its own operations, it inherits from global operations
+        $this->globalOperations(new GeneralOperation);
 
         $this->resource('books', 'Book')
             ->operations([ GeneralOperation::CREATE, GeneralOperation::UPDATE ]);

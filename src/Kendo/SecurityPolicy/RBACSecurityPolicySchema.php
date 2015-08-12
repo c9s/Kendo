@@ -72,7 +72,7 @@ abstract class RBACSecurityPolicySchema
         }
     }
 
-    public function operation($bitmask, $label)
+    public function globalOperation($bitmask, $label)
     {
         if (isset($this->operations[$bitmask])) {
             throw new Exception("operation $label ($bitmask) is already defined.");
@@ -85,12 +85,12 @@ abstract class RBACSecurityPolicySchema
     /**
      * Register an operation list.
      */
-    public function operations($operations)
+    public function globalOperations($operations)
     {
         if (method_exists($operations, 'export')) {
             $constants = $operations->export();
             foreach ($constants as $constantValue => $constantName) {
-                $this->operation($constantValue, $constantName);
+                $this->globalOperation($constantValue, $constantName);
             }
         } else {
             // Fetch constant information by using ReflectionClass
@@ -98,7 +98,7 @@ abstract class RBACSecurityPolicySchema
             $constants = $refClass->getConstants();
             foreach ($constants as $constantName => $constantValue) {
                 // TODO: split underscore into words
-                $this->operation($constantValue, ucfirst(strtolower($constantName)));
+                $this->globalOperation($constantValue, ucfirst(strtolower($constantName)));
             }
         }
         return $this;
