@@ -1,14 +1,15 @@
 <?php
-namespace Kendo\Definition;
-// use Kendo\Definition\RoleDefinition;
+namespace Kendo\SecurityPolicy;
+use Kendo\Definition\RoleDefinition;
 use Kendo\Definition\ActorDefinition;
 use Kendo\Definition\ResourceDefinition;
 use Kendo\Definition\RuleDefinition;
+use Kendo\Definition\OperationDefinition;
 use Kendo\Operation\OperationList;
 use Exception;
 use ReflectionClass;
 
-abstract class Definition
+abstract class RBACSecurityPolicySchema
 {
     abstract public function schema();
 
@@ -147,6 +148,8 @@ abstract class Definition
     {
         return $this->rules;
     }
+
+
 
 }
 

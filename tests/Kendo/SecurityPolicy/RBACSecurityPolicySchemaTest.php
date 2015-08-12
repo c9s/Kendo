@@ -1,5 +1,5 @@
 <?php
-use Kendo\Definition\Definition;
+use Kendo\SecurityPolicy\RBACSecurityPolicySchema;
 
 class MockUser
 {
@@ -11,7 +11,7 @@ class MockUser
     }
 }
 
-class FooDefinition extends Definition
+class FooSecurityPolicy extends RBACSecurityPolicySchema
 {
     public function schema()
     {
@@ -45,11 +45,11 @@ class FooDefinition extends Definition
     }
 }
 
-class DefinitionTest extends PHPUnit_Framework_TestCase
+class RBACSecurityPolicySchemaTest extends PHPUnit_Framework_TestCase
 {
-    public function testDefinitionSchema()
+    public function testSchema()
     {
-        $definition = new FooDefinition();
+        $definition = new FooSecurityPolicy();
         $definition->schema();
     }
 }

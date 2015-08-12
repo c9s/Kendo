@@ -48,8 +48,8 @@ class DatabaseRuleExporter
             $ret = $actorRecord->load([ 'identifier' => $actorDefinition->identifier ]);
             $this->assertResultSuccess($ret);
 
-            if ($roles = $actorDefinition->getRoleDefinitions()) {
-                foreach ($roles as $roleDefinition) {
+            if ($roleDefinitions = $actorDefinition->getRoleDefinitions()) {
+                foreach ($roleDefinitions as $roleDefinition) {
                     $roleRecord = new ActorRecord;
                     $ret = $roleRecord->createOrUpdate([
                         'identifier' => $roleDefinition->identifier,
@@ -136,11 +136,6 @@ class DatabaseRuleExporter
                             ], [ 'actor_id', 'resource_id', 'operation_id' ]);
 
                             $this->assertResultSuccess($ret);
-
-
-                            // echo "Actor '", $actorDefinition->identifier, "' with role '", $roleIdentifier, "' " , $op->label, " " , $resourceIdentifier, ($allow ? " is" : " is not"), " allowed.\n";
-                            // var_dump( $op );
-                            // var_dump( $allow );
                         }
                     }
                 }

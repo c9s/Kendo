@@ -1,6 +1,6 @@
 <?php
 namespace Kendo\RuleLoader;
-use Kendo\DefinitionStorage;
+use Kendo\SecurityPolicyModule;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\Definition\RuleDefinition;
 use SplObjectStorage;
@@ -27,9 +27,9 @@ class DefinitionRuleLoader implements RuleLoader
      */
     protected $accessRules = array();
 
-    public function __construct(DefinitionStorage $storage = null)
+    public function __construct(SecurityPolicyModule $storage = null)
     {
-        $this->definitionStorage = $storage ?: new DefinitionStorage;
+        $this->definitionStorage = $storage ?: new SecurityPolicyModule;
     }
 
     public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
@@ -83,7 +83,7 @@ class DefinitionRuleLoader implements RuleLoader
         }
     }
 
-    public function load(DefinitionStorage $storage)
+    public function load(SecurityPolicyModule $storage)
     {
         // merge definition objects
         $this->definitionStorage->addAll($storage);

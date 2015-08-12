@@ -1,10 +1,10 @@
 <?php
 namespace SimpleApp;
-use Kendo\Definition\Definition;
-use Kendo\DefinitionStorage;
+use Kendo\SecurityPolicy\RBACSecurityPolicySchema;
+use Kendo\SecurityPolicyModule;
 use Kendo\Operation\CommonOperation as Op;
 
-class SimpleDefinition extends Definition
+class SimpleSecurityPolicy extends RBACSecurityPolicySchema
 {
     public function schema()
     {

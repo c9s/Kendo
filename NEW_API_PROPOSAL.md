@@ -2,13 +2,13 @@
 New API Proposal
 ======================
 
-DefinitionStorage
+SecurityPolicyModule
 ----------------
-DefinitionStorage loads results from authentication schema modules:
+SecurityPolicyModule loads results from authentication schema modules:
 
 ```php
-use Kendo\Definition\DefinitionStorage;
-$loader = new DefinitionStorage;
+use Kendo\SecurityPolicy\RBACSecurityPolicySchemaStorage;
+$loader = new SecurityPolicyModule;
 $loader->add(new FooAuthDefinition);
 $loader->add(new BarAuthDefinition);
 

@@ -1,6 +1,6 @@
 <?php
-use Kendo\DefinitionStorage;
-use SimpleApp\SimpleDefinition;
+use Kendo\SecurityPolicyModule;
+use SimpleApp\SimpleSecurityPolicy;
 use SimpleApp\User\NormalUser;
 
 use Kendo\RuleLoader\RuleLoader;
@@ -32,8 +32,8 @@ class DatabaseRuleExporterTest extends ModelTestCase
 
     public function testExport()
     {
-        $storage = new DefinitionStorage;
-        $storage->add(new SimpleDefinition);
+        $storage = new SecurityPolicyModule;
+        $storage->add(new SimpleSecurityPolicy);
 
         $loader = new DefinitionRuleLoader;
         $loader->load($storage);

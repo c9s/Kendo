@@ -1,9 +1,9 @@
 <?php
 namespace Kendo;
-use Kendo\Definition\Definition;
+use Kendo\SecurityPolicy\RBACSecurityPolicySchema;
 use SplObjectStorage;
 
-class DefinitionStorage extends SplObjectStorage
+class SecurityPolicyModule extends SplObjectStorage
 {
     public function __construct(array $defs = array())
     {
@@ -12,7 +12,7 @@ class DefinitionStorage extends SplObjectStorage
         }
     }
 
-    public function add(Definition $definition)
+    public function add(RBACSecurityPolicySchema $definition)
     {
         if ($this->contains($definition)) {
             return false;

@@ -1,6 +1,6 @@
 <?php
-use Kendo\DefinitionStorage;
-use SimpleApp\SimpleDefinition;
+use Kendo\SecurityPolicyModule;
+use SimpleApp\SimpleSecurityPolicy;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\DefinitionRuleLoader;
 
@@ -8,8 +8,8 @@ class DefinitionRuleLoaderTest extends PHPUnit_Framework_TestCase
 {
     public function testSimpleLoad()
     {
-        $storage = new DefinitionStorage;
-        $storage->add(new SimpleDefinition);
+        $storage = new SecurityPolicyModule;
+        $storage->add(new SimpleSecurityPolicy);
 
         $loader = new DefinitionRuleLoader;
         $loader->load($storage);
@@ -17,8 +17,8 @@ class DefinitionRuleLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testGetAccessControlListByActorIdentifier()
     {
-        $storage = new DefinitionStorage;
-        $storage->add(new SimpleDefinition);
+        $storage = new SecurityPolicyModule;
+        $storage->add(new SimpleSecurityPolicy);
 
         $loader = new DefinitionRuleLoader;
         $loader->load($storage);

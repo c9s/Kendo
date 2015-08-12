@@ -1,7 +1,7 @@
 <?php
 namespace SimpleApp\User;
-use Kendo\DefinitionStorage;
-use SimpleApp\SimpleDefinition;
+use Kendo\SecurityPolicyModule;
+use SimpleApp\SimpleSecurityPolicy;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\DefinitionRuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;

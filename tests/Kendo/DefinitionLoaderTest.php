@@ -1,13 +1,13 @@
 <?php
-use Kendo\DefinitionStorage;
-use SimpleApp\SimpleDefinition;
+use Kendo\SecurityPolicyModule;
+use SimpleApp\SimpleSecurityPolicy;
 
-class DefinitionStorageTest extends PHPUnit_Framework_TestCase
+class SecurityPolicyModuleTest extends PHPUnit_Framework_TestCase
 {
-    public function testDefinitionStorage()
+    public function testSecurityPolicyModule()
     {
-        $loader = new DefinitionStorage;
-        $loader->add($a = new SimpleDefinition);
+        $loader = new SecurityPolicyModule;
+        $loader->add($a = new SimpleSecurityPolicy);
         $loader->detach($a);
     }
 }

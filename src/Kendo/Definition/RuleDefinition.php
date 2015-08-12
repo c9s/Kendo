@@ -1,6 +1,6 @@
 <?php
 namespace Kendo\Definition;
-use Kendo\Definition\Definition;
+use Kendo\SecurityPolicy\RBACSecurityPolicySchema;
 use Exception;
 
 class RuleDefinition
@@ -21,11 +21,11 @@ class RuleDefinition
     protected $permissions = array();
 
 
-    protected $definition;
+    protected $policy;
 
-    public function __construct(Definition $definition)
+    public function __construct(RBACSecurityPolicySchema $policy)
     {
-        $this->definition = $definition;
+        $this->policy = $policy;
     }
 
     /**
@@ -35,7 +35,7 @@ class RuleDefinition
      */
     public function actor($identifier)
     {
-        $this->actor = $this->definition->findActorByIdentifier($identifier);
+        $this->actor = $this->policy->findActorByIdentifier($identifier);
         if (!$this->actor) {
             throw new Exception("Actor $identifier not found.");
         }
