@@ -2,14 +2,14 @@
 namespace SimpleApp;
 use Kendo\SecurityPolicy\RBACSecurityPolicySchema;
 use Kendo\SecurityPolicy\SecurityPolicyModule;
-use Kendo\Operation\GeneralOperation as Op;
+use Kendo\Operation\GeneralOperation;
 
 class SimpleSecurityPolicy extends RBACSecurityPolicySchema
 {
     public function schema()
     {
-        $this->resource('books', 'Book');
-        $this->resource('products', 'Product');
+        $this->resource('books', 'Book')->operations(new GeneralOperation);
+        $this->resource('products', 'Product')->operations(new GeneralOperation);
 
         // The basic actor - user
         $this->actor('user', 'User')
@@ -24,27 +24,27 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
         // Actor without roles
         $this->actor('store', 'Store');
 
-        // Define available operations
-        $this->operations(new Op);
+        // Define global available operations
+        $this->operations(new GeneralOperation);
 
         $this->rule()
             ->actor('user')->role('admin')
-                ->can([Op::CREATE, Op::UPDATE, Op::DELETE], 'books');
+                ->can([GeneralOperation::CREATE, GeneralOperation::UPDATE, GeneralOperation::DELETE], 'books');
 
         $this->rule()
             ->actor('user')
                 ->role('admin')
-                ->can([Op::CREATE, Op::UPDATE, Op::DELETE], 'products');
+                ->can([GeneralOperation::CREATE, GeneralOperation::UPDATE, GeneralOperation::DELETE], 'products');
 
         $this->rule()
             ->actor('user')
                 ->role('customer')
-                ->can([Op::VIEW], 'products')
-                ->cant([Op::CREATE], 'products');
+                ->can([GeneralOperation::VIEW], 'products')
+                ->cant([GeneralOperation::CREATE], 'products');
 
         // all user actor can view and search
         $this->rule()
             ->actor('user')
-                ->can([Op::VIEW, Op::SEARCH], 'products');
+                ->can([GeneralOperation::VIEW, GeneralOperation::SEARCH], 'products');
     }
 }
