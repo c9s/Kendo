@@ -12,7 +12,7 @@ use LogicException;
  */
 class SecurityPolicyRuleLoader implements RuleLoader
 {
-    protected $definitionStorage;
+    protected $policyModule;
 
     /**
      * @var ActorDefinition[identifier]
@@ -36,9 +36,9 @@ class SecurityPolicyRuleLoader implements RuleLoader
      */
     protected $accessRules = array();
 
-    public function __construct(SplObjectStorage $storage = null)
+    public function __construct(SecurityPolicyModule $storage = null)
     {
-        $this->definitionStorage = $storage ?: new SplObjectStorage;
+        $this->policyModule = $storage ?: new SecurityPolicyModule;
     }
 
     public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
@@ -92,11 +92,11 @@ class SecurityPolicyRuleLoader implements RuleLoader
         }
     }
 
-    public function load(SecurityPolicyModule $storage)
+    public function load(SecurityPolicyModule $module)
     {
         // merge definition objects
-        $this->definitionStorage->addAll($storage);
-        foreach ($storage as $definition) {
+        $this->policyModule->addAll($module);
+        foreach ($module as $definition) {
 
             if ($actors = $definition->getActorDefinitions()) {
                 foreach ($actors as $actor) {
