@@ -1,6 +1,19 @@
 {
     "name": "corneltek/kendo",
+    "homepage": "https://github.com/c9s/Kendo",
     "version": "1.0.4",
+    "description": "The powerful general access control framework",
+    "keywords": [
+        "access",
+        "control",
+        "acl",
+        "orm",
+        "lazyrecord",
+        "role-based",
+        "RBAC",
+        "RSBAC",
+        "ABAC"
+    ],
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
         "corneltek/universal": "^1.4",
@@ -12,6 +25,16 @@
         {
             "name": "Yo-An Lin",
             "email": "cornelius.howl@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/c9s/Kendo/issues"
+    },
+    "authors": [
+        {
+            "name": "Yo-An Lin",
+            "email": "cornelius.howl@gmail.com",
+            "homepage": "http://c9s.me"
         }
     ],
     "autoload": {
