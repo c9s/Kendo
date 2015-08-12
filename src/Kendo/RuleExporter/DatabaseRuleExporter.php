@@ -160,14 +160,16 @@ class DatabaseRuleExporter
 
                             $this->assertResultSuccess($ret);
 
-                            /*
                             $controlRecord = new AccessControlRecord;
                             $ret = $controlRecord->updateOrCreate([
                                 'rule_id' => $rule->id,
+                                'allow' => $allow,
+
+                                // TODO: support extra attributes later.
+                                // 'actor_record_id' => ...
+                                // 'resource_record_id' => ...
                             ],[ 'rule_id' ]);
                             $this->assertResultSuccess($ret);
-                            */
-
                         }
                     }
                 }
@@ -196,6 +198,17 @@ class DatabaseRuleExporter
 
                         $this->assertResultSuccess($ret);
 
+
+                        $controlRecord = new AccessControlRecord;
+                        $ret = $controlRecord->updateOrCreate([
+                            'rule_id' => $rule->id,
+                            'allow' => $allow,
+
+                            // TODO: support extra attributes later.
+                            // 'actor_record_id' => ...
+                            // 'resource_record_id' => ...
+                        ],[ 'rule_id' ]);
+                        $this->assertResultSuccess($ret);
 
                     }
                 }

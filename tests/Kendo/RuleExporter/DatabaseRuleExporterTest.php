@@ -46,12 +46,6 @@ class DatabaseRuleExporterTest extends ModelTestCase
 
         $rules = new AccessRuleCollection;
         $this->assertCount(4, $rules);
-        foreach ($rules as $rule) {
-
-            // var_dump($rule);
-
-        }
-
 
 
     }

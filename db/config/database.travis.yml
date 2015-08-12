@@ -4,9 +4,14 @@ bootstrap:
 schema:
   auto_id: true
 seeds:
-data_sources:
-  default:
-    driver: mysql
-    host: localhost
-    database: kendo_test
-    user: root
+data_source:
+  default: sqlite
+  nodes:
+    sqlite:
+      driver: "sqlite"
+      dsn: "sqlite:kendo.sqlite"
+    mysql:
+      driver: mysql
+      host: localhost
+      database: kendo_test
+      user: root
