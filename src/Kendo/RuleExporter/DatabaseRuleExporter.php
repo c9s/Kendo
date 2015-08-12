@@ -37,7 +37,7 @@ class DatabaseRuleExporter
             $ret = $actorRecord->createOrUpdate([
                 'identifier' => $actorDefinition->identifier,
                 'label' => $actorDefinition->label,
-            ], 'identifier');
+            ], ['identifier']);
             $this->assertResultSuccess($ret);
             $actorRecords[$actorRecord->identifier] = $actorRecord;
         }
@@ -54,12 +54,12 @@ class DatabaseRuleExporter
 
             if ($roleDefinitions = $actorDefinition->getRoleDefinitions()) {
                 foreach ($roleDefinitions as $roleDefinition) {
-                    $roleRecord = new ActorRecord;
+                    $roleRecord = new RoleRecord;
                     $ret = $roleRecord->createOrUpdate([
                         'identifier' => $roleDefinition->identifier,
                         'label'      => $roleDefinition->label,
                         'actor_id'   => $actorRecord->id,
-                    ], 'identifier');
+                    ], ['identifier']);
                     $this->assertResultSuccess($ret);
                     $roleRecords[$roleRecord->identifier] = $roleRecord;
                 }

@@ -23,6 +23,6 @@ $schemas = array(
     new \Kendo\Model\AccessRuleSchema,
     new \Kendo\Model\AccessControlSchema,
 );
-$g = new \LazyRecord\Schema\SchemaGenerator($config, $logger);
+$g = new SchemaGenerator($config, $logger);
 $g->setForceUpdate(true);
 $g->generate($schemas);

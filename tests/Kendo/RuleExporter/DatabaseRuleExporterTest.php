@@ -15,6 +15,8 @@ use Kendo\RuleExporter\DatabaseRuleExporter;
 use LazyRecord\Testing\ModelTestCase;
 
 use Kendo\Model\AccessRuleCollection;
+use Kendo\Model\ActorCollection;
+use Kendo\Model\ResourceCollection;
 
 class DatabaseRuleExporterTest extends ModelTestCase
 {
@@ -47,7 +49,11 @@ class DatabaseRuleExporterTest extends ModelTestCase
         $rules = new AccessRuleCollection;
         $this->assertCount(4, $rules);
 
+        $actors = new ActorCollection;
+        $this->assertCount(3, $actors);
 
+        $resources = new ResourceCollection;
+        $this->assertCount(2, $resources);
     }
 }
 
