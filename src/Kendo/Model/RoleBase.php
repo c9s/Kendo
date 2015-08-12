@@ -7,7 +7,7 @@ class RoleBase
     const schema_proxy_class = 'Kendo\\Model\\RoleSchemaProxy';
     const collection_class = 'Kendo\\Model\\RoleCollection';
     const model_class = 'Kendo\\Model\\Role';
-    const table = 'roles';
+    const table = 'access_roles';
     const read_source_id = 'default';
     const write_source_id = 'default';
     const primary_key = 'id';

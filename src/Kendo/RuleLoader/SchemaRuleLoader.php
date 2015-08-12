@@ -42,6 +42,19 @@ class SchemaRuleLoader implements RuleLoader
         $this->policyModule = $storage ?: new SecurityPolicyModule;
     }
 
+
+    /**
+     * Return access rules in the following format:
+     *
+     * [
+     *    {resource} => [ 
+     *       [ GeneralOperation::CREATE, true ],
+     *       [ GeneralOperation::UPDATE, false ],
+     *    ]
+     * ]
+     *
+     * $this->accessRules[ $actor->getIdentifier() ][0][$resource][] = [$op, $allow];
+     */
     public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
     {
         if ($roleIdentifier && isset($this->accessRules[ $actorIdentifier ][ $roleIdentifier ])) {
