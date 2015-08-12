@@ -8,16 +8,11 @@ class AccessControlSchema extends DeclareSchema
     {
         $this->column('rule_id')->unsigned()->integer();
 
-        // actor identifier
-        $this->column('actor_id')
-            ->refer('Kendo\\Model\\ActorSchema')
-            ->integer();
-
+        // if the rule has a specific actor record
         $this->column('actor_record_id')
             ->integer();
 
-        $this->column('role_id')
-            ->refer('Kendo\\Model\\RoleSchema')
+        $this->column('resource_record_id')
             ->integer()
             ->null()
             ;

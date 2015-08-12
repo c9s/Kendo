@@ -15,6 +15,8 @@ class ResourceDefinition extends BaseDefinition
         foreach ($args as $arg) {
             if (is_array($arg)) {
                 $this->operations = array_merge($this->operations, $arg);
+            } else if ($arg instanceof OperationList) {
+
             } else {
                 $this->operations[] = $arg;
             }

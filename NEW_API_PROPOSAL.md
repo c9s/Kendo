@@ -1,4 +1,3 @@
-
 New API Proposal
 ======================
 
@@ -9,8 +8,8 @@ SecurityPolicyModule loads results from authentication schema modules:
 ```php
 use Kendo\SecurityPolicy\RBACSecurityPolicySchemaStorage;
 $loader = new SecurityPolicyModule;
-$loader->add(new FooAuthDefinition);
-$loader->add(new BarAuthDefinition);
+$loader->add(new FooSecurityPolicy);
+$loader->add(new BarSecurityPolicy);
 
 // Return flat array that contains rules.
 $rules = $loader->expandRules();
@@ -117,6 +116,28 @@ DatabaseRuleAuthenticator
 ```php
 
 ```
+
+
+
+
+Permission Management
+--------------------------
+
+### Rendering Permission Items
+
+
+1. For each security policy modules
+    1. List the related resources
+    2. For each related reosurces
+    3. List the available operation
+
+
+1. For the current actor, reads all rules related to the current actor with the current role. The role argument is optional if it's not defined.
+
+2. For each rule, find the current access control that matches the current actor, the current actor record id, the current actor role
+
+    - group the rules by modules
+    - for each module, list the resources related to the module
 
 
 

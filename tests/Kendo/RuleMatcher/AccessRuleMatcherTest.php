@@ -5,7 +5,7 @@ use SimpleApp\User\NormalUser;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\SecurityPolicyRuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;
-use Kendo\Operation\CommonOperation;
+use Kendo\Operation\GeneralOperation;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
 
 class AccessRuleMatcherTest extends PHPUnit_Framework_TestCase
@@ -20,7 +20,7 @@ class AccessRuleMatcherTest extends PHPUnit_Framework_TestCase
 
         $actor = new NormalUser;
         $matcher = new AccessRuleMatcher($loader);
-        $rule = $matcher->match($actor, CommonOperation::VIEW, 'products');
+        $rule = $matcher->match($actor, GeneralOperation::VIEW, 'products');
         $this->assertNotNull($rule, 'common user can view products');
         $this->assertTrue($rule->allow);
         $this->assertEquals(0, $rule->role);

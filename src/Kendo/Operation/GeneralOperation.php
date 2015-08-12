@@ -1,10 +1,11 @@
 <?php
 namespace Kendo\Operation;
+use Kendo\Definition\OperationDefinitionSet;
 
 /**
  * Pre-defined common operations with default labels.
  */
-class CommonOperation
+class GeneralOperation implements OperationDefinitionSet
 {
     const ALL    = 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1 << 5; // 11111
     const CREATE = 1;       // 00001

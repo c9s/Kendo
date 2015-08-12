@@ -6,10 +6,10 @@ use SimpleApp\User\NormalUser;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\SecurityPolicyRuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;
-use Kendo\Operation\CommonOperation;
+use Kendo\Operation\GeneralOperation;
 use Kendo\Authorizer\Authorizer;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
-use Kendo\Operation\CommonOperation as Op;
+use Kendo\Operation\GeneralOperation as Op;
 
 use Kendo\RuleExporter\DatabaseRuleExporter;
 use LazyRecord\Testing\ModelTestCase;

@@ -2,7 +2,7 @@
 namespace SimpleApp;
 use Kendo\SecurityPolicy\RBACSecurityPolicySchema;
 use Kendo\SecurityPolicy\SecurityPolicyModule;
-use Kendo\Operation\CommonOperation as Op;
+use Kendo\Operation\GeneralOperation as Op;
 
 class SimpleSecurityPolicy extends RBACSecurityPolicySchema
 {
