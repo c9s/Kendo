@@ -1,7 +1,7 @@
 <?php
 namespace Kendo\Definition;
 
-abstract class BaseDefinition
+class BaseDefinition
 {
     public $identifier;
 

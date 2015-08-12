@@ -8,15 +8,6 @@ class AccessControlSchema extends DeclareSchema
     {
         $this->column('rule_id')->unsigned()->integer();
 
-        // if the rule has a specific actor record
-        $this->column('actor_record_id')
-            ->integer();
-
-        $this->column('resource_record_id')
-            ->integer()
-            ->null()
-            ;
-
         $this->column('allow')
             ->boolean()
             ->notNull()

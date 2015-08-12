@@ -3,12 +3,16 @@ namespace Kendo\RuleExporter;
 use Kendo\RuleLoader\SecurityPolicyRuleLoader;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\Model\AccessRule as AccessRuleRecord;
+use Kendo\Model\AccessControl as AccessControlRecord;
 use Kendo\Model\AccessRuleCollection;
 use Kendo\Model\Actor as ActorRecord;
 use Kendo\Model\Role as RoleRecord;
 use Kendo\Model\Operation as OperationRecord;
 use Kendo\Model\Resource as ResourceRecord;
 
+/**
+ * DatabaseRuleExporter exports AccessRule from schema to database
+ */
 class DatabaseRuleExporter
 {
     protected $loader;
@@ -111,37 +115,86 @@ class DatabaseRuleExporter
         $operationRecords = $this->exportOperationRecords($operationDefinitions);
 
         foreach ($actorDefinitions as $actorDefinition) {
-            if ($roleDefinitions = $actorDefinition->getRoleDefinitions()) {
+            $roleDefinitions = $actorDefinition->getRoleDefinitions();
+
+            if (!empty($roleDefinitions)) {
+
                 foreach ($roleDefinitions as $roleDefinition) {
+
                     $roleIdentifier = $roleDefinition->identifier;
                     $accessRules = $this->loader->getAccessRulesByActorIdentifier($actorDefinition->identifier, $roleIdentifier);
+
                     foreach ($accessRules as $resourceIdentifier => $permissions) {
+
                         foreach ($permissions as list($opBit, $allow)) {
                             $op = $operationDefinitions[$opBit];
 
+
+
                             $ruleRecord = new AccessRuleRecord;
+
                             $ret = $ruleRecord->createOrUpdate([
                                 'actor_id'          => $actorRecords[ $actorDefinition->identifier ]->id,
                                 // 'actor_record_id' => ...
 
                                 'role_id' => $roleRecords[ $roleIdentifier ]->id,
 
-                                'resource_id'       => $resourceRecords[ $resourceIdentifier ]->id,
+                                'resource_id' => $resourceRecords[ $resourceIdentifier ]->id,
 
                                 // 'resource_record_id' => ...
                                 'operation_bitmask' => $opBit,
                                 'operation_id'      => $operationRecords[$opBit]->id,
 
-                                'allow'             => $allow,
-                            ], [ 'actor_id', 'resource_id', 'operation_id' ]);
+                                'allow'   => $allow,
+
+
+                            ], [ 'actor_id', 'role_id', 'resource_id', 'operation_id' ]);
+
+                            /*
+                            printf("Created rule %d: %s Actor %s %s %s\n",
+                                $ruleRecord->id,
+                                $actorDefinition->identifier
+                                , $allow ? 'can' : 'can not',
+                                $op->label, $resourceIdentifier);
+                             */
 
                             $this->assertResultSuccess($ret);
+
+                            /*
+                            $controlRecord = new AccessControlRecord;
+                            $ret = $controlRecord->updateOrCreate([
+                                'rule_id' => $rule->id,
+                            ],[ 'rule_id' ]);
+                            $this->assertResultSuccess($ret);
+                            */
+
                         }
                     }
                 }
             } else if ($accessRules = $this->loader->getAccessRulesByActorIdentifier($actorDefinition->identifier)) {
-                foreach ($accessRules as $resource => $permissions) {
+
+                foreach ($accessRules as $resourceIdentifier => $permissions) {
                     foreach ($permissions as list($opBit, $allow)) {
+
+                        $op = $operationDefinitions[$opBit];
+
+                        $ruleRecord = new AccessRuleRecord;
+
+                        $ret = $ruleRecord->createOrUpdate([
+                            'actor_id'          => $actorRecords[ $actorDefinition->identifier ]->id,
+
+                            'resource_id'       => $resourceRecords[ $resourceIdentifier ]->id,
+
+                            'operation_bitmask' => $opBit,
+                            'operation_id'      => $operationRecords[$opBit]->id,
+
+                            'allow'   => $allow,
+
+                            'role_id' => null,
+
+                        ], [ 'actor_id', 'role_id', 'resource_id', 'operation_id' ]);
+
+                        $this->assertResultSuccess($ret);
 
 
                     }

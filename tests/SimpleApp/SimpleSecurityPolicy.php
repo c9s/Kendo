@@ -18,7 +18,7 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
         $this->resource('products', 'Product')
             ->operations(new GeneralOperation);
 
-        // The basic actor - user
+        // The actor with different roles - user
         $this->actor('user', 'User')
             ->role('admin', 'Administrator')
             ->role('member', 'Member')

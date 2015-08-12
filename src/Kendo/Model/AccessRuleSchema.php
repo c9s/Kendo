@@ -17,17 +17,28 @@ class AccessRuleSchema extends DeclareSchema
             ->null()
             ;
 
-        $this->column('actor_record_id')
-            ->integer();
 
         $this->column('resource_id')
             ->integer()
             ->required();
 
+        // The actor record is and resource record are actually 
+        // an attribute of a rule.
+
+        // When managing operation permissions, we don't query the attributes
+        $this->column('actor_record_id')
+            ->integer();
+
         $this->column('resource_record_id')
             ->integer()
             ->null()
             ;
+
+        // This is also defined in AccessControlSchema
+        $this->column('allow')
+            ->boolean()
+            ->notNull()
+            ->required();
 
         // oepration bit mask (saved for quick access & filtering)
         $this->column('operation_bitmask')

@@ -123,14 +123,15 @@ DatabaseRuleAuthenticator
 Permission Management
 --------------------------
 
-### Rendering Permission Items
+When admin wants to manage permissions, the permissions should be rendered as a superset.
 
+
+### Rendering Permission Items
 
 1. For each security policy modules
     1. List the related resources
     2. For each related reosurces
     3. List the available operation
-
 
 1. For the current actor, reads all rules related to the current actor with the current role. The role argument is optional if it's not defined.
 
