@@ -7,7 +7,8 @@ use Kendo\Definition\OperationDefinitionSet;
  */
 class GeneralOperation implements OperationDefinitionSet
 {
-    const ALL    = 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1 << 5; // 11111
+    // const ALL    = 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1 << 5; // 11111
+    const ALL    = 61;
     const CREATE = 1;       // 00001
     const UPDATE = 1 << 2;  // 00010
     const DELETE = 1 << 3;  // 00100
