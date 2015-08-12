@@ -1,5 +1,12 @@
 Kendo
 ======
+[![Latest Stable Version](https://poser.pugx.org/corneltek/kendo/v/stable)](https://packagist.org/packages/corneltek/kendo) 
+[![Total Downloads](https://poser.pugx.org/corneltek/kendo/downloads)](https://packagist.org/packages/corneltek/kendo)
+[![Latest Unstable Version](https://poser.pugx.org/corneltek/kendo/v/unstable)](https://packagist.org/packages/corneltek/kendo) 
+[![License](https://poser.pugx.org/corneltek/kendo/license)](https://packagist.org/packages/corneltek/kendo)
+
+[![Monthly Downloads](https://poser.pugx.org/corneltek/kendo/d/monthly)](https://packagist.org/packages/corneltek/kendo)
+[![Daily Downloads](https://poser.pugx.org/corneltek/kendo/d/daily)](https://packagist.org/packages/corneltek/kendo)
 
 ## Install
 
