@@ -2,16 +2,16 @@
 use Kendo\SecurityPolicy\SecurityPolicyModule;
 use SimpleApp\SimpleSecurityPolicy;
 use Kendo\RuleLoader\RuleLoader;
-use Kendo\RuleLoader\DefinitionRuleLoader;
+use Kendo\RuleLoader\SecurityPolicyRuleLoader;
 
-class DefinitionRuleLoaderTest extends PHPUnit_Framework_TestCase
+class SecurityPolicyRuleLoaderTest extends PHPUnit_Framework_TestCase
 {
     public function testSimpleLoad()
     {
         $storage = new SecurityPolicyModule;
         $storage->add(new SimpleSecurityPolicy);
 
-        $loader = new DefinitionRuleLoader;
+        $loader = new SecurityPolicyRuleLoader;
         $loader->load($storage);
     }
 
@@ -20,7 +20,7 @@ class DefinitionRuleLoaderTest extends PHPUnit_Framework_TestCase
         $storage = new SecurityPolicyModule;
         $storage->add(new SimpleSecurityPolicy);
 
-        $loader = new DefinitionRuleLoader;
+        $loader = new SecurityPolicyRuleLoader;
         $loader->load($storage);
         $userAccessControlList = $loader->getAccessRulesByActorIdentifier('user');
         $this->assertNotEmpty($userAccessControlList);

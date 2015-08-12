@@ -3,7 +3,7 @@ use Kendo\SecurityPolicy\SecurityPolicyModule;
 use SimpleApp\SimpleSecurityPolicy;
 use SimpleApp\User\NormalUser;
 use Kendo\RuleLoader\RuleLoader;
-use Kendo\RuleLoader\DefinitionRuleLoader;
+use Kendo\RuleLoader\SecurityPolicyRuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;
 use Kendo\Operation\CommonOperation;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
@@ -15,7 +15,7 @@ class AccessRuleMatcherTest extends PHPUnit_Framework_TestCase
         $storage = new SecurityPolicyModule;
         $storage->add(new SimpleSecurityPolicy);
 
-        $loader = new DefinitionRuleLoader;
+        $loader = new SecurityPolicyRuleLoader;
         $loader->load($storage);
 
         $actor = new NormalUser;

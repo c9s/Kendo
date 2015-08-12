@@ -1,6 +1,6 @@
 <?php
 namespace Kendo\RuleExporter;
-use Kendo\RuleLoader\DefinitionRuleLoader;
+use Kendo\RuleLoader\SecurityPolicyRuleLoader;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\Model\AccessRule as AccessRuleRecord;
 use Kendo\Model\AccessRuleCollection;
@@ -142,6 +142,7 @@ class DatabaseRuleExporter
             } else if ($accessRules = $this->loader->getAccessRulesByActorIdentifier($actorDefinition->identifier)) {
                 foreach ($accessRules as $resource => $permissions) {
                     foreach ($permissions as list($opBit, $allow)) {
+
 
                     }
                 }

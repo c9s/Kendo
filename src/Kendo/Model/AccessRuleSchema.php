@@ -1,8 +1,8 @@
 <?php
 namespace Kendo\Model;
-use LazyRecord\Schema\SchemaDeclare;
+use LazyRecord\Schema\DeclareSchema;
 
-class AccessRuleSchema extends SchemaDeclare
+class AccessRuleSchema extends DeclareSchema
 {
     public function schema() 
     {
@@ -38,16 +38,13 @@ class AccessRuleSchema extends SchemaDeclare
             ->integer()
             ->required();
 
-        $this->column('allow')
-            ->boolean()
-            ->notNull()
-            ->required();
-
         $this->belongsTo('resource','Kendo\\Model\\ResourceSchema','id','resource_id');
 
         $this->belongsTo('operation','Kendo\\Model\\OperationSchema','id','operation_id');
 
         $this->belongsTo('actor','Kendo\\Model\\ActorSchema','id','actor_id');
+
+        $this->many('controls', 'Kendo\\Model\\AccessControlSchema', 'rule_id', 'id');
     }
 }
 

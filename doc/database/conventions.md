@@ -76,7 +76,7 @@ That is,
 
 <?php
 
-    class Product extends SchemaDeclare {
+    class Product extends DeclareSchema {
 
         function schema() 
         {

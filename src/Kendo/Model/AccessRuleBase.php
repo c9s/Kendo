@@ -19,8 +19,7 @@ class AccessRuleBase
       4 => 'resource_record_id',
       5 => 'operation_bitmask',
       6 => 'operation_id',
-      7 => 'allow',
-      8 => 'id',
+      7 => 'id',
     );
     public static $column_hash = array (
       'actor_id' => 1,
@@ -30,7 +29,6 @@ class AccessRuleBase
       'resource_record_id' => 1,
       'operation_bitmask' => 1,
       'operation_id' => 1,
-      'allow' => 1,
       'id' => 1,
     );
     public static $mixin_classes = array (
@@ -69,10 +67,6 @@ class AccessRuleBase
     public function getOperationId()
     {
             return $this->get('operation_id');
-    }
-    public function getAllow()
-    {
-            return $this->get('allow');
     }
     public function getId()
     {

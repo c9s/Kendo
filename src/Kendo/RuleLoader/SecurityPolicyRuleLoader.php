@@ -8,9 +8,9 @@ use LogicException;
 
 
 /**
- * DefinitionRuleLoader loads definitions from schema and build up the access rules.
+ * SecurityPolicyRuleLoader loads definitions from schema and build up the access rules.
  */
-class DefinitionRuleLoader implements RuleLoader
+class SecurityPolicyRuleLoader implements RuleLoader
 {
     protected $definitionStorage;
 
