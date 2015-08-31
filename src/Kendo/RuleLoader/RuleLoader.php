@@ -3,6 +3,10 @@ namespace Kendo\RuleLoader;
 use Kendo\SecurityPolicy\SecurityPolicyModule;
 use SplObjectStorage;
 
+
+/**
+ * RuleLoader interface defines what a RuleLoader should have
+ */
 interface RuleLoader
 {
     public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = 0);

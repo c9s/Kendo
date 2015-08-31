@@ -90,10 +90,19 @@ class DatabaseRuleImporter
         $resourceRecords = [];
         foreach ($definitions as $definition) {
             $resourceRecord = new ResourceRecord;
+
+            $groupId = null;
+
+            if ($definition->group) {
+                if ($groupRecord = $definition->group->getRecord()) {
+                    $groupId = $groupRecord->id;
+                }
+            }
+
             $ret = $resourceRecord->createOrUpdate([
                 'identifier' => $definition->identifier,
-                // 'group_id'   => $resourceDefinition->group,
-                'label' => $definition->label,
+                'group_id'   => $groupId,
+                'label'      => $definition->label,
             ], 'identifier');
             $this->assertResultSuccess($ret);
             $resourceRecords[$resourceRecord->identifier] = $resourceRecord;
