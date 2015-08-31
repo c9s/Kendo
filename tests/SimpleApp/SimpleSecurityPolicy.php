@@ -12,11 +12,16 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
         // When resource didn't defined its own operations, it inherits from global operations
         $this->globalOperations(new GeneralOperation);
 
+        $group = $this->resourceGroup('core', 'Core');
+
         $this->resource('books', 'Book')
+            ->group($group)
             ->operations([ GeneralOperation::CREATE, GeneralOperation::UPDATE ]);
 
         $this->resource('products', 'Product')
+            ->group($group)
             ->operations(new GeneralOperation);
+
 
         // The actor with different roles - user
         $this->actor('user', 'User')

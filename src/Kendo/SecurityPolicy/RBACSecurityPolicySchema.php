@@ -3,6 +3,7 @@ namespace Kendo\SecurityPolicy;
 use Kendo\Definition\RoleDefinition;
 use Kendo\Definition\ActorDefinition;
 use Kendo\Definition\ResourceDefinition;
+use Kendo\Definition\ResourceGroupDefinition;
 use Kendo\Definition\RuleDefinition;
 use Kendo\Definition\OperationDefinition;
 use Kendo\Operation\OperationList;
@@ -37,6 +38,12 @@ abstract class RBACSecurityPolicySchema
      * @var ResourceDefinition[identifier] resources provided by this definition
      */
     protected $resources = array();
+
+
+    /**
+     * @var ResourceGroup[identifier]
+     */
+    protected $resourceGroups = array();
 
     /**
      * The default rules of a definition
@@ -102,6 +109,14 @@ abstract class RBACSecurityPolicySchema
             }
         }
         return $this;
+    }
+
+    public function resourceGroup($identifier, $label = null)
+    {
+        if (isset($this->resourceGroups[ $identifier ])) {
+            return $this->resourceGroups[ $identifier ];
+        }
+        return $this->resourceGroups[ $identifier ] = new ResourceGroupDefinition($identifier, $label);
     }
 
 

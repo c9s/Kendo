@@ -3,10 +3,13 @@ namespace Kendo\Definition;
 use Kendo\Definition\BaseDefinition;
 use Kendo\Definition\OperationDefinitionSet;
 use Kendo\Definition\OperationDefinition;
+use Kendo\Definition\ResourceGroupDefinition;
 
 class ResourceDefinition extends BaseDefinition
 {
     protected $operations = array();
+
+    protected $group;
 
     /**
      * operations method defines available operations of this resource
@@ -34,6 +37,12 @@ class ResourceDefinition extends BaseDefinition
                 $this->operations[] = $arg;
             }
         }
+        return $this;
+    }
+
+    public function group(ResourceGroupDefinition $group)
+    {
+        $this->group = $group;
         return $this;
     }
 }
