@@ -7,9 +7,9 @@ use Kendo\Definition\ResourceGroupDefinition;
 
 class ResourceDefinition extends BaseDefinition
 {
-    protected $operations = array();
+    public $operations = array();
 
-    protected $group;
+    public $group;
 
     /**
      * operations method defines available operations of this resource
