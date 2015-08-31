@@ -29,7 +29,7 @@ class DatabaseRuleImporter
         }
     }
 
-    public function exportActorRecords(array $definitions)
+    protected function exportActorRecords(array $definitions)
     {
         $actorRecords = [];
         foreach ($definitions as $actorDefinition) {
@@ -44,7 +44,7 @@ class DatabaseRuleImporter
         return $actorRecords;
     }
 
-    public function exportRoleRecords(array $definitions)
+    protected function exportRoleRecords(array $definitions)
     {
         $roleRecords = [];
         foreach ($definitions as $actorDefinition) {
@@ -68,7 +68,7 @@ class DatabaseRuleImporter
         return $roleRecords;
     }
 
-    public function exportResourceRecords(array $definitions)
+    protected function exportResourceRecords(array $definitions)
     {
         $resourceRecords = [];
         foreach ($definitions as $resourceDefinition) {
@@ -83,7 +83,7 @@ class DatabaseRuleImporter
         return $resourceRecords;
     }
 
-    public function exportOperationRecords(array $definitions)
+    protected function exportOperationRecords(array $definitions)
     {
         $operationRecords = [];
         foreach ($definitions as $operationDefinition) {

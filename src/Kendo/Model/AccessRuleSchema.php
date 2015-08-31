@@ -22,6 +22,12 @@ class AccessRuleSchema extends DeclareSchema
             ->integer()
             ->required();
 
+
+        // the resource group id
+        $this->column('resource_group_id')
+            ->integer()
+            ->required();
+
         // The actor record is and resource record are actually 
         // an attribute of a rule.
 
@@ -50,6 +56,8 @@ class AccessRuleSchema extends DeclareSchema
             ->required();
 
         $this->belongsTo('resource','Kendo\\Model\\ResourceSchema','id','resource_id');
+
+        $this->belongsTo('resource_group','Kendo\\Model\\ResourceGroupSchema','id','resource_group_id');
 
         $this->belongsTo('operation','Kendo\\Model\\OperationSchema','id','operation_id');
 
