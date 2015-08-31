@@ -39,6 +39,12 @@ class PDORuleLoader implements RuleLoader
     protected $definedResources = array();
 
 
+    /**
+     * @var ResourceGroupDefinition[identifier]
+     */
+    protected $defineResourceGroups = array();
+
+
     public function __construct()
     {
     }
@@ -65,6 +71,12 @@ class PDORuleLoader implements RuleLoader
         $stm->execute();
         while ($res = $stm->fetchObject('Kendo\\Definition\\ResourceDefinition')) {
             $this->definedResources[$res->identifier] = $res;
+        }
+
+        $stm = $conn->prepare('select * from access_resource_groups');
+        $stm->execute();
+        while ($res = $stm->fetchObject('Kendo\\Definition\\ResourceGroupDefinition')) {
+            $this->definedResourceGroups[$res->identifier] = $res;
         }
 
         $stm = $conn->prepare('select * from access_operations');
@@ -145,6 +157,12 @@ class PDORuleLoader implements RuleLoader
     public function getOperationDefinitions()
     {
         return $this->definedOperations;
+    }
+
+    public function getResourceGroupDefinitions()
+    {
+
+        return $this->definedResourceGroupDefinitions;
     }
 
 }

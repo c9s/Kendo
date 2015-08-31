@@ -6,7 +6,7 @@ class ResourceGroupSchema extends DeclareSchema
 {
     public function schema() 
     {
-        $this->table('access_resources_group');
+        $this->table('access_resource_groups');
 
         $this->column('identifier')
             ->varchar(64)

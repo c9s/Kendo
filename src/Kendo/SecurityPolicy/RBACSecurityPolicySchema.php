@@ -154,6 +154,11 @@ abstract class RBACSecurityPolicySchema
         return $this->resources;
     }
 
+    public function getResourceGroupDefinitions()
+    {
+        return $this->resourceGroups;
+    }
+
     /**
      * Returns allow rule definition objects
      *

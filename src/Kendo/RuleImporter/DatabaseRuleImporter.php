@@ -9,6 +9,7 @@ use Kendo\Model\Actor as ActorRecord;
 use Kendo\Model\Role as RoleRecord;
 use Kendo\Model\Operation as OperationRecord;
 use Kendo\Model\Resource as ResourceRecord;
+use Kendo\Model\ResourceGroup as ResourceGroupRecord;
 
 /**
  * DatabaseRuleImporter exports AccessRule from schema to database
@@ -127,6 +128,10 @@ class DatabaseRuleImporter
 
         $actorDefinitions    = $this->loader->getActorDefinitions();
         $roleRecords = $this->exportRoleRecords($actorDefinitions);
+
+
+        $resourceGroupDefinitions = $this->loader->getResourceGroupDefinitions();
+        $resourceGroupRecords = $this->exportResourceGroupRecords($resourceGroupDefinitions);
 
         $resourceDefinitions = $this->loader->getResourceDefinitions();
         $resourceRecords = $this->exportResourceRecords($resourceDefinitions);

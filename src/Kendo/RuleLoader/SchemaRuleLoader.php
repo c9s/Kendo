@@ -69,6 +69,11 @@ class SchemaRuleLoader implements RuleLoader
         return $this->definedResources;
     }
 
+    public function getResourceGroupDefinitions()
+    {
+        return $this->definedResourceGroups;
+    }
+
     public function getActorDefinitions()
     {
         return $this->definedActors;
@@ -119,6 +124,16 @@ class SchemaRuleLoader implements RuleLoader
                     }
                     $this->definedActors[$actor->identifier] = $actor;
                 }
+            }
+
+            if ($groups = $definition->getResourceGroupDefinitions()) {
+                foreach ($groups as $group) {
+                    if (isset($this->definedResourceGroups[$group->identifier])) {
+                        throw new LogicException("Resource Group {$group->identifier} is already defined.");
+                    }
+                    $this->definedResourceGroups[$group->identifier] = $group;
+                }
+
             }
 
             if ($resources = $definition->getResourceDefinitions()) {
