@@ -15,13 +15,13 @@ $loader->add(new BarSecurityPolicy);
 $rules = $loader->expandRules();
 ```
 
-RuleExporter
+RuleImporter
 ------------------
-RuleExporter export definitions into database:
+RuleImporter export definitions into database:
 
-- FileCacheRuleExporter: Import rules into cache file.
-- PDORuleExporter: Import rules into database
-- APCRuleExporter: Import rules into apc
+- FileCacheRuleImporter: Import rules into cache file.
+- PDORuleImporter: Import rules into database
+- APCRuleImporter: Import rules into apc
 
 RuleLoader
 ------------------

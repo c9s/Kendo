@@ -18,6 +18,14 @@ class ResourceSchema extends DeclareSchema
 
         $this->column('description')
             ->text();
+
+
+        $this->column('group_id')
+            ->integer()
+            ;
+
+        $this->belongsTo('group', 'Kendo\\Model\\ResourceGroupSchema', 'id', 'group_id');
+
     }
 
 

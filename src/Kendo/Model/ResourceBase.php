@@ -15,12 +15,14 @@ class ResourceBase
       0 => 'identifier',
       1 => 'label',
       2 => 'description',
-      3 => 'id',
+      3 => 'group_id',
+      4 => 'id',
     );
     public static $column_hash = array (
       'identifier' => 1,
       'label' => 1,
       'description' => 1,
+      'group_id' => 1,
       'id' => 1,
     );
     public static $mixin_classes = array (
@@ -43,6 +45,10 @@ class ResourceBase
     public function getDescription()
     {
             return $this->get('description');
+    }
+    public function getGroupId()
+    {
+            return $this->get('group_id');
     }
     public function getId()
     {

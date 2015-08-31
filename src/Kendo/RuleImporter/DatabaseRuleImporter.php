@@ -1,5 +1,5 @@
 <?php
-namespace Kendo\RuleExporter;
+namespace Kendo\RuleImporter;
 use Kendo\RuleLoader\SchemaRuleLoader;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\Model\AccessRule as AccessRuleRecord;
@@ -11,9 +11,9 @@ use Kendo\Model\Operation as OperationRecord;
 use Kendo\Model\Resource as ResourceRecord;
 
 /**
- * DatabaseRuleExporter exports AccessRule from schema to database
+ * DatabaseRuleImporter exports AccessRule from schema to database
  */
-class DatabaseRuleExporter
+class DatabaseRuleImporter
 {
     protected $loader;
 

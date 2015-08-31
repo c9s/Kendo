@@ -10,7 +10,7 @@ use Kendo\Operation\GeneralOperation;
 use Kendo\Authorizer\Authorizer;
 use Kendo\SecurityPolicy\SecurityPolicyModule;
 
-use Kendo\RuleExporter\DatabaseRuleExporter;
+use Kendo\RuleImporter\DatabaseRuleImporter;
 
 use Kendo\Model\AccessRuleCollection;
 use Kendo\Model\ActorCollection;
@@ -18,7 +18,7 @@ use Kendo\Model\ResourceCollection;
 
 use LazyRecord\Testing\ModelTestCase;
 
-class DatabaseRuleExporterTest extends ModelTestCase
+class DatabaseRuleImporterTest extends ModelTestCase
 {
     public $driver = 'sqlite';
 
@@ -41,7 +41,7 @@ class DatabaseRuleExporterTest extends ModelTestCase
         $storage->add(new SimpleSecurityPolicy);
         $loader = new SchemaRuleLoader;
         $loader->load($storage);
-        $exporter = new DatabaseRuleExporter($loader);
+        $exporter = new DatabaseRuleImporter($loader);
         $exporter->export();
 
 

@@ -15,7 +15,7 @@ use Kendo\Operation\GeneralOperation;
 use Kendo\Authorizer\Authorizer;
 use Kendo\SecurityPolicy\SecurityPolicyModule;
 
-use Kendo\RuleExporter\DatabaseRuleExporter;
+use Kendo\RuleImporter\DatabaseRuleImporter;
 
 use Kendo\Model\AccessRuleCollection;
 use Kendo\Model\ActorCollection;
@@ -44,7 +44,7 @@ class PDORuleLoaderTest extends ModelTestCase
         $loader = new SchemaRuleLoader;
         $loader->load($storage);
 
-        $exporter = new DatabaseRuleExporter($loader);
+        $exporter = new DatabaseRuleImporter($loader);
         $exporter->export();
 
         $resources = new ResourceCollection;
