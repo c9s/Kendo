@@ -26,7 +26,8 @@ class AccessRuleSchema extends DeclareSchema
         // the resource group id
         $this->column('resource_group_id')
             ->integer()
-            ->required();
+            ->null()
+            ;
 
         // The actor record is and resource record are actually 
         // an attribute of a rule.
