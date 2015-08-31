@@ -1,5 +1,6 @@
 <?php
 namespace Kendo\Definition;
+use LazyRecord\BaseModel;
 
 class BaseDefinition
 {
@@ -13,6 +14,12 @@ class BaseDefinition
     public $label;
 
     public $description;
+
+    /**
+     * @var BaseModel The record object existing in database.
+     */
+    protected $record;
+
 
     public function __construct($identifier = null, $label = null)
     {
@@ -36,6 +43,17 @@ class BaseDefinition
     {
         return $this->label;
     }
+
+    public function setRecord(BaseModel $record)
+    {
+        $this->record = $record;
+    }
+
+    public function getRecord()
+    {
+        return $this->record;
+    }
+
 }
 
 

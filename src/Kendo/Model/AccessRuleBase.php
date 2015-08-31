@@ -15,17 +15,19 @@ class AccessRuleBase
       0 => 'actor_id',
       1 => 'role_id',
       2 => 'resource_id',
-      3 => 'actor_record_id',
-      4 => 'resource_record_id',
-      5 => 'allow',
-      6 => 'operation_bitmask',
-      7 => 'operation_id',
-      8 => 'id',
+      3 => 'resource_group_id',
+      4 => 'actor_record_id',
+      5 => 'resource_record_id',
+      6 => 'allow',
+      7 => 'operation_bitmask',
+      8 => 'operation_id',
+      9 => 'id',
     );
     public static $column_hash = array (
       'actor_id' => 1,
       'role_id' => 1,
       'resource_id' => 1,
+      'resource_group_id' => 1,
       'actor_record_id' => 1,
       'resource_record_id' => 1,
       'allow' => 1,
@@ -53,6 +55,10 @@ class AccessRuleBase
     public function getResourceId()
     {
             return $this->get('resource_id');
+    }
+    public function getResourceGroupId()
+    {
+            return $this->get('resource_group_id');
     }
     public function getActorRecordId()
     {
