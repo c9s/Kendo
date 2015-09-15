@@ -12,7 +12,7 @@ class OperationConstantExporter
         $defined = array();
         foreach ($constants as $name => $value) {
             if (isset($defined[ $value ])) {
-                throw new LogicException("Constant '$name' wants to use '$value', however '$value' was defined in " . $defined[$value]);
+                throw new LogicException("Constant '$name' definition use '$value', however '$value' was defined in " . $defined[$value]);
             }
             $defined[ $value ] = $name;
         }
