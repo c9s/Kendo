@@ -3,7 +3,7 @@ namespace Kendo\Definition;
 use Kendo\Definition\BaseDefinition;
 use Kendo\Definition\OperationDefinition;
 use Kendo\Definition\ResourceGroupDefinition;
-use Kendo\ConstantExporter;
+use Kendo\Operation\OperationConstantExporter;
 
 class ResourceDefinition extends BaseDefinition
 {
@@ -18,6 +18,7 @@ class ResourceDefinition extends BaseDefinition
      */
     public function operations($opertions)
     {
+
         $args = func_get_args();
         foreach ($args as $arg) {
             if (is_array($arg)) {
@@ -37,7 +38,7 @@ class ResourceDefinition extends BaseDefinition
 
             } else {
 
-                $exporter = new ConstantExporter;
+                $exporter = new OperationConstantExporter;
                 $constants = $exporter->export($arg);
 
                 foreach ($constants as $name => $bitmask) {

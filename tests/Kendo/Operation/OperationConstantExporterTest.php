@@ -1,5 +1,5 @@
 <?php
-use Kendo\ConstantExporter;
+use Kendo\Operation\OperationConstantExporter;
 
 class FooConstants
 {
@@ -8,11 +8,11 @@ class FooConstants
     const C = 2;
 }
 
-class ConstantExporterTest extends PHPUnit_Framework_TestCase
+class OperationConstantExporterTest extends PHPUnit_Framework_TestCase
 {
     public function test()
     {
-        $exporter = new ConstantExporter;
+        $exporter = new OperationConstantExporter;
         $constants = $exporter->export('FooConstants');
         $this->assertSame([ 
             'A' => 0,
