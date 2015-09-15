@@ -1,9 +1,9 @@
 <?php
 namespace Kendo\Definition;
 use Kendo\Definition\BaseDefinition;
-use Kendo\Definition\OperationDefinitionSet;
 use Kendo\Definition\OperationDefinition;
 use Kendo\Definition\ResourceGroupDefinition;
+use Kendo\ConstantExporter;
 
 class ResourceDefinition extends BaseDefinition
 {
@@ -14,7 +14,7 @@ class ResourceDefinition extends BaseDefinition
     /**
      * operations method defines available operations of this resource
      *
-     * @param OperationDefinitionSet|OperationDefinition
+     * @param OperationDefinition
      */
     public function operations($opertions)
     {
@@ -28,13 +28,22 @@ class ResourceDefinition extends BaseDefinition
 
                 $this->operations[] = $arg->bitmask;
 
-            } else if ($arg instanceof OperationDefinitionSet) {
+            } else if (method_exists($arg,'export')) {
+
                 $maps = $arg->export();
-                foreach ($maps as $bitmask => $label) {
+                foreach ($maps as $label => $bitmask) {
                     $this->operations[] = $bitmask;
                 }
+
             } else {
-                $this->operations[] = $arg;
+
+                $exporter = new ConstantExporter;
+                $constants = $exporter->export($arg);
+
+                foreach ($constants as $name => $bitmask) {
+                    $this->operations[] = $bitmask;
+                }
+
             }
         }
         return $this;
