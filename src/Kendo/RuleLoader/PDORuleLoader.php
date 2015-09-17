@@ -120,7 +120,7 @@ class PDORuleLoader implements RuleLoader
             // echo "Query with required role {$requiredRole->id}\n";
             $stm = $this->conn->prepare('
                 SELECT ar.id, ar.actor_id, ar.role_id, ar.resource_id, ar.operation_id, ar.operation_bitmask, ar.allow
-                        , res.identifier as resource_identifier, res.label as resource_label
+                        , res.identifier as resource_identifier, res.label as resource_label, ops.label as op_name
                 FROM access_rules ar 
                 LEFT JOIN access_resources res ON (ar.resource_id = res.id)
                 LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
@@ -131,7 +131,7 @@ class PDORuleLoader implements RuleLoader
         } else {
             $stm = $this->conn->prepare('
                 SELECT ar.id, ar.actor_id, ar.resource_id, ar.operation_id, ar.operation_bitmask , ar.allow
-                        , res.identifier as resource_identifier, res.label as resource_label
+                        , res.identifier as resource_identifier, res.label as resource_label, ops.label as op_name
                 FROM access_rules ar 
                 LEFT JOIN access_resources res ON (ar.resource_id = res.id)
                 LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
@@ -145,13 +145,10 @@ class PDORuleLoader implements RuleLoader
         while ($rule = $stm->fetchObject()) {
             $rules[$rule->resource_identifier][] = [ 
                 intval($rule->operation_bitmask),
+                $rule->op_name,
                 boolval($rule->allow),
             ];
         }
-        /*
-        echo "PDO Rules for $actorIdentifier with $roleIdentifier: \n";
-        var_dump($rules); 
-         */
         return $rules;
     }
 

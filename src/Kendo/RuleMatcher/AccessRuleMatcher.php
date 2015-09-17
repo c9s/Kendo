@@ -100,10 +100,10 @@ class AccessRuleMatcher implements RuleMatcher
                 return (object) [
                     'actor' => $actor,
                     'role'  => $role,
-                    'resource'   => $resourceIdentifier,
-                    'operation'    => $operation,
-                    'allow' => $opControl[1],
-                    'mask'  => $opControl[0],
+                    'resource'  => $resourceIdentifier,
+                    'mask'      => $opControl[0],
+                    'operation' => $operation[1],
+                    'allow'     => $opControl[2],
                 ];
             }
         }

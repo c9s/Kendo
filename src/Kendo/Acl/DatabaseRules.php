@@ -44,7 +44,7 @@ abstract class DatabaseRules extends BaseRules
             'description' => $rule->desc,
         );
         if (isset($rule->operation['label'] )) {
-            $args['operation_label'] = $rule->operation['label'];
+            $args['op_name'] = $rule->operation['label'];
         }
         return $args;
     }

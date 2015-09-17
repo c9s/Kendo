@@ -84,8 +84,8 @@ class SchemaRuleLoader implements RuleLoader
             // $roleIdentifer can be zero (means rules without role constraint)
             foreach ($resourceOperations as $resource => $operations) {
                 foreach ($operations as $operation) {
-                    list($bitmask, $allow) = $operation;
-                    $rules[] = [$actorIdentifier, $roleIdentifier, $resource, $bitmask, $allow];
+                    list($bitmask, $opName, $allow) = $operation;
+                    $rules[] = [$actorIdentifier, $roleIdentifier, $resource, $bitmask, $opName, $allow];
                 }
             }
         }
@@ -125,14 +125,14 @@ class SchemaRuleLoader implements RuleLoader
 
                 $allow = $permissionControl['allow'];
 
-                foreach ($permissionControl['operations'] as $op) {
-
+                foreach ($permissionControl['operations'] as $opbit) {
+                    $op = $this->definedOperations[ $opbit ];
                     if ($roles = $rule->getRoles()) {
                         foreach ($roles as $role) {
-                            $this->accessRules[$actor->getIdentifier()][$role][$resource][] = [$op, $allow];
+                            $this->accessRules[$actor->getIdentifier()][$role][$resource][] = [$opbit, $op->label, $allow];
                         }
                     } else {
-                        $this->accessRules[ $actor->getIdentifier() ][0][$resource][] = [$op, $allow];
+                        $this->accessRules[ $actor->getIdentifier() ][0][$resource][] = [$opbit, $op->label, $allow];
                     }
 
                 }
