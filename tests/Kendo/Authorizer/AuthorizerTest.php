@@ -1,6 +1,7 @@
 <?php
 use Kendo\SecurityPolicy\SecurityPolicyModule;
 use SimpleApp\SimpleSecurityPolicy;
+use SimpleApp\SecondSecurityPolicy;
 use SimpleApp\User\NormalUser;
 
 use Kendo\RuleLoader\RuleLoader;
@@ -17,6 +18,7 @@ class AuthorizerTest extends PHPUnit_Framework_TestCase
     {
         $storage = new SecurityPolicyModule;
         $storage->add(new SimpleSecurityPolicy);
+        $storage->add(new SecondSecurityPolicy);
 
         $loader = new SchemaRuleLoader;
         $loader->load($storage);
@@ -25,6 +27,11 @@ class AuthorizerTest extends PHPUnit_Framework_TestCase
 
         $accessRuleMatcher = new AccessRuleMatcher($loader);
         $authorizer->addMatcher($accessRuleMatcher);
+
+
+        $actor = new NormalUser;
+        $ret = $authorizer->authorize($actor, Op::CREATE, 'products');
+        // var_dump( $ret ); 
 
         /*
         $dynamicRuleMatcher = new DynamicRuleMatcher([

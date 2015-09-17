@@ -15,6 +15,19 @@ class SchemaRuleLoaderTest extends PHPUnit_Framework_TestCase
         $loader->load($storage);
     }
 
+    public function testGetAccessRulesByActorIdentifier()
+    {
+        $storage = new SecurityPolicyModule;
+        $storage->add(new SimpleSecurityPolicy);
+
+        $loader = new SchemaRuleLoader;
+        $loader->load($storage);
+
+        // get user actor related rules
+        $userRules = $loader->getAccessRulesByActorIdentifier('user');
+        $this->assertNotEmpty($userRules);
+    }
+
     public function testGetAccessControlListByActorIdentifier()
     {
         $storage = new SecurityPolicyModule;
@@ -22,7 +35,7 @@ class SchemaRuleLoaderTest extends PHPUnit_Framework_TestCase
 
         $loader = new SchemaRuleLoader;
         $loader->load($storage);
-        $userAccessControlList = $loader->getAccessRulesByActorIdentifier('user');
+        $userAccessControlList = $loader->getResourceRulesByActorIdentifier('user');
         $this->assertNotEmpty($userAccessControlList);
     }
 }

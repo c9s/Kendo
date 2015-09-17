@@ -44,18 +44,21 @@ class SchemaRuleLoader implements RuleLoader
 
 
     /**
-     * Return access rules in the following format:
+     * getResourceRulesByActorIdentifier returns access rules foreach resource in
+     * the following structure:
      *
      * [
-     *    {resource} => [ 
+     *    {resource} => [
      *       [ GeneralOperation::CREATE, true ],
      *       [ GeneralOperation::UPDATE, false ],
-     *    ]
+     *    ],
      * ]
      *
      * $this->accessRules[ $actor->getIdentifier() ][0][$resource][] = [$op, $allow];
+     *
+     * @return array
      */
-    public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
+    public function getResourceRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
     {
         if ($roleIdentifier && isset($this->accessRules[ $actorIdentifier ][ $roleIdentifier ])) {
             return $this->accessRules[ $actorIdentifier ][ $roleIdentifier ];
@@ -63,6 +66,33 @@ class SchemaRuleLoader implements RuleLoader
             return $this->accessRules[ $actorIdentifier ][0];
         }
     }
+
+
+    /**
+     * getAccessRulesByActorIdentifier returns an array that contains access rules
+     *
+     * Each access rule contains [ actor, role, resource, bitmask, allow]
+     *
+     * TODO: need more details about the opeartion (currently we only have
+     * bitmask and allow/disallow flag), so that we can describe the reason why
+     * we accept/reject the operation.
+     */
+    public function getAccessRulesByActorIdentifier($actorIdentifier)
+    {
+        $rules = [];
+        foreach ($this->accessRules[$actorIdentifier] as $roleIdentifier => $resourceOperations ) {
+            // $roleIdentifer can be zero (means rules without role constraint)
+            foreach ($resourceOperations as $resource => $operations) {
+                foreach ($operations as $operation) {
+                    list($bitmask, $allow) = $operation;
+                    $rules[] = [$actorIdentifier, $roleIdentifier, $resource, $bitmask, $allow];
+                }
+            }
+        }
+        return $rules;
+    }
+
+
 
     public function getResourceDefinitions()
     {

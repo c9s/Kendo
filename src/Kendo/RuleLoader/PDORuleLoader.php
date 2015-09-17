@@ -90,10 +90,21 @@ class PDORuleLoader implements RuleLoader
         while ($role = $stm->fetchObject('Kendo\\Definition\\RoleDefinition', [null, null])) {
             $this->definedRoles[$role->identifier] = $role;
         }
-
     }
 
-    public function getAccessRulesByActorIdentifier($actorIdentifier, $roleIdentifier = 0)
+
+    /**
+     * getResourceRulesByActorIdentifier returns access rules that belongs to one actor.
+     *
+     * If $roleIdentifier is given, it returns access rules with that $roleIdentifier.
+     * If $roleIdentifier is not given, it returns access rules without role.
+     *
+     * @param string $actorIdentifier
+     * @param string $roleIdentifier
+     *
+     * @return array
+     */
+    public function getResourceRulesByActorIdentifier($actorIdentifier, $roleIdentifier = 0)
     {
         $requiredActor = $this->definedActors[$actorIdentifier];
 

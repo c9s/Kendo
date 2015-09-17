@@ -11,11 +11,13 @@ class Authorizer
 
     }
 
-    public function addMatcher(RuleMatcher $matcher) {
+    public function addMatcher(RuleMatcher $matcher)
+    {
         $this->matchers[] = $matcher;
     }
 
-    public function authorize() {
+    public function authorize($actor, $opeation, $resource)
+    {
 
     }
 }

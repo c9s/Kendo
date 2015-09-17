@@ -10,6 +10,7 @@ use Kendo\Model\Role as RoleRecord;
 use Kendo\Model\Operation as OperationRecord;
 use Kendo\Model\Resource as ResourceRecord;
 use Kendo\Model\ResourceGroup as ResourceGroupRecord;
+use Kendo\Exception\DefinitionRedefinedException;
 
 /**
  * DatabaseRuleImporter exports AccessRule from schema to database
@@ -123,6 +124,10 @@ class DatabaseRuleImporter
                 'label'       => $operationDefinition->label,
             ], ['bitmask']);
             $this->assertResultSuccess($ret);
+
+            if (isset($operationRecords[$operationRecord->bitmask])) {
+                throw new DefinitionRedefinedException("Opeartion redefined.");
+            }
             $operationRecords[$operationRecord->bitmask] = $operationRecord;
         }
         return $operationRecords;
@@ -156,7 +161,7 @@ class DatabaseRuleImporter
                 foreach ($roleDefinitions as $roleDefinition) {
 
                     $roleIdentifier = $roleDefinition->identifier;
-                    $accessRules = $this->loader->getAccessRulesByActorIdentifier($actorDefinition->identifier, $roleIdentifier);
+                    $accessRules = $this->loader->getResourceRulesByActorIdentifier($actorDefinition->identifier, $roleIdentifier);
 
                     foreach ($accessRules as $resourceIdentifier => $permissions) {
 
@@ -210,7 +215,7 @@ class DatabaseRuleImporter
             }
 
             // Export rules without roles
-            if ($accessRules = $this->loader->getAccessRulesByActorIdentifier($actorDefinition->identifier)) {
+            if ($accessRules = $this->loader->getResourceRulesByActorIdentifier($actorDefinition->identifier)) {
                 foreach ($accessRules as $resourceIdentifier => $permissions) {
                     foreach ($permissions as list($opBit, $allow)) {
 
