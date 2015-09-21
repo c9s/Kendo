@@ -13,8 +13,11 @@ class OperationSchema extends DeclareSchema
             ->unique()
             ->required();
 
-        $this->column('label')
+        $this->column('identifier')
             ->varchar(128);
+
+        $this->column('label')
+            ->varchar(30);
 
         $this->column('description')
             ->text();
