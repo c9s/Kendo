@@ -6,7 +6,8 @@ class AccessRuleSchema extends DeclareSchema
 {
     public function schema() 
     {
-        // actor identifier
+        // Relationship Foreign Key
+        // -----------------------------------------------------
         $this->column('actor_id')
             ->refer('Kendo\\Model\\ActorSchema')
             ->integer();
@@ -16,7 +17,6 @@ class AccessRuleSchema extends DeclareSchema
             ->integer()
             ->null()
             ;
-
 
         $this->column('resource_id')
             ->integer()
@@ -29,6 +29,9 @@ class AccessRuleSchema extends DeclareSchema
             ->null()
             ;
 
+
+        // Attributes
+        // -----------------------------------------------------
         // The actor record is and resource record are actually 
         // an attribute of a rule.
 
@@ -41,20 +44,33 @@ class AccessRuleSchema extends DeclareSchema
             ->null()
             ;
 
+
         // This is also defined in AccessControlSchema
         $this->column('allow')
             ->boolean()
             ->notNull()
             ->required();
 
+
+        $this->column('operation_id')
+            ->integer()
+            ->required();
+
+
+        /**
+         * Saved identifiers for query & view
+         */
+        $this->column('actor')
+            ->varchar(30) ;
+        $this->column('role')
+            ->varchar(30) ;
+        $this->column('resource')
+            ->varchar(30) ;
         $this->column('operation')
             ->varchar(30)
             ->required()
             ;
 
-        $this->column('operation_id')
-            ->integer()
-            ->required();
 
         $this->belongsTo('resource','Kendo\\Model\\ResourceSchema','id','resource_id');
 

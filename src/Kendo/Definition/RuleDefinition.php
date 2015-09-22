@@ -11,6 +11,11 @@ class RuleDefinition
     protected $actor;
 
     /**
+     * @var integer
+     */
+    protected $actorRecordId;
+
+    /**
      * @var RoleDefinition[ identifier ]
      */
     protected $roles = array();

@@ -2,9 +2,13 @@
 namespace Kendo\Authorizer;
 use Kendo\RuleMatcher\RuleMatcher;
 
+
+/**
+ * Credential is used for granted operation.
+ *
+ */
 class Credential
 {
-
     public $expiry; // timestamp or DateTime
 
     public $actor;
@@ -51,8 +55,8 @@ class Authorizer
     public function authorize($actor, $operation, $resource)
     {
         foreach ($this->matchers as $matcher) {
-            if ($result = $matcher->match($actor, $operation, $resource)) {
-                return $result;
+            if ($matched = $matcher->match($actor, $operation, $resource)) {
+                return new Result($matched->allow, "Rule matched");
             }
         }
         if ($this->disallowNoRuleMatches) {

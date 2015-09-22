@@ -22,11 +22,20 @@ class AccessRuleMatcher implements RuleMatcher
         $this->context = $context;
     }
 
+    /**
+     *
+     *
+     * @param mixed $actor 
+     * @param string $operation operation identifier
+     * @param mixed $resource the resource object
+     * @param Context $context authentication context.
+     */
     public function match($actor, $operation, $resource, Context $context = null)
     {
         $actorDefinitions = $this->loader->getActorDefinitions();
         $currentContext = $context ?: $this->context;
 
+        // for each actor definition, use instance class to find the matched actor definition.
         $matchedActorDefinition = null;
         foreach ($actorDefinitions as $actorDefinition) {
             if (!$actorDefinition->instanceClass) {
@@ -57,6 +66,8 @@ class AccessRuleMatcher implements RuleMatcher
 
         }
 
+
+        // An actor may have different roles, if the actor doesn't have one, we will use '0' to find access_rules.
         $role = 0;
         if ($actor instanceof RoleIdentifierProvider) {
             $role = $actor->getRoleIdentifier();

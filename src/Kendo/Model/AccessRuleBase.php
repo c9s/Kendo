@@ -19,9 +19,12 @@ class AccessRuleBase
       4 => 'actor_record_id',
       5 => 'resource_record_id',
       6 => 'allow',
-      7 => 'operation',
-      8 => 'operation_id',
-      9 => 'id',
+      7 => 'operation_id',
+      8 => 'actor',
+      9 => 'role',
+      10 => 'resource',
+      11 => 'operation',
+      12 => 'id',
     );
     public static $column_hash = array (
       'actor_id' => 1,
@@ -31,8 +34,11 @@ class AccessRuleBase
       'actor_record_id' => 1,
       'resource_record_id' => 1,
       'allow' => 1,
-      'operation' => 1,
       'operation_id' => 1,
+      'actor' => 1,
+      'role' => 1,
+      'resource' => 1,
+      'operation' => 1,
       'id' => 1,
     );
     public static $mixin_classes = array (
@@ -72,13 +78,25 @@ class AccessRuleBase
     {
             return $this->get('allow');
     }
-    public function getOperation()
-    {
-            return $this->get('operation');
-    }
     public function getOperationId()
     {
             return $this->get('operation_id');
+    }
+    public function getActor()
+    {
+            return $this->get('actor');
+    }
+    public function getRole()
+    {
+            return $this->get('role');
+    }
+    public function getResource()
+    {
+            return $this->get('resource');
+    }
+    public function getOperation()
+    {
+            return $this->get('operation');
     }
     public function getId()
     {

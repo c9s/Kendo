@@ -59,7 +59,6 @@ class PDORuleLoader implements RuleLoader
     {
         $this->conn = $conn;
 
-
         // pre-fetch actor records
         $stm = $conn->prepare('select * from access_actors');
         $stm->execute();
@@ -116,27 +115,39 @@ class PDORuleLoader implements RuleLoader
             $requiredRole = $this->definedRoles[$roleIdentifier];
         }
 
+
+        // rules with record_id should be compared before other rules that are without record id.
         if ($requiredRole) {
             // echo "Query with required role {$requiredRole->id}\n";
             $stm = $this->conn->prepare('
-                SELECT ar.id, ar.actor_id, ar.role_id, ar.resource_id, ar.operation_id, ar.allow
-                        , res.identifier as resource_identifier, res.label as resource_label, ops.identifier as op_identifier
+                SELECT 
+                    ar.id, ar.actor_id, ar.actor_record_id, ar.role_id,
+                        ar.resource_id,
+                        ar.operation_id,
+                        ar.allow,
+                    res.identifier as resource_identifier,
+                    res.label as resource_label,
+                    ops.identifier as op_identifier
                 FROM access_rules ar 
                 LEFT JOIN access_resources res ON (ar.resource_id = res.id)
                 LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
                 LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)
                 WHERE ar.actor_id = ? AND ar.role_id = ?
+                ORDER BY ar.actor_record_id DESC
             ');
             $stm->execute([$requiredActor->id, $requiredRole->id]);
         } else {
             $stm = $this->conn->prepare('
-                SELECT ar.id, ar.actor_id, ar.resource_id, ar.operation_id , ar.allow
-                        , res.identifier as resource_identifier, res.label as resource_label, ops.identifier as op_identifier
+                SELECT ar.id, ar.actor_id, ar.actor_record_id, ar.resource_id, ar.operation_id, ar.allow,
+                    res.identifier as resource_identifier,
+                    res.label as resource_label,
+                    ops.identifier as op_identifier
                 FROM access_rules ar 
                 LEFT JOIN access_resources res ON (ar.resource_id = res.id)
                 LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
                 LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)
                 WHERE ar.actor_id = ? AND ar.role_id IS NULL
+                ORDER BY ar.actor_record_id DESC
             ');
             $stm->execute([$requiredActor->id]);
         }

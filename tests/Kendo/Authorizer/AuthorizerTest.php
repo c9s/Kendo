@@ -7,10 +7,9 @@ use SimpleApp\User\NormalUser;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\RuleLoader\SchemaRuleLoader;
 use Kendo\RuleMatcher\AccessRuleMatcher;
-use Kendo\Operation\GeneralOperation;
 use Kendo\Authorizer\Authorizer;
 use Kendo\IdentifierProvider\ActorIdentifierProvider;
-use Kendo\Operation\GeneralOperation as Op;
+use Kendo\Operation\GeneralOperation;
 
 class AuthorizerTest extends PHPUnit_Framework_TestCase
 {
@@ -28,10 +27,9 @@ class AuthorizerTest extends PHPUnit_Framework_TestCase
         $accessRuleMatcher = new AccessRuleMatcher($loader);
         $authorizer->addMatcher($accessRuleMatcher);
 
-
         $actor = new NormalUser;
-        $ret = $authorizer->authorize($actor, Op::CREATE, 'products');
-        // var_dump( $ret ); 
+        $ret = $authorizer->authorize($actor, GeneralOperation::VIEW, 'products');
+        var_dump( $ret ); 
 
         /*
         $dynamicRuleMatcher = new DynamicRuleMatcher([
