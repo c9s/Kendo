@@ -127,7 +127,12 @@ class PDORuleLoader implements RuleLoader
                         ar.allow,
                     res.identifier as resource_identifier,
                     res.label as resource_label,
-                    ops.identifier as op_identifier
+                    ops.identifier as op_identifier,
+
+                    ar.actor,
+                    ar.role,
+                    ar.resource
+
                 FROM access_rules ar 
                 LEFT JOIN access_resources res ON (ar.resource_id = res.id)
                 LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
@@ -141,7 +146,12 @@ class PDORuleLoader implements RuleLoader
                 SELECT ar.id, ar.actor_id, ar.actor_record_id, ar.resource_id, ar.operation_id, ar.allow,
                     res.identifier as resource_identifier,
                     res.label as resource_label,
-                    ops.identifier as op_identifier
+                    ops.identifier as op_identifier,
+
+                    ar.actor,
+                    ar.role,
+                    ar.resource
+
                 FROM access_rules ar 
                 LEFT JOIN access_resources res ON (ar.resource_id = res.id)
                 LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
