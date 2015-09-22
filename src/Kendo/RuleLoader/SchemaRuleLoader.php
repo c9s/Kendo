@@ -122,26 +122,18 @@ class SchemaRuleLoader implements RuleLoader
         $permissions = $rule->getPermissions();
         foreach ($permissions as $resource => $permissionControls) {
 
-            foreach ($permissionControls as $permissionControl) {
+            foreach ($permissionControls as $opIdentifier => $allow) {
+                $op = $this->definedOperations[$opIdentifier];
+                if (!$op) {
+                    throw new Exception("Undefined operation");
+                }
 
-                $allow = $permissionControl['allow'];
-
-                // the structure of ($permissionControl['operations']) is a list(string, string, string, ....)
-                foreach ($permissionControl['operations'] as $opIdentifier) {
-                    // get op object
-                    $op = $this->definedOperations[$opIdentifier];
-
-                    if (!$op) {
-                        throw new Exception("Undefined operation");
+                if ($roles = $rule->getRoles()) {
+                    foreach ($roles as $role) {
+                        $this->accessRules[$actor->getIdentifier()][$role][$resource][$op->identifier] = $allow;
                     }
-
-                    if ($roles = $rule->getRoles()) {
-                        foreach ($roles as $role) {
-                            $this->accessRules[$actor->getIdentifier()][$role][$resource][$op->identifier] = $allow;
-                        }
-                    } else {
-                        $this->accessRules[$actor->getIdentifier()][0][$resource][$op->identifier] = $allow;
-                    }
+                } else {
+                    $this->accessRules[$actor->getIdentifier()][0][$resource][$op->identifier] = $allow;
                 }
             }
 

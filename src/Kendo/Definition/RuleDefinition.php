@@ -75,10 +75,16 @@ class RuleDefinition
     {
         if (is_array($resources)) {
             foreach ($resources as $resourceIdentifier) {
-                $this->permissions[$resourceIdentifier][] = [ 'resource' => $resourceIdentifier, 'operations' => (array) $operations, 'allow' => true ];
+                foreach ((array) $operations as $operation) {
+                    $this->permissions[$resourceIdentifier][$operation] = true;
+                }
+            }
+        } else if (is_string($resources)) {
+            foreach ((array) $operations as $operation) {
+                $this->permissions[$resources][$operation] = true;
             }
         } else {
-            $this->permissions[$resources][] = [ 'operations' => (array) $operations, 'allow' => true ];
+            throw new Exception('Unsupported type of resources.');
         }
         return $this;
     }
@@ -94,10 +100,14 @@ class RuleDefinition
     {
         if (is_array($resources)) {
             foreach ($resources as $resourceIdentifier) {
-                $this->permissions[$resourceIdentifier][] = [ 'operations' => (array) $operations, 'allow' => false ];
+                foreach ((array) $operations as $operation) {
+                    $this->permissions[$resourceIdentifier][$operation] = false;
+                }
             }
         } else {
-            $this->permissions[$resources][] = [ 'operations' => (array) $operations, 'allow' => false ];
+            foreach ((array) $operations as $operation) {
+                $this->permissions[$resources][$operation] = false;
+            }
         }
         return $this;
     }
