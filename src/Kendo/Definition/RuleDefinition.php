@@ -11,7 +11,7 @@ class RuleDefinition
     protected $actor;
 
     /**
-     * @var integer
+     * @var integer The id of the actor record
      */
     protected $actorRecordId;
 
@@ -38,12 +38,13 @@ class RuleDefinition
      *
      * @param string $identifier
      */
-    public function actor($identifier)
+    public function actor($identifier, $actorRecordId = null)
     {
         $this->actor = $this->policy->findActorByIdentifier($identifier);
         if (!$this->actor) {
             throw new Exception("Actor $identifier not found.");
         }
+        $this->actorRecordId = $actorRecordId;
         return $this;
     }
 
