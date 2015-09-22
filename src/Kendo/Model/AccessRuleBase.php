@@ -19,7 +19,7 @@ class AccessRuleBase
       4 => 'actor_record_id',
       5 => 'resource_record_id',
       6 => 'allow',
-      7 => 'operation_bitmask',
+      7 => 'operation',
       8 => 'operation_id',
       9 => 'id',
     );
@@ -31,7 +31,7 @@ class AccessRuleBase
       'actor_record_id' => 1,
       'resource_record_id' => 1,
       'allow' => 1,
-      'operation_bitmask' => 1,
+      'operation' => 1,
       'operation_id' => 1,
       'id' => 1,
     );
@@ -72,9 +72,9 @@ class AccessRuleBase
     {
             return $this->get('allow');
     }
-    public function getOperationBitmask()
+    public function getOperation()
     {
-            return $this->get('operation_bitmask');
+            return $this->get('operation');
     }
     public function getOperationId()
     {

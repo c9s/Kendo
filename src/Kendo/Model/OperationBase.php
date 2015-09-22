@@ -12,13 +12,13 @@ class OperationBase
     const write_source_id = 'default';
     const primary_key = 'id';
     public static $column_names = array (
-      0 => 'bitmask',
+      0 => 'identifier',
       1 => 'label',
       2 => 'description',
       3 => 'id',
     );
     public static $column_hash = array (
-      'bitmask' => 1,
+      'identifier' => 1,
       'label' => 1,
       'description' => 1,
       'id' => 1,
@@ -32,9 +32,9 @@ class OperationBase
         }
         return $this->_schema = \LazyRecord\Schema\SchemaLoader::load('Kendo\\Model\\OperationSchemaProxy');
     }
-    public function getBitmask()
+    public function getIdentifier()
     {
-            return $this->get('bitmask');
+            return $this->get('identifier');
     }
     public function getLabel()
     {

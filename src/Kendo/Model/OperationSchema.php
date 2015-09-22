@@ -8,12 +8,9 @@ class OperationSchema extends DeclareSchema
     {
         $this->table('access_operations');
 
-        $this->column('bitmask')
-            ->integer()
-            ->unique()
-            ->required();
-
         $this->column('identifier')
+            ->unique()
+            ->required()
             ->varchar(128);
 
         $this->column('label')

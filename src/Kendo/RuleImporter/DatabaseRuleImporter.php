@@ -17,6 +17,10 @@ use Kendo\Exception\DefinitionRedefinedException;
  */
 class DatabaseRuleImporter
 {
+
+    /**
+     * @var RuleLoader $loader
+     */
     protected $loader;
 
     public function __construct(RuleLoader $loader)
@@ -24,6 +28,9 @@ class DatabaseRuleImporter
         $this->loader = $loader;
     }
 
+    /**
+     * Result
+     */
     private function assertResultSuccess($ret)
     {
         if ($ret->error) {
@@ -119,16 +126,16 @@ class DatabaseRuleImporter
         foreach ($definitions as $operationDefinition) {
             $operationRecord = new OperationRecord;
             $ret = $operationRecord->createOrUpdate([
-                'bitmask'     => $operationDefinition->bitmask,
                 'description' => $operationDefinition->description,
                 'label'       => $operationDefinition->label,
-            ], ['bitmask']);
+                'identifier'       => $operationDefinition->identifier,
+            ], ['identifier']);
             $this->assertResultSuccess($ret);
 
-            if (isset($operationRecords[$operationRecord->bitmask])) {
+            if (isset($operationRecords[$operationRecord->identifier])) {
                 throw new DefinitionRedefinedException("Opeartion redefined.");
             }
-            $operationRecords[$operationRecord->bitmask] = $operationRecord;
+            $operationRecords[$operationRecord->identifier] = $operationRecord;
         }
         return $operationRecords;
     }
@@ -165,29 +172,28 @@ class DatabaseRuleImporter
 
                     foreach ($accessRules as $resourceIdentifier => $permissions) {
 
-                        foreach ($permissions as list($opBit, $opName, $allow)) {
-                            $op = $operationDefinitions[$opBit];
-
-
+                        foreach ($permissions as $opIdentifier => $allow) {
+                            $op = $operationDefinitions[$opIdentifier];
 
                             $ruleRecord = new AccessRuleRecord;
 
                             $ret = $ruleRecord->createOrUpdate([
-                                'actor_id'          => $actorRecords[ $actorDefinition->identifier ]->id,
+                                'actor_id' => $actorRecords[ $actorDefinition->identifier ]->id,
                                 // 'actor_record_id' => ...
 
                                 'role_id' => $roleRecords[ $roleIdentifier ]->id,
 
                                 'resource_id' => $resourceRecords[ $resourceIdentifier ]->id,
 
+
+                                'operation' => $opIdentifier,
+
                                 // 'resource_record_id' => ...
-                                'operation_bitmask' => $opBit,
-                                'operation_id'      => $operationRecords[$opBit]->id,
+                                'operation_id'      => $operationRecords[$opIdentifier]->id,
 
                                 'allow'   => $allow,
 
-
-                            ], [ 'actor_id', 'role_id', 'resource_id', 'operation_id' ]);
+                            ], [ 'actor_id', 'role_id', 'resource_id', 'operation' ]);
 
                             /*
                             printf("Created rule %d: %s Actor %s %s %s\n",
@@ -217,9 +223,9 @@ class DatabaseRuleImporter
             // Export rules without roles
             if ($accessRules = $this->loader->getResourceRulesByActorIdentifier($actorDefinition->identifier)) {
                 foreach ($accessRules as $resourceIdentifier => $permissions) {
-                    foreach ($permissions as list($opBit, $opName, $allow)) {
+                    foreach ($permissions as $opIdentifier => $allow) {
 
-                        $op = $operationDefinitions[$opBit];
+                        $op = $operationDefinitions[$opIdentifier];
 
                         $ruleRecord = new AccessRuleRecord;
 
@@ -228,14 +234,15 @@ class DatabaseRuleImporter
 
                             'resource_id'       => $resourceRecords[ $resourceIdentifier ]->id,
 
-                            'operation_bitmask' => $opBit,
-                            'operation_id'      => $operationRecords[$opBit]->id,
+                            'operation' => $opIdentifier,
+
+                            'operation_id'      => $operationRecords[$opIdentifier]->id,
 
                             'allow'   => $allow,
 
                             'role_id' => null,
 
-                        ], [ 'actor_id', 'role_id', 'resource_id', 'operation_id' ]);
+                        ], [ 'actor_id', 'role_id', 'resource_id', 'operation' ]);
 
                         $this->assertResultSuccess($ret);
 

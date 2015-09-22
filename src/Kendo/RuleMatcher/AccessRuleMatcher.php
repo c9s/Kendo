@@ -93,21 +93,19 @@ class AccessRuleMatcher implements RuleMatcher
         }
 
         // TODO: pre-compute the operation mask to improve the performance
-        $opControlList = $accessRules[$resourceIdentifier];
-        foreach ($opControlList as $opControl) {
-            if ($opControl[0] & $operation) {
-                // XXX: should return Authentication object here
-                return (object) [
-                    'actor' => $actor,
-                    'role'  => $role,
-                    'resource'  => $resourceIdentifier,
-                    'mask'      => $opControl[0],
-                    'operation' => $operation[1],
-                    'allow'     => $opControl[2],
-                ];
-            }
+        $permissions = $accessRules[$resourceIdentifier];
+
+        if (!isset($permissions[$operation])) {
+            return null;
         }
-        return null;
+
+        return (object) [
+            'actor' => $actor,
+            'role'  => $role,
+            'resource'  => $resourceIdentifier,
+            'operation' => $operation,
+            'allow'     => $permissions[$operation],
+        ];
     }
 }
 

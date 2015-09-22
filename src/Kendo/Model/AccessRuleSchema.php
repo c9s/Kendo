@@ -47,10 +47,10 @@ class AccessRuleSchema extends DeclareSchema
             ->notNull()
             ->required();
 
-        // oepration bit mask (saved for quick access & filtering)
-        $this->column('operation_bitmask')
-            ->integer()
-            ->required();
+        $this->column('operation')
+            ->varchar(30)
+            ->required()
+            ;
 
         $this->column('operation_id')
             ->integer()

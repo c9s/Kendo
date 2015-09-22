@@ -36,7 +36,6 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
         // Actor without roles
         $this->actor('store', 'Store');
 
-
         $this->rule()
             ->actor('user')->role('admin')
                 ->can([GeneralOperation::CREATE, GeneralOperation::UPDATE, GeneralOperation::DELETE], 'books');

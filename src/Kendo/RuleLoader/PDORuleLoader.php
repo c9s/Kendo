@@ -82,7 +82,7 @@ class PDORuleLoader implements RuleLoader
         $stm = $conn->prepare('select * from access_operations');
         $stm->execute();
         while ($op = $stm->fetchObject('Kendo\\Definition\\OperationDefinition', [null, null])) {
-            $this->definedOperations[$op->bitmask] = $op;
+            $this->definedOperations[$op->identifier] = $op;
         }
 
         $stm = $conn->prepare('select * from access_roles');
@@ -119,7 +119,7 @@ class PDORuleLoader implements RuleLoader
         if ($requiredRole) {
             // echo "Query with required role {$requiredRole->id}\n";
             $stm = $this->conn->prepare('
-                SELECT ar.id, ar.actor_id, ar.role_id, ar.resource_id, ar.operation_id, ar.operation_bitmask, ar.allow
+                SELECT ar.id, ar.actor_id, ar.role_id, ar.resource_id, ar.operation_id, ar.allow
                         , res.identifier as resource_identifier, res.label as resource_label, ops.identifier as op_identifier
                 FROM access_rules ar 
                 LEFT JOIN access_resources res ON (ar.resource_id = res.id)
@@ -130,7 +130,7 @@ class PDORuleLoader implements RuleLoader
             $stm->execute([$requiredActor->id, $requiredRole->id]);
         } else {
             $stm = $this->conn->prepare('
-                SELECT ar.id, ar.actor_id, ar.resource_id, ar.operation_id, ar.operation_bitmask , ar.allow
+                SELECT ar.id, ar.actor_id, ar.resource_id, ar.operation_id , ar.allow
                         , res.identifier as resource_identifier, res.label as resource_label, ops.identifier as op_identifier
                 FROM access_rules ar 
                 LEFT JOIN access_resources res ON (ar.resource_id = res.id)
@@ -143,11 +143,7 @@ class PDORuleLoader implements RuleLoader
 
         $rules = [];
         while ($rule = $stm->fetchObject()) {
-            $rules[$rule->resource_identifier][] = [ 
-                intval($rule->operation_bitmask),
-                $rule->op_identifier,
-                boolval($rule->allow),
-            ];
+            $rules[$rule->resource_identifier][$rule->op_identifier] = boolval($rule->allow);
         }
         return $rules;
     }

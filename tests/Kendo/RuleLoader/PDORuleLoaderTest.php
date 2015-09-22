@@ -71,13 +71,16 @@ class PDORuleLoaderTest extends ModelTestCase
 
         $rules = $loader->getResourceRulesByActorIdentifier('user');
         $this->assertNotEmpty($rules);
-
+        $this->assertSame([
+            'products' => [ 
+                'view' => true,
+                'search' => true,
+            ],
+        ], $rules);
 
         $matcher = new AccessRuleMatcher($loader);
         $actor = new NormalUser;
         $rule = $matcher->match($actor, GeneralOperation::VIEW, 'products');
-
-        // var_dump($rule);
 
         $this->assertNotNull($rule, 'common user can view products');
         $this->assertTrue($rule->allow);

@@ -6,6 +6,7 @@ use Kendo\RuleLoader\RuleLoader;
 use Kendo\Definition\RuleDefinition;
 use SplObjectStorage;
 use LogicException;
+use Exception;
 
 
 /**
@@ -84,8 +85,8 @@ class SchemaRuleLoader implements RuleLoader
             // $roleIdentifer can be zero (means rules without role constraint)
             foreach ($resourceOperations as $resource => $operations) {
                 foreach ($operations as $operation) {
-                    list($bitmask, $opName, $allow) = $operation;
-                    $rules[] = [$actorIdentifier, $roleIdentifier, $resource, $bitmask, $opName, $allow];
+                    list($opIdentifier, $allow) = $operation;
+                    $rules[] = [$actorIdentifier, $roleIdentifier, $resource, $opIdentifier, $allow];
                 }
             }
         }
@@ -125,16 +126,22 @@ class SchemaRuleLoader implements RuleLoader
 
                 $allow = $permissionControl['allow'];
 
-                foreach ($permissionControl['operations'] as $opbit) {
-                    $op = $this->definedOperations[ $opbit ];
-                    if ($roles = $rule->getRoles()) {
-                        foreach ($roles as $role) {
-                            $this->accessRules[$actor->getIdentifier()][$role][$resource][] = [$opbit, $op->label, $allow];
-                        }
-                    } else {
-                        $this->accessRules[ $actor->getIdentifier() ][0][$resource][] = [$opbit, $op->label, $allow];
+                // the structure of ($permissionControl['operations']) is a list(string, string, string, ....)
+                foreach ($permissionControl['operations'] as $opIdentifier) {
+                    // get op object
+                    $op = $this->definedOperations[$opIdentifier];
+
+                    if (!$op) {
+                        throw new Exception("Undefined operation");
                     }
 
+                    if ($roles = $rule->getRoles()) {
+                        foreach ($roles as $role) {
+                            $this->accessRules[$actor->getIdentifier()][$role][$resource][$op->identifier] = $allow;
+                        }
+                    } else {
+                        $this->accessRules[$actor->getIdentifier()][0][$resource][$op->identifier] = $allow;
+                    }
                 }
             }
 
@@ -176,11 +183,11 @@ class SchemaRuleLoader implements RuleLoader
             }
 
             if ($ops = $definition->getOperationDefinitions()) {
-                foreach ($ops as $op) {
-                    if (isset($this->definedOperations[$op->bitmask])) {
-                        throw new LogicException("Operation {$op->label} is already defined.");
+                foreach ($ops as $opIdentifier => $op) {
+                    if (isset($this->definedOperations[$opIdentifier])) {
+                        throw new LogicException("Operation {$opIdentifier} is already defined.");
                     }
-                    $this->definedOperations[$op->bitmask] = $op;
+                    $this->definedOperations[$opIdentifier] = $op;
                 }
             }
 

@@ -11,6 +11,7 @@ class ResourceDefinition extends BaseDefinition
 
     public $group;
 
+
     /**
      * operations method defines available operations of this resource
      *
@@ -22,18 +23,22 @@ class ResourceDefinition extends BaseDefinition
         $args = func_get_args();
         foreach ($args as $arg) {
             if (is_array($arg)) {
-                foreach ($arg as $bitmask) {
-                    $this->operations[] = $bitmask;
+                foreach ($arg as $op => $val) {
+                    if ($val instanceof OperationDefinition) {
+                        $this->operations[$val->identifier] = true;
+                    } else {
+                        $this->operations[$op] = $val;
+                    }
                 }
             } else if ($arg instanceof OperationDefinition) {
 
-                $this->operations[] = $arg->bitmask;
+                $this->operations[$op->identifier] = $op;
 
             } else if (method_exists($arg,'export')) {
 
                 $maps = $arg->export();
-                foreach ($maps as $label => $bitmask) {
-                    $this->operations[] = $bitmask;
+                foreach ($maps as $identifier => $val) {
+                    $this->operations[$identifier] = true;
                 }
 
             } else {
@@ -41,8 +46,8 @@ class ResourceDefinition extends BaseDefinition
                 $exporter = new OperationConstantExporter;
                 $constants = $exporter->export($arg);
 
-                foreach ($constants as $name => $bitmask) {
-                    $this->operations[] = $bitmask;
+                foreach ($constants as $identifier => $val) {
+                    $this->operations[$identifier] = $val;
                 }
 
             }

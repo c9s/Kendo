@@ -7,6 +7,7 @@ use Kendo\Definition\ResourceGroupDefinition;
 use Kendo\Definition\RuleDefinition;
 use Kendo\Definition\OperationDefinition;
 use Kendo\Operation\OperationList;
+use Kendo\Operation\OperationConstantExporter;
 use Exception;
 use ReflectionClass;
 
@@ -79,13 +80,13 @@ abstract class RBACSecurityPolicySchema
         }
     }
 
-    public function globalOperation($bitmask, $label)
+    public function globalOperation($identifier, $label = null)
     {
-        if (isset($this->operations[$bitmask])) {
-            throw new Exception("operation $label ($bitmask) is already defined.");
+        if (isset($this->operations[$identifier])) {
+            throw new Exception("operation $label ($identifier) is already defined.");
         }
-        $op = new OperationDefinition($bitmask, $label);
-        $this->operations[ $bitmask ] = $op;
+        $op = new OperationDefinition($identifier, $label);
+        $this->operations[$identifier] = $op;
         return $this;
     }
 
@@ -96,16 +97,15 @@ abstract class RBACSecurityPolicySchema
     {
         if (method_exists($operations, 'export')) {
             $constants = $operations->export();
-            foreach ($constants as $constantValue => $constantName) {
-                $this->globalOperation($constantValue, $constantName);
+            foreach ($constants as $constantName => $constantValue) {
+                $this->globalOperation($constantName, $constantValue);
             }
         } else {
             // Fetch constant information by using ReflectionClass
             $refClass = new ReflectionClass($operations);
             $constants = $refClass->getConstants();
             foreach ($constants as $constantName => $constantValue) {
-                // TODO: split underscore into words
-                $this->globalOperation($constantValue, ucfirst(strtolower($constantName)));
+                $this->globalOperation($constantValue);
             }
         }
         return $this;

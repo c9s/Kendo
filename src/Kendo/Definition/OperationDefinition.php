@@ -12,24 +12,30 @@ class OperationDefinition
 
     public $bitmask;
 
+    public $identifier;
+
     public $label;
 
     public $description;
 
-    public function __construct($bitmask = null, $label = null)
+    public function __construct($identifier = null, $label = null)
     {
-        if ($bitmask) {
-            $this->bitmask = $bitmask;
+        if ($identifier) {
+            $this->identifier = $identifier;
         }
         if ($label) {
             $this->label = $label;
         }
+
+        // Record Id
         if ($this->id) {
             $this->id = intval($this->id);
         }
+        /*
         if ($this->bitmask) {
             $this->bitmask = intval($this->bitmask);
         }
+        */
     }
 }
 
