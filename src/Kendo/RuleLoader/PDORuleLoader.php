@@ -48,6 +48,7 @@ class PDORuleLoader implements RuleLoader
      */
     protected $defineResourceGroups = array();
 
+    protected $stm;
 
     public function __construct()
     {
@@ -95,6 +96,10 @@ class PDORuleLoader implements RuleLoader
         }
     }
 
+
+    public function prepareAccessRuleStatement()
+    {
+    }
 
     /**
      * getActorAccessRules returns access rules that belongs to one actor.
@@ -148,11 +153,13 @@ class PDORuleLoader implements RuleLoader
             LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)'
             . ' WHERE ' . $conditionSQL
             . ' ORDER BY ar.role, ar.actor_record_id, ar.resource_record_id DESC';
-        $stm = $this->conn->prepare($sql);
-        $stm->execute($queryArgs->toArray(true));
+        if (!$this->stm) {
+            $this->stm = $this->conn->prepare($sql);
+        }
+        $this->stm->execute($queryArgs->toArray(true));
 
         $this->accessRules = [];
-        while ($row = $stm->fetch()) {
+        while ($row = $this->stm->fetch()) {
             $this->accessRules[ $row['actor'] ][ $row['resource'] ][] = [
                 'op'                 => $row['operation'],
                 'role'               => $row['role'],
