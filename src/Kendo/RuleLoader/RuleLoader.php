@@ -9,7 +9,7 @@ use SplObjectStorage;
  */
 interface RuleLoader
 {
-    public function getActorAccessRules($actorIdentifier, $roleIdentifier = 0);
+    public function getActorAccessRules($actorIdentifier);
 
     public function getActorDefinitions();
 

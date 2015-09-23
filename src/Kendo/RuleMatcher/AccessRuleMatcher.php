@@ -93,30 +93,55 @@ class AccessRuleMatcher implements RuleMatcher
 
         }
 
+        $accessRules = $this->loader->getActorAccessRules($actorIdentifier);
 
-        $accessRules = $this->loader->getActorAccessRules($actorIdentifier, $role);
+        // TODO: return reason
         if ($accessRules === null || empty($accessRules)) {
             return null;
         }
 
+        // resource undefined.
+        // TODO: return reason
         if (!isset($accessRules[$resourceIdentifier])) {
+            printf("Reason: resource rules undefined.\n");
             return null;
         }
 
         // TODO: pre-compute the operation mask to improve the performance
-        $permissions = $accessRules[$resourceIdentifier];
+        $rules = $accessRules[$resourceIdentifier];
 
-        if (!isset($permissions[$operation])) {
+        // TODO: return reason
+        if (empty($rules)) {
+            printf("Reason: empty resource rules.\n");
             return null;
         }
 
-        return (object) [
-            'actor'     => $actor,
-            'role'      => $role,
-            'resource'  => $resourceIdentifier,
-            'operation' => $operation,
-            'allow'     => $permissions[$operation],
-        ];
+        foreach ($rules as $rule) {
+
+            /*
+            // FIXME
+            if (isset($rule['actor_record_id']) && $rule['actor_record_id'] != $actorRecordId) {
+                continue;
+            }
+            if (isset($rule['resource_record_id']) && $rule['resource_record_id'] != $resourceRecordId) {
+                continue;
+            }
+            */
+            if (isset($rule['role']) && $rule['role'] != $role) {
+                continue;
+            }
+            if ($rule['op'] != $operation) {
+                continue;
+            }
+            return (object) [
+                'actor'     => $actor,
+                'role'      => $role,
+                'resource'  => $resourceIdentifier,
+                'operation' => $operation,
+                'allow'     => $rule['allow'],
+            ];
+        }
+
     }
 }
 

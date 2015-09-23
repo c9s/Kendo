@@ -103,53 +103,45 @@ class PDORuleLoader implements RuleLoader
      * If $roleIdentifier is not given, it returns access rules without role.
      *
      * @param string $actorIdentifier
-     * @param string $roleIdentifier
      *
      * @return array
      */
-    public function getActorAccessRules($actorIdentifier, $roleIdentifier = 0)
+    public function getActorAccessRules($actorIdentifier)
     {
-        $requiredActor = $this->definedActors[$actorIdentifier];
-
-        $requiredRole = null;
-        if ($roleIdentifier) {
-            if (!isset($this->definedRoles[$roleIdentifier])) {
-                throw new Exception("Role '$roleIdentifier' not found, undefined role identifier '$roleIdentifier' or inexisted role record.");
-            }
-            $requiredRole = $this->definedRoles[$roleIdentifier];
+        if (isset($this->accessRules[$actorIdentifier])) {
+            return $this->accessRules[$actorIdentifier];
         }
 
+
+        $requiredActor = $this->definedActors[$actorIdentifier];
 
         $conditions = new Conditions;
         $queryDriver =  PDODriverFactory::create($this->conn);
-        $conditions->equal('ar.actor_id', new Bind('actor_id', $requiredActor->id));
+        // $conditions->equal('ar.actor_id', new Bind('actor_id', $requiredActor->id));
+        $conditions->equal('ar.actor', new Bind('actor', $actorIdentifier));
+
         $queryArgs = new ArgumentArray;
 
         // rules with record_id should be compared before other rules that are without record id.
-        if ($requiredRole && $requiredRole->id) {
-            $conditions->equal('ar.role_id', new Bind('role_id', $requiredRole->id));
-        } else {
-            $conditions->is('ar.role_id', null);
-        }
 
         $conditionSQL = $conditions->toSql($queryDriver, $queryArgs);
         $sql = '
             SELECT 
-                ar.id, ar.actor_id,
-                ar.actor_record_id AS actorRecordId,
+                ar.id,
+                ar.actor,
+                ar.actor_id,
+                ar.actor_record_id,
+                ar.role,
                 ar.role_id,
+                ar.resource,
                 ar.resource_id,
-                ar.resource_record_id AS resourceRecordId,
+                ar.resource_record_id,
+                ar.operation,
                 ar.operation_id,
                 ar.allow,
                 res.identifier as resource_identifier,
                 res.label as resource_label,
-                ops.identifier as op_identifier,
-
-                ar.actor,
-                ar.role,
-                ar.resource
-
+                ops.identifier as op_identifier
             FROM access_rules ar 
             LEFT JOIN access_resources res ON (ar.resource_id = res.id)
             LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
@@ -159,13 +151,26 @@ class PDORuleLoader implements RuleLoader
         $stm = $this->conn->prepare($sql);
         $stm->execute($queryArgs->toArray(true));
 
-        $rules = [];
-        while ($rule = $stm->fetchObject()) {
-            // $rules[] = $rule;
-            $rules[$rule->resource_identifier][$rule->op_identifier] = boolval($rule->allow);
+        $this->accessRules = [];
+        while ($row = $stm->fetch()) {
+            $this->accessRules[ $row['actor'] ][ $row['resource'] ][] = [
+                'op'                 => $row['operation'],
+                'role'               => $row['role'],
+                'resource'           => $row['resource'],
+                'resource_record_id' => $row['resource_record_id'],
+                'actor_record_id'    => $row['actor_record_id'],
+                'allow'              => boolval($row['allow']),
+            ];
         }
-        return $rules;
+        return $this->accessRules[$actorIdentifier];
     }
+
+
+    public function getAccessRules()
+    {
+        return $this->accessRules;
+    }
+
 
     public function getActorDefinitions()
     {

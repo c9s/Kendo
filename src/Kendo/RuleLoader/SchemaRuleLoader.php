@@ -44,30 +44,6 @@ class SchemaRuleLoader implements RuleLoader
     }
 
 
-    /**
-     * getActorAccessRules returns access rules foreach resource in
-     * the following structure:
-     *
-     * [
-     *    {resource} => [
-     *       [ GeneralOperation::CREATE, true ],
-     *       [ GeneralOperation::UPDATE, false ],
-     *    ],
-     * ]
-     *
-     * $this->accessRules[ $actor->getIdentifier() ][0][$resource][] = [$op, $allow];
-     *
-     * @return array
-     */
-    public function getActorAccessRules($actorIdentifier, $roleIdentifier = null)
-    {
-        if ($roleIdentifier && isset($this->accessRules[ $actorIdentifier ][ $roleIdentifier ])) {
-            return $this->accessRules[ $actorIdentifier ][ $roleIdentifier ];
-        } else if (isset($this->accessRules[ $actorIdentifier ][0])) {
-            return $this->accessRules[ $actorIdentifier ][0];
-        }
-    }
-
 
 
     public function getResourceDefinitions()
@@ -91,6 +67,10 @@ class SchemaRuleLoader implements RuleLoader
     }
 
 
+    public function getAccessRules()
+    {
+        return $this->accessRules;
+    }
 
     public function load(SecurityPolicyModule $module)
     {
@@ -136,72 +116,72 @@ class SchemaRuleLoader implements RuleLoader
             }
 
 
+            $this->accessRules = [];
+
             // Populate rule definitions into access rule array structure
-            $rules = $definition->getRuleDefinitions();
-            foreach ($rules as $rule) {
-                $this->expandRulePermissions($rule);
-            }
-        }
-    }
+            $ruleDefinitions = $definition->getRuleDefinitions();
+            foreach ($ruleDefinitions as $ruleDef) {
+
+                $actor = $ruleDef->getActor();
+                $actorIdentifier = $actor->getIdentifier();
+                $actorRecordId = $ruleDef->getActorRecordId();
+                $permissions = $ruleDef->getPermissions();
 
 
-
-    /**
-     * expandRulePermissions expand rule object into array
-     *
-     * The array structure makes the interface simple & easy to cache.
-     *
-     */
-    protected function expandRulePermissions(RuleDefinition $rule)
-    {
-        // the actor definition
-        $actor = $rule->getActor();
-        $permissions = $rule->getPermissions();
-        foreach ($permissions as $resource => $permissionControls) {
-
-            foreach ($permissionControls as $opIdentifier => $allow) {
-                $op = $this->definedOperations[$opIdentifier];
-                if (!$op) {
-                    throw new Exception("Undefined operation");
-                }
-
-                if ($roles = $rule->getRoles()) {
-                    foreach ($roles as $role) {
-                        $this->accessRules[$actor->getIdentifier()][$role][$resource][$op->identifier] = $allow;
+                if ($roles = $ruleDef->getRoles()) { ; // roles = string[]
+                    foreach ($roles as $roleIdentifier) {
+                        $roleDef = $actor->getRoleDefinition($roleIdentifier);
+                        foreach ($permissions as $resourceIdentifier => $permissionControls) {
+                            foreach ($permissionControls as $op => $allow) {
+                                $this->accessRules[$actorIdentifier][$resourceIdentifier][] = [ 
+                                    'op' => $op,
+                                    'role' => $roleIdentifier,
+                                    'actor_record_id' => $actorRecordId,
+                                    'resource_record_id' => null,
+                                    'allow' => $allow,
+                                ];
+                            }
+                        }
                     }
                 } else {
-                    $this->accessRules[$actor->getIdentifier()][0][$resource][$op->identifier] = $allow;
+                    foreach ($permissions as $resourceIdentifier => $permissionControls) {
+                        foreach ($permissionControls as $op => $allow) {
+                            $this->accessRules[$actorIdentifier][$resourceIdentifier][] = [ 
+                                'op' => $op,
+                                'role' => null,
+                                'actor_record_id' => $actorRecordId,
+                                'resource_record_id' => null,
+                                'allow' => $allow,
+                            ];
+                        }
+                    }
                 }
-            }
 
+            }
         }
     }
-
 
     /**
-     * getAccessRulesByActorIdentifier returns an array that contains access rules
+     * getActorAccessRules returns access rules foreach resource in
+     * the following structure:
      *
-     * Each access rule contains [ actor, role, resource, bitmask, allow]
+     * [
+     *    {resource} => [
+     *       [ GeneralOperation::CREATE, true ],
+     *       [ GeneralOperation::UPDATE, false ],
+     *    ],
+     * ]
      *
-     * TODO: need more details about the opeartion (currently we only have
-     * bitmask and allow/disallow flag), so that we can describe the reason why
-     * we accept/reject the operation.
+     * $this->accessRules[ $actor->getIdentifier() ][0][$resource][] = [$op, $allow];
+     *
+     * @return array
      */
-    public function getAccessRulesByActorIdentifier($actorIdentifier)
+    public function getActorAccessRules($actorIdentifier)
     {
-        $rules = [];
-        foreach ($this->accessRules[$actorIdentifier] as $roleIdentifier => $resourceOperations ) {
-            // $roleIdentifer can be zero (means rules without role constraint)
-            foreach ($resourceOperations as $resource => $operations) {
-                foreach ($operations as $operation) {
-                    list($opIdentifier, $allow) = $operation;
-                    $rules[] = [$actorIdentifier, $roleIdentifier, $resource, $opIdentifier, $allow];
-                }
-            }
+        if (isset($this->accessRules[$actorIdentifier])) {
+            return $this->accessRules[$actorIdentifier];
         }
-        return $rules;
     }
-
 
 }
 

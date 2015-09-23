@@ -110,15 +110,26 @@ class RuleDefinition
                     $this->permissions[$resourceIdentifier][$operation] = false;
                 }
             }
-        } else {
+        } else if (is_string($resources)) {
             foreach ((array) $operations as $operation) {
                 $this->permissions[$resources][$operation] = false;
             }
+        } else {
+            throw new Exception('Unsupported type of resources.');
         }
         return $this;
     }
 
 
+    /**
+     * Return actor record id (if any)
+     *
+     * @return integer
+     */
+    public function getActorRecordId()
+    {
+        return $this->actorRecordId;
+    }
 
     /**
      * @return ActorDefinition

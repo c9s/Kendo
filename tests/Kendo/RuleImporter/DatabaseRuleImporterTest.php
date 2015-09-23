@@ -18,6 +18,9 @@ use Kendo\Model\ResourceCollection;
 
 use LazyRecord\Testing\ModelTestCase;
 
+use CLIFramework\Debug\ConsoleDebug;
+use CLIFramework\Debug\LineIndicator;
+
 class DatabaseRuleImporterTest extends ModelTestCase
 {
     public $driver = 'sqlite';
@@ -35,15 +38,18 @@ class DatabaseRuleImporterTest extends ModelTestCase
     }
 
 
-    public function testExport()
+    public function testImport()
     {
-        $storage = new SecurityPolicyModule;
-        $storage->add(new SimpleSecurityPolicy);
-        $loader = new SchemaRuleLoader;
-        $loader->load($storage);
-        $exporter = new DatabaseRuleImporter($loader);
-        $exporter->export();
+        $module = new SecurityPolicyModule;
+        $module->add(new SimpleSecurityPolicy);
 
+        $loader = new SchemaRuleLoader;
+        $loader->load($module);
+
+        $rules = $loader->getAccessRules();
+
+        $importer = new DatabaseRuleImporter($loader);
+        $importer->import();
 
         $rules = new AccessRuleCollection;
         $this->assertCount(10, $rules);

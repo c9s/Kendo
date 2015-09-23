@@ -13,7 +13,7 @@ use Kendo\Model\ResourceGroup as ResourceGroupRecord;
 use Kendo\Exception\DefinitionRedefinedException;
 
 /**
- * DatabaseRuleImporter exports AccessRule from schema to database
+ * DatabaseRuleImporter imports AccessRule from schema to database
  */
 class DatabaseRuleImporter
 {
@@ -38,7 +38,7 @@ class DatabaseRuleImporter
         }
     }
 
-    protected function exportActorRecords(array $definitions)
+    protected function importActorRecords(array $definitions)
     {
         $actorRecords = [];
         foreach ($definitions as $actorDefinition) {
@@ -53,7 +53,7 @@ class DatabaseRuleImporter
         return $actorRecords;
     }
 
-    protected function exportRoleRecords(array $definitions)
+    protected function importRoleRecords(array $definitions)
     {
         $roleRecords = [];
         foreach ($definitions as $actorDefinition) {
@@ -77,7 +77,7 @@ class DatabaseRuleImporter
         return $roleRecords;
     }
 
-    protected function exportResourceGroupRecords(array $definitions)
+    protected function importResourceGroupRecords(array $definitions)
     {
         $records = array();
         foreach ($definitions as $definition) {
@@ -93,7 +93,7 @@ class DatabaseRuleImporter
         return $records;
     }
 
-    protected function exportResourceRecords(array $definitions)
+    protected function importResourceRecords(array $definitions)
     {
         $resourceRecords = [];
         foreach ($definitions as $definition) {
@@ -120,7 +120,7 @@ class DatabaseRuleImporter
         return $resourceRecords;
     }
 
-    protected function exportOperationRecords(array $definitions)
+    protected function importOperationRecords(array $definitions)
     {
         $operationRecords = [];
         foreach ($definitions as $operationDefinition) {
@@ -140,128 +140,59 @@ class DatabaseRuleImporter
         return $operationRecords;
     }
 
-    public function export()
+    public function import()
     {
         // TODO: clean up removed actor records...
 
         $actorDefinitions    = $this->loader->getActorDefinitions();
-        $actorRecords = $this->exportActorRecords($actorDefinitions);
+        $actorRecords = $this->importActorRecords($actorDefinitions);
 
         $actorDefinitions    = $this->loader->getActorDefinitions();
-        $roleRecords = $this->exportRoleRecords($actorDefinitions);
+        $roleRecords = $this->importRoleRecords($actorDefinitions);
 
 
         $resourceGroupDefinitions = $this->loader->getResourceGroupDefinitions();
-        $resourceGroupRecords = $this->exportResourceGroupRecords($resourceGroupDefinitions);
+        $resourceGroupRecords = $this->importResourceGroupRecords($resourceGroupDefinitions);
 
         $resourceDefinitions = $this->loader->getResourceDefinitions();
-        $resourceRecords = $this->exportResourceRecords($resourceDefinitions);
+        $resourceRecords = $this->importResourceRecords($resourceDefinitions);
 
         $operationDefinitions = $this->loader->getOperationDefinitions();
-        $operationRecords = $this->exportOperationRecords($operationDefinitions);
-
-        foreach ($actorDefinitions as $actorDefinition) {
-            $roleDefinitions = $actorDefinition->getRoleDefinitions();
-
-            if (!empty($roleDefinitions)) {
-
-                foreach ($roleDefinitions as $roleDefinition) {
-
-                    $roleIdentifier = $roleDefinition->identifier;
-                    $accessRules = $this->loader->getActorAccessRules($actorDefinition->identifier, $roleIdentifier);
-
-                    foreach ($accessRules as $resourceIdentifier => $permissions) {
-
-                        foreach ($permissions as $opIdentifier => $allow) {
-                            $op = $operationDefinitions[$opIdentifier];
-
-                            $ruleRecord = new AccessRuleRecord;
-
-                            $ret = $ruleRecord->createOrUpdate([
-                                'actor_id' => $actorRecords[ $actorDefinition->identifier ]->id,
-                                // 'actor_record_id' => ...
-
-                                'role_id' => $roleRecords[ $roleIdentifier ]->id,
-
-                                'resource_id' => $resourceRecords[ $resourceIdentifier ]->id,
+        $operationRecords = $this->importOperationRecords($operationDefinitions);
 
 
-                                'operation' => $opIdentifier,
+        // get all access rules from loader
+        $accessRules = $this->loader->getAccessRules();
+        foreach ($accessRules as $actorIdentifier =>  $actorRules) {
+            foreach ($actorRules as $resourceIdentifier => $rules) {
+                foreach ($rules as $rule) {
 
-                                // 'resource_record_id' => ...
-                                'operation_id'      => $operationRecords[$opIdentifier]->id,
+                    $opIdentifier = $rule['op'];
+                    $allow = $rule['allow'];
+                    $roleIdentifier = $rule['role'];
+                    $op = $operationDefinitions[$opIdentifier];
 
-                                'allow'   => $allow,
+                    $ruleRecord = new AccessRuleRecord;
+                    $ret = $ruleRecord->createOrUpdate([
+                        'actor'    => $actorIdentifier,
+                        'actor_id' => $actorRecords[$actorIdentifier]->id,
+                        'actor_record_id' => $rule['actor_record_id'],
+                        'role'     => $roleIdentifier,
+                        'role_id' => $roleIdentifier ? $roleRecords[$roleIdentifier]->id : null,
 
-                            ], [ 'actor_id', 'role_id', 'resource_id', 'operation' ]);
+                        'operation'    => $opIdentifier,
+                        'operation_id' => $operationRecords[$opIdentifier]->id,
 
-                            /*
-                            printf("Created rule %d: %s Actor %s %s %s\n",
-                                $ruleRecord->id,
-                                $actorDefinition->identifier
-                                , $allow ? 'can' : 'can not',
-                                $op->label, $resourceIdentifier);
-                             */
+                        'resource' => $resourceIdentifier ,
+                        'resource_id' => $resourceRecords[ $resourceIdentifier ]->id,
+                        'resource_record_id' => $rule['actor_record_id'],
 
-                            $this->assertResultSuccess($ret);
+                        'allow'   => $allow,
 
-                            $controlRecord = new AccessControlRecord;
-                            $ret = $controlRecord->createOrUpdate([
-                                'rule_id' => $ruleRecord->id,
-                                'allow' => $allow,
+                    ], [ 'actor', 'role', 'resource', 'operation', 'actor_record_id', 'resource_record_id' ]);
 
-                                // TODO: support extra attributes later.
-                                // 'actor_record_id' => ...
-                                // 'resource_record_id' => ...
-                            ],[ 'rule_id' ]);
-                            $this->assertResultSuccess($ret);
-                        }
-                    }
+                    $this->assertResultSuccess($ret);
                 }
-            }
-
-            // Export rules without roles
-            if ($accessRules = $this->loader->getActorAccessRules($actorDefinition->identifier)) {
-                foreach ($accessRules as $resourceIdentifier => $permissions) {
-                    foreach ($permissions as $opIdentifier => $allow) {
-
-                        $op = $operationDefinitions[$opIdentifier];
-
-                        $ruleRecord = new AccessRuleRecord;
-
-                        $ret = $ruleRecord->createOrUpdate([
-                            'actor_id'          => $actorRecords[ $actorDefinition->identifier ]->id,
-
-                            'resource_id'       => $resourceRecords[ $resourceIdentifier ]->id,
-
-                            'operation' => $opIdentifier,
-
-                            'operation_id'      => $operationRecords[$opIdentifier]->id,
-
-                            'allow'   => $allow,
-
-                            'role_id' => null,
-
-                        ], [ 'actor_id', 'role_id', 'resource_id', 'operation' ]);
-
-                        $this->assertResultSuccess($ret);
-
-
-                        $controlRecord = new AccessControlRecord;
-                        $ret = $controlRecord->createOrUpdate([
-                            'rule_id' => $ruleRecord->id,
-                            'allow' => $allow,
-
-                            // TODO: support extra attributes later.
-                            // 'actor_record_id' => ...
-                            // 'resource_record_id' => ...
-                        ],[ 'rule_id' ]);
-                        $this->assertResultSuccess($ret);
-
-                    }
-                }
-            } else {
-                // this actor doesn't have any rule to import
             }
         }
     }
