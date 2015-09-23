@@ -121,11 +121,13 @@ class PDORuleLoader implements RuleLoader
             // echo "Query with required role {$requiredRole->id}\n";
             $stm = $this->conn->prepare('
                 SELECT 
-                    ar.id, ar.actor_id, ar.actor_record_id AS actorRecordId, ar.role_id,
-                        ar.resource_id,
-                        ar.resource_record_id AS resourceRecordId,
-                        ar.operation_id,
-                        ar.allow,
+                    ar.id, ar.actor_id,
+                    ar.actor_record_id AS actorRecordId,
+                    ar.role_id,
+                    ar.resource_id,
+                    ar.resource_record_id AS resourceRecordId,
+                    ar.operation_id,
+                    ar.allow,
                     res.identifier as resource_identifier,
                     res.label as resource_label,
                     ops.identifier as op_identifier,
