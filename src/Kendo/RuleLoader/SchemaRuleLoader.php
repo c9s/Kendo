@@ -45,7 +45,7 @@ class SchemaRuleLoader implements RuleLoader
 
 
     /**
-     * getResourceRulesByActorIdentifier returns access rules foreach resource in
+     * getActorAccessRules returns access rules foreach resource in
      * the following structure:
      *
      * [
@@ -59,7 +59,7 @@ class SchemaRuleLoader implements RuleLoader
      *
      * @return array
      */
-    public function getResourceRulesByActorIdentifier($actorIdentifier, $roleIdentifier = null)
+    public function getActorAccessRules($actorIdentifier, $roleIdentifier = null)
     {
         if ($roleIdentifier && isset($this->accessRules[ $actorIdentifier ][ $roleIdentifier ])) {
             return $this->accessRules[ $actorIdentifier ][ $roleIdentifier ];

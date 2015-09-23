@@ -168,7 +168,7 @@ class DatabaseRuleImporter
                 foreach ($roleDefinitions as $roleDefinition) {
 
                     $roleIdentifier = $roleDefinition->identifier;
-                    $accessRules = $this->loader->getResourceRulesByActorIdentifier($actorDefinition->identifier, $roleIdentifier);
+                    $accessRules = $this->loader->getActorAccessRules($actorDefinition->identifier, $roleIdentifier);
 
                     foreach ($accessRules as $resourceIdentifier => $permissions) {
 
@@ -221,7 +221,7 @@ class DatabaseRuleImporter
             }
 
             // Export rules without roles
-            if ($accessRules = $this->loader->getResourceRulesByActorIdentifier($actorDefinition->identifier)) {
+            if ($accessRules = $this->loader->getActorAccessRules($actorDefinition->identifier)) {
                 foreach ($accessRules as $resourceIdentifier => $permissions) {
                     foreach ($permissions as $opIdentifier => $allow) {
 

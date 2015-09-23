@@ -63,13 +63,13 @@ class PDORuleLoaderTest extends ModelTestCase
         $this->assertCount(3, $actors = $loader->getActorDefinitions());
         $this->assertCount(6, $ops = $loader->getOperationDefinitions());
 
-        $rules = $loader->getResourceRulesByActorIdentifier('user', 'admin');
+        $rules = $loader->getActorAccessRules('user', 'admin');
         $this->assertNotEmpty($rules);
         $this->assertCount(2, $rules, 'two resources');
         $this->assertCount(3, $rules['books'], '3 rules on books');
         $this->assertCount(3, $rules['products'], '3 rules on books');
 
-        $rules = $loader->getResourceRulesByActorIdentifier('user');
+        $rules = $loader->getActorAccessRules('user');
         $this->assertNotEmpty($rules);
         $this->assertSame([
             'products' => [ 

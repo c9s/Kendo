@@ -35,7 +35,7 @@ class SchemaRuleLoaderTest extends PHPUnit_Framework_TestCase
 
         $loader = new SchemaRuleLoader;
         $loader->load($storage);
-        $userAccessControlList = $loader->getResourceRulesByActorIdentifier('user');
+        $userAccessControlList = $loader->getActorAccessRules('user');
         $this->assertNotEmpty($userAccessControlList);
     }
 }

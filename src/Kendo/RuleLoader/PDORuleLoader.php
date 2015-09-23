@@ -93,7 +93,7 @@ class PDORuleLoader implements RuleLoader
 
 
     /**
-     * getResourceRulesByActorIdentifier returns access rules that belongs to one actor.
+     * getActorAccessRules returns access rules that belongs to one actor.
      *
      * If $roleIdentifier is given, it returns access rules with that $roleIdentifier.
      * If $roleIdentifier is not given, it returns access rules without role.
@@ -103,7 +103,7 @@ class PDORuleLoader implements RuleLoader
      *
      * @return array
      */
-    public function getResourceRulesByActorIdentifier($actorIdentifier, $roleIdentifier = 0)
+    public function getActorAccessRules($actorIdentifier, $roleIdentifier = 0)
     {
         $requiredActor = $this->definedActors[$actorIdentifier];
 
