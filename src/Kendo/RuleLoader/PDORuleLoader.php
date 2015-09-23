@@ -172,6 +172,7 @@ class PDORuleLoader implements RuleLoader
 
         $rules = [];
         while ($rule = $stm->fetchObject()) {
+            // $rules[] = $rule;
             $rules[$rule->resource_identifier][$rule->op_identifier] = boolval($rule->allow);
         }
         return $rules;

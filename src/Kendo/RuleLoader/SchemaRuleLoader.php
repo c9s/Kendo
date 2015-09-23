@@ -69,31 +69,6 @@ class SchemaRuleLoader implements RuleLoader
     }
 
 
-    /**
-     * getAccessRulesByActorIdentifier returns an array that contains access rules
-     *
-     * Each access rule contains [ actor, role, resource, bitmask, allow]
-     *
-     * TODO: need more details about the opeartion (currently we only have
-     * bitmask and allow/disallow flag), so that we can describe the reason why
-     * we accept/reject the operation.
-     */
-    public function getAccessRulesByActorIdentifier($actorIdentifier)
-    {
-        $rules = [];
-        foreach ($this->accessRules[$actorIdentifier] as $roleIdentifier => $resourceOperations ) {
-            // $roleIdentifer can be zero (means rules without role constraint)
-            foreach ($resourceOperations as $resource => $operations) {
-                foreach ($operations as $operation) {
-                    list($opIdentifier, $allow) = $operation;
-                    $rules[] = [$actorIdentifier, $roleIdentifier, $resource, $opIdentifier, $allow];
-                }
-            }
-        }
-        return $rules;
-    }
-
-
 
     public function getResourceDefinitions()
     {
@@ -115,30 +90,7 @@ class SchemaRuleLoader implements RuleLoader
         return $this->definedOperations;
     }
 
-    protected function expandRulePermissions(RuleDefinition $rule)
-    {
-        // the actor definition
-        $actor = $rule->getActor();
-        $permissions = $rule->getPermissions();
-        foreach ($permissions as $resource => $permissionControls) {
 
-            foreach ($permissionControls as $opIdentifier => $allow) {
-                $op = $this->definedOperations[$opIdentifier];
-                if (!$op) {
-                    throw new Exception("Undefined operation");
-                }
-
-                if ($roles = $rule->getRoles()) {
-                    foreach ($roles as $role) {
-                        $this->accessRules[$actor->getIdentifier()][$role][$resource][$op->identifier] = $allow;
-                    }
-                } else {
-                    $this->accessRules[$actor->getIdentifier()][0][$resource][$op->identifier] = $allow;
-                }
-            }
-
-        }
-    }
 
     public function load(SecurityPolicyModule $module)
     {
@@ -183,13 +135,74 @@ class SchemaRuleLoader implements RuleLoader
                 }
             }
 
+
+            // Populate rule definitions into access rule array structure
             $rules = $definition->getRuleDefinitions();
             foreach ($rules as $rule) {
                 $this->expandRulePermissions($rule);
             }
+        }
+    }
+
+
+
+    /**
+     * expandRulePermissions expand rule object into array
+     *
+     * The array structure makes the interface simple & easy to cache.
+     *
+     */
+    protected function expandRulePermissions(RuleDefinition $rule)
+    {
+        // the actor definition
+        $actor = $rule->getActor();
+        $permissions = $rule->getPermissions();
+        foreach ($permissions as $resource => $permissionControls) {
+
+            foreach ($permissionControls as $opIdentifier => $allow) {
+                $op = $this->definedOperations[$opIdentifier];
+                if (!$op) {
+                    throw new Exception("Undefined operation");
+                }
+
+                if ($roles = $rule->getRoles()) {
+                    foreach ($roles as $role) {
+                        $this->accessRules[$actor->getIdentifier()][$role][$resource][$op->identifier] = $allow;
+                    }
+                } else {
+                    $this->accessRules[$actor->getIdentifier()][0][$resource][$op->identifier] = $allow;
+                }
+            }
 
         }
     }
+
+
+    /**
+     * getAccessRulesByActorIdentifier returns an array that contains access rules
+     *
+     * Each access rule contains [ actor, role, resource, bitmask, allow]
+     *
+     * TODO: need more details about the opeartion (currently we only have
+     * bitmask and allow/disallow flag), so that we can describe the reason why
+     * we accept/reject the operation.
+     */
+    public function getAccessRulesByActorIdentifier($actorIdentifier)
+    {
+        $rules = [];
+        foreach ($this->accessRules[$actorIdentifier] as $roleIdentifier => $resourceOperations ) {
+            // $roleIdentifer can be zero (means rules without role constraint)
+            foreach ($resourceOperations as $resource => $operations) {
+                foreach ($operations as $operation) {
+                    list($opIdentifier, $allow) = $operation;
+                    $rules[] = [$actorIdentifier, $roleIdentifier, $resource, $opIdentifier, $allow];
+                }
+            }
+        }
+        return $rules;
+    }
+
+
 }
 
 
