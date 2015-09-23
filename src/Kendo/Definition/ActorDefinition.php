@@ -50,8 +50,16 @@ class ActorDefinition extends BaseDefinition
         return $instanceClass;
     }
 
+    public function getRoleDefinition($roleIdentifier)
+    {
+        if (isset($this->roles[ $roleIdentifier ])) {
+            return $this->roles[ $roleIdentifier ];
+        }
+    }
+
+
     /**
-     * @return string[] Return role identifiers
+     * @return RoleDefinition[string identifier] Return role identifiers
      */
     public function getRoleDefinitions()
     {
