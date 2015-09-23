@@ -73,7 +73,7 @@ class PDORuleLoaderTest extends ModelTestCase
         $this->assertNotEmpty($rules);
         $this->assertSame([
             'products' => [ 
-                'view' => true,
+                'view'   => true,
                 'search' => true,
             ],
         ], $rules);

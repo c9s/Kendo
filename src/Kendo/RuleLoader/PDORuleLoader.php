@@ -7,6 +7,10 @@ use Kendo\Definition\ActorDefinition;
 use Kendo\Definition\RoleDefinition;
 use Kendo\Definition\ResourceDefinition;
 use Kendo\Definition\OperationDefinition;
+use SQLBuilder\Universal\Syntax\Conditions;
+use SQLBuilder\Bind;
+use SQLBuilder\ArgumentArray;
+use SQLBuilder\Driver\PDODriverFactory;
 use Exception;
 
 class PDORuleLoader implements RuleLoader
@@ -116,59 +120,44 @@ class PDORuleLoader implements RuleLoader
         }
 
 
+        $conditions = new Conditions;
+        $queryDriver =  PDODriverFactory::create($this->conn);
+        $conditions->equal('ar.actor_id', new Bind('actor_id', $requiredActor->id));
+        $queryArgs = new ArgumentArray;
+
         // rules with record_id should be compared before other rules that are without record id.
-        if ($requiredRole) {
-            // echo "Query with required role {$requiredRole->id}\n";
-            $stm = $this->conn->prepare('
-                SELECT 
-                    ar.id, ar.actor_id,
-                    ar.actor_record_id AS actorRecordId,
-                    ar.role_id,
-                    ar.resource_id,
-                    ar.resource_record_id AS resourceRecordId,
-                    ar.operation_id,
-                    ar.allow,
-                    res.identifier as resource_identifier,
-                    res.label as resource_label,
-                    ops.identifier as op_identifier,
-
-                    ar.actor,
-                    ar.role,
-                    ar.resource
-
-                FROM access_rules ar 
-                LEFT JOIN access_resources res ON (ar.resource_id = res.id)
-                LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
-                LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)
-                WHERE ar.actor_id = ? AND ar.role_id = ?
-                ORDER BY ar.role, ar.actor_record_id, ar.resource_record_id DESC
-            ');
-            $stm->execute([$requiredActor->id, $requiredRole->id]);
+        if ($requiredRole && $requiredRole->id) {
+            $conditions->equal('ar.role_id', new Bind('role_id', $requiredRole->id));
         } else {
-            $stm = $this->conn->prepare('
-                SELECT ar.id, ar.actor_id, 
-                    ar.actor_record_id AS actorRecordId,
-                    ar.resource_id,
-                    ar.resource_record_id AS resourceRecordId,
-                    ar.operation_id,
-                    ar.allow,
-                    res.identifier as resource_identifier,
-                    res.label as resource_label,
-                    ops.identifier as op_identifier,
-
-                    ar.actor,
-                    ar.role,
-                    ar.resource
-
-                FROM access_rules ar 
-                LEFT JOIN access_resources res ON (ar.resource_id = res.id)
-                LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
-                LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)
-                WHERE ar.actor_id = ? AND ar.role_id IS NULL
-                ORDER BY ar.role, ar.actor_record_id, ar.resource_record_id DESC
-            ');
-            $stm->execute([$requiredActor->id]);
+            $conditions->is('ar.role_id', null);
         }
+
+        $conditionSQL = $conditions->toSql($queryDriver, $queryArgs);
+        $sql = '
+            SELECT 
+                ar.id, ar.actor_id,
+                ar.actor_record_id AS actorRecordId,
+                ar.role_id,
+                ar.resource_id,
+                ar.resource_record_id AS resourceRecordId,
+                ar.operation_id,
+                ar.allow,
+                res.identifier as resource_identifier,
+                res.label as resource_label,
+                ops.identifier as op_identifier,
+
+                ar.actor,
+                ar.role,
+                ar.resource
+
+            FROM access_rules ar 
+            LEFT JOIN access_resources res ON (ar.resource_id = res.id)
+            LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
+            LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)'
+            . ' WHERE ' . $conditionSQL
+            . ' ORDER BY ar.role, ar.actor_record_id, ar.resource_record_id DESC';
+        $stm = $this->conn->prepare($sql);
+        $stm->execute($queryArgs->toArray(true));
 
         $rules = [];
         while ($rule = $stm->fetchObject()) {
