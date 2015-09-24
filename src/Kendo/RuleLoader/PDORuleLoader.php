@@ -52,6 +52,7 @@ class PDORuleLoader implements RuleLoader
 
     public function __construct()
     {
+
     }
 
 
@@ -120,43 +121,47 @@ class PDORuleLoader implements RuleLoader
 
         $requiredActor = $this->definedActors[$actorIdentifier];
 
-        $conditions = new Conditions;
         $queryDriver =  PDODriverFactory::create($this->conn);
-        // $conditions->equal('ar.actor_id', new Bind('actor_id', $requiredActor->id));
-        $conditions->equal('ar.actor', new Bind('actor', $actorIdentifier));
 
-        $queryArgs = new ArgumentArray;
+        $queryArgs = new ArgumentArray([ 
+            ':actor' => $actorIdentifier,
+        ]);
 
-        // rules with record_id should be compared before other rules that are without record id.
-
-        $conditionSQL = $conditions->toSql($queryDriver, $queryArgs);
-        $sql = '
-            SELECT 
-                ar.id,
-                ar.actor,
-                ar.actor_id,
-                ar.actor_record_id,
-                ar.role,
-                ar.role_id,
-                ar.resource,
-                ar.resource_id,
-                ar.resource_record_id,
-                ar.operation,
-                ar.operation_id,
-                ar.allow,
-                res.identifier as resource_identifier,
-                res.label as resource_label,
-                ops.identifier as op_identifier
-            FROM access_rules ar 
-            LEFT JOIN access_resources res ON (ar.resource_id = res.id)
-            LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
-            LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)'
-            . ' WHERE ' . $conditionSQL
-            . ' ORDER BY ar.role, ar.actor_record_id, ar.resource_record_id DESC';
         if (!$this->stm) {
+            $conditions = new Conditions;
+            $conditions->equal('ar.actor', new Bind('actor', $actorIdentifier));
+            // $conditions->equal('ar.actor_id', new Bind('actor_id', $requiredActor->id));
+
+            // rules with record_id should be compared before other rules that are without record id.
+
+            $conditionSQL = $conditions->toSql($queryDriver, $queryArgs);
+            $sql = '
+                SELECT 
+                    ar.id,
+                    ar.actor,
+                    ar.actor_id,
+                    ar.actor_record_id,
+                    ar.role,
+                    ar.role_id,
+                    ar.resource,
+                    ar.resource_id,
+                    ar.resource_record_id,
+                    ar.operation,
+                    ar.operation_id,
+                    ar.allow,
+                    res.identifier as resource_identifier,
+                    res.label as resource_label,
+                    ops.identifier as op_identifier
+                FROM access_rules ar 
+                LEFT JOIN access_resources res ON (ar.resource_id = res.id)
+                LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
+                LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)'
+                . ' WHERE ' . $conditionSQL
+                . ' ORDER BY ar.role, ar.actor_record_id, ar.resource_record_id DESC';
             $this->stm = $this->conn->prepare($sql);
         }
-        $this->stm->execute($queryArgs->toArray(true));
+
+        $this->stm->execute($queryArgs->toArray());
 
         $this->accessRules = [];
         while ($row = $this->stm->fetch()) {
