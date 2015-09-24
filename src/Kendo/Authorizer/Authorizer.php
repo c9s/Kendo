@@ -13,23 +13,6 @@ class Credential
     public $actor;
 }
 
-class Result {
-
-    public $allowed;
-
-    public $reason;
-
-    public $credential;
-
-    public function __construct($allowed, $reason, Credential $credential = null)
-    {
-        $this->allowed = $allowed;
-        $this->reason = $reason;
-        $this->credential = $credential;
-    }
-
-}
-
 class Authorizer
 {
     protected $matchers = array();
@@ -51,19 +34,49 @@ class Authorizer
         $this->matchers[] = $matcher;
     }
 
+
+
+    /**
+     * Translate matching result code into reason string.
+     *
+     * @return string reason in string type.
+     */
+    protected function translateCode($code)
+    {
+        switch ($code) {
+        case RuleMatcher::NO_RULE_MATCHED:
+            return 'No rule matched.';
+        case RuleMatcher::RESOURCE_RULE_EMPTY:
+            return 'Resource rule empty.';
+        case RuleMatcher::ACTOR_RULE_UNDEFINED:
+            return 'Actor rule undefined.';
+        case RuleMatcher::RESOURCE_RULE_UNDEFINED:
+            return 'Resource rule undefined.';
+        }
+    }
+
+
+    /**
+     *
+     *
+     * @param string|RuleIdentifierProvider|ActorIdentifierProvider $actor
+     * @param string $oepration
+     * @param string|ResourceIdentifierProvider $resource
+     */
     public function authorize($actor, $operation, $resource)
     {
         foreach ($this->matchers as $matcher) {
             $retval = $matcher->match($actor, $operation, $resource);
             if (is_integer($retval)) {
-                return new Result(false, "No rule matched.");
+                $reason = $this->translateCode($retval);
+                return new AuthorizationResult(false, $reason);
             }
-            return new Result($matched->allow, "Rule matched");
+            return new AuthorizationResult($matched->allow, "Rule matched");
         }
         if ($this->disallowNoRuleMatches) {
-            return new Result(false, "Disallowed.");
+            return new AuthorizationResult(false, "Disallowed.");
         }
-        return new Result(true, "Allowed by default.");
+        return new AuthorizationResult(true, "Allowed by default.");
     }
 }
 
