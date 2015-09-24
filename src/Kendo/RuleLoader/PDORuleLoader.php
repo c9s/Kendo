@@ -104,9 +104,6 @@ class PDORuleLoader implements RuleLoader
         $conditions = new Conditions;
         $conditions->equal('ar.actor', new Bind('actor', $actorIdentifier));
         // $conditions->equal('ar.actor_id', new Bind('actor_id', $requiredActor->id));
-
-        // rules with record_id should be compared before other rules that are without record id.
-
         $conditionSQL = $conditions->toSql($queryDriver, $queryArgs);
         $sql = '
             SELECT 
@@ -121,14 +118,8 @@ class PDORuleLoader implements RuleLoader
                 ar.resource_record_id,
                 ar.operation,
                 ar.operation_id,
-                ar.allow,
-                res.identifier as resource_identifier,
-                res.label as resource_label,
-                ops.identifier as op_identifier
-            FROM access_rules ar 
-            LEFT JOIN access_resources res ON (ar.resource_id = res.id)
-            LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
-            LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)'
+                ar.allow
+            FROM access_rules ar'
             . ' WHERE ' . $conditionSQL
             . ' ORDER BY ar.actor, ar.role, ar.actor_record_id, ar.resource, ar.resource_record_id DESC';
         return $this->conn->prepare($sql);
