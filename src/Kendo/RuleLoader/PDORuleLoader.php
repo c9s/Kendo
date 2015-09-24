@@ -162,11 +162,11 @@ class PDORuleLoader implements RuleLoader
 
         $this->stm->execute($queryArgs->toArray());
 
-        $this->fetchStatementRules($this->stm);
+        $this->fetchActorAccessRules($this->stm);
         return $this->accessRules[$actorIdentifier];
     }
 
-    protected function fetchStatementRules(PDOStatement $stm)
+    protected function fetchActorAccessRules(PDOStatement $stm)
     {
         while ($row = $stm->fetch()) {
             $this->accessRules[ $row['actor'] ][ $row['resource'] ][] = [
