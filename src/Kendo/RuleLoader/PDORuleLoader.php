@@ -99,10 +99,10 @@ class PDORuleLoader implements RuleLoader
         }
     }
 
-    public function prepareAccessRuleStatement(ArgumentArray $queryArgs, Conditions $conditions)
+    public function prepareAccessRuleStatement(ArgumentArray $args, Conditions $conditions)
     {
         $queryDriver =  PDODriverFactory::create($this->conn);
-        $conditionSQL = $conditions->toSql($queryDriver, $queryArgs);
+        $conditionSQL = $conditions->toSql($queryDriver, $args);
         $sql = '
             SELECT 
                 id,
@@ -117,18 +117,39 @@ class PDORuleLoader implements RuleLoader
                 operation,
                 operation_id,
                 allow
-            FROM access_rules ar '
+            FROM access_rules '
             . ' WHERE ' . $conditionSQL
-            . ' ORDER BY actor, role, actor_record_id, resource, resource_record_id DESC';
+            . ' ORDER BY actor, actor_record_id, role, resource, resource_record_id DESC';
+        // echo $sql , PHP_EOL;
         return $this->conn->prepare($sql);
     }
 
-
-    public function getActorAccessRulesByResource($actor, $actorRecordId, $resource)
+    public function queryActorAccessRules($actor, $actorRecordId = null, $resource = null)
     {
-        $conditions = new Conditions;
-        $conditions->equal('actor', new Bind('actor', $actorIdentifier));
+        $args = new ArgumentArray;
 
+        $conditions = new Conditions;
+        $conditions->equal('actor', new Bind('actor', $actor));
+
+        // remove resource specific rules
+        $conditions->is('resource_record_id', null);
+
+        if ($actorRecordId) {
+            $conditions->equal('actor_record_id', new Bind('actor_record_id', $actorRecordId));
+        }
+
+        if ($resource) {
+            $conditions->equal('resource', new Bind('resource',$resource));
+        }
+
+        $stm = $this->prepareAccessRuleStatement($args, $conditions);
+        $stm->execute($args->toArray());
+
+        $rules = [];
+        while ($row = $stm->fetch()) {
+            $rules[] = $row;
+        }
+        return $rules;
     }
 
 

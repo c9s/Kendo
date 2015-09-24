@@ -166,7 +166,6 @@ class DatabaseRuleImporter
         foreach ($accessRules as $actorIdentifier =>  $actorRules) {
             foreach ($actorRules as $resourceIdentifier => $rules) {
                 foreach ($rules as $rule) {
-
                     $opIdentifier = $rule['op'];
                     $allow = $rule['allow'];
                     $roleIdentifier = $rule['role'];
@@ -185,7 +184,7 @@ class DatabaseRuleImporter
 
                         'resource' => $resourceIdentifier ,
                         'resource_id' => $resourceRecords[ $resourceIdentifier ]->id,
-                        'resource_record_id' => $rule['actor_record_id'],
+                        'resource_record_id' => $rule['resource_record_id'],
 
                         'allow'   => $allow,
 
