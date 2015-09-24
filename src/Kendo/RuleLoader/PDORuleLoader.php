@@ -130,7 +130,7 @@ class PDORuleLoader implements RuleLoader
             LEFT JOIN access_roles roles ON (ar.role_id = roles.id)
             LEFT JOIN access_operations ops ON (ar.operation_id = ops.id)'
             . ' WHERE ' . $conditionSQL
-            . ' ORDER BY ar.role, ar.actor_record_id, ar.resource_record_id DESC';
+            . ' ORDER BY ar.actor, ar.role, ar.actor_record_id, ar.resource, ar.resource_record_id DESC';
         return $this->conn->prepare($sql);
     }
 
