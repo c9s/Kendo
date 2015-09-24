@@ -105,23 +105,33 @@ class PDORuleLoader implements RuleLoader
         $conditionSQL = $conditions->toSql($queryDriver, $queryArgs);
         $sql = '
             SELECT 
-                ar.id,
-                ar.actor,
-                ar.actor_id,
-                ar.actor_record_id,
-                ar.role,
-                ar.role_id,
-                ar.resource,
-                ar.resource_id,
-                ar.resource_record_id,
-                ar.operation,
-                ar.operation_id,
-                ar.allow
-            FROM access_rules ar'
+                id,
+                actor,
+                actor_id,
+                actor_record_id,
+                role,
+                role_id,
+                resource,
+                resource_id,
+                resource_record_id,
+                operation,
+                operation_id,
+                allow
+            FROM access_rules ar '
             . ' WHERE ' . $conditionSQL
-            . ' ORDER BY ar.actor, ar.role, ar.actor_record_id, ar.resource, ar.resource_record_id DESC';
+            . ' ORDER BY actor, role, actor_record_id, resource, resource_record_id DESC';
         return $this->conn->prepare($sql);
     }
+
+
+    public function getActorAccessRulesByResource($actor, $actorRecordId, $resource)
+    {
+        $conditions = new Conditions;
+        $conditions->equal('actor', new Bind('actor', $actorIdentifier));
+
+    }
+
+
 
     /**
      * getActorAccessRules returns access rules that belongs to one actor.
@@ -131,33 +141,34 @@ class PDORuleLoader implements RuleLoader
      *
      * This method is usually used when controller needs to verify the permissions.
      *
-     * @param string $actorIdentifier
+     * @param string $actor
      *
      * @return array
      */
-    public function getActorAccessRules($actorIdentifier)
+    public function getActorAccessRules($actor)
     {
-        if (isset($this->accessRules[$actorIdentifier])) {
-            return $this->accessRules[$actorIdentifier];
+        if (isset($this->accessRules[$actor])) {
+            return $this->accessRules[$actor];
         }
 
-        $requiredActor = $this->definedActors[$actorIdentifier];
 
-        $queryArgs = new ArgumentArray([
-            ':actor' => $actorIdentifier,
+        $args = new ArgumentArray([
+            ':actor' => $actor,
         ]);
 
         if (!$this->stm) {
             $conditions = new Conditions;
-            $conditions->equal('ar.actor', new Bind('actor', $actorIdentifier));
-            // $conditions->equal('ar.actor_id', new Bind('actor_id', $requiredActor->id));
-            $this->stm = $this->prepareAccessRuleStatement($queryArgs, $conditions);
+            $conditions->equal('actor', new Bind('actor', $actor));
+
+            // $requiredActor = $this->definedActors[$actor];
+            // $conditions->equal('actor_id', new Bind('actor_id', $requiredActor->id));
+            $this->stm = $this->prepareAccessRuleStatement($args, $conditions);
         }
 
-        $this->stm->execute($queryArgs->toArray());
+        $this->stm->execute($args->toArray());
 
         $this->fetchActorAccessRules($this->stm);
-        return $this->accessRules[$actorIdentifier];
+        return $this->accessRules[$actor];
     }
 
     protected function fetchActorAccessRules(PDOStatement $stm)
