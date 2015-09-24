@@ -1,7 +1,6 @@
 <?php
 namespace Kendo\RuleLoader;
 use Kendo\RuleLoader\RuleLoader;
-use PDO;
 use Kendo\Definition\RuleDefinition;
 use Kendo\Definition\ActorDefinition;
 use Kendo\Definition\RoleDefinition;
@@ -11,6 +10,8 @@ use SQLBuilder\Universal\Syntax\Conditions;
 use SQLBuilder\Bind;
 use SQLBuilder\ArgumentArray;
 use SQLBuilder\Driver\PDODriverFactory;
+use PDO;
+use PDOStatement;
 use Exception;
 
 class PDORuleLoader implements RuleLoader
@@ -97,7 +98,6 @@ class PDORuleLoader implements RuleLoader
         }
     }
 
-
     public function prepareAccessRuleStatement(ArgumentArray $queryArgs, $actorIdentifier)
     {
         $queryDriver =  PDODriverFactory::create($this->conn);
@@ -150,9 +150,7 @@ class PDORuleLoader implements RuleLoader
             return $this->accessRules[$actorIdentifier];
         }
 
-
         $requiredActor = $this->definedActors[$actorIdentifier];
-
 
         $queryArgs = new ArgumentArray([
             ':actor' => $actorIdentifier,
@@ -164,8 +162,13 @@ class PDORuleLoader implements RuleLoader
 
         $this->stm->execute($queryArgs->toArray());
 
-        $this->accessRules = [];
-        while ($row = $this->stm->fetch()) {
+        $this->fetchStatementRules($this->stm);
+        return $this->accessRules[$actorIdentifier];
+    }
+
+    protected function fetchStatementRules(PDOStatement $stm)
+    {
+        while ($row = $stm->fetch()) {
             $this->accessRules[ $row['actor'] ][ $row['resource'] ][] = [
                 'op'                 => $row['operation'],
                 'role'               => $row['role'],
@@ -175,8 +178,9 @@ class PDORuleLoader implements RuleLoader
                 'allow'              => boolval($row['allow']),
             ];
         }
-        return $this->accessRules[$actorIdentifier];
     }
+
+
 
 
     public function getAccessRules()
