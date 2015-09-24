@@ -12,7 +12,6 @@ use LogicException;
 
 class AccessRuleMatcher implements RuleMatcher
 {
-
     protected $loader;
 
     protected $context;
@@ -117,14 +116,13 @@ class AccessRuleMatcher implements RuleMatcher
 
         // TODO: return reason
         if ($accessRules === null || empty($accessRules)) {
-            return null;
+            return RuleMatcher::ACTOR_RULE_UNDEFINED;
         }
 
         // resource undefined.
         // TODO: return reason
         if (!isset($accessRules[$resourceIdentifier])) {
-            printf("Reason: resource rules undefined.\n");
-            return null;
+            return RuleMatcher::RESOURCE_RULE_UNDEFINED;
         }
 
         // TODO: pre-compute the operation mask to improve the performance
@@ -132,8 +130,7 @@ class AccessRuleMatcher implements RuleMatcher
 
         // TODO: return reason
         if (empty($rules)) {
-            printf("Reason: empty resource rules.\n");
-            return null;
+            return RuleMatcher::RESOURCE_RULE_EMPTY;
         }
 
         foreach ($rules as $rule) {
@@ -161,6 +158,7 @@ class AccessRuleMatcher implements RuleMatcher
             ];
         }
 
+        return RuleMatcher::NO_RULE_MATCHED;
     }
 }
 

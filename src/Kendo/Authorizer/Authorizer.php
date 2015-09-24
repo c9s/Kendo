@@ -54,9 +54,11 @@ class Authorizer
     public function authorize($actor, $operation, $resource)
     {
         foreach ($this->matchers as $matcher) {
-            if ($matched = $matcher->match($actor, $operation, $resource)) {
-                return new Result($matched->allow, "Rule matched");
+            $retval = $matcher->match($actor, $operation, $resource);
+            if (is_integer($retval)) {
+                return new Result(false, "No rule matched.");
             }
+            return new Result($matched->allow, "Rule matched");
         }
         if ($this->disallowNoRuleMatches) {
             return new Result(false, "Disallowed.");
