@@ -2,7 +2,6 @@
 namespace Kendo\Authorizer;
 use Kendo\RuleMatcher\RuleMatcher;
 
-
 /**
  * Credential is used for granted operation.
  *

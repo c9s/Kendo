@@ -5,6 +5,7 @@ use Kendo\IdentifierProvider\ActorIdentifierProvider;
 use Kendo\IdentifierProvider\RoleIdentifierProvider;
 use Kendo\IdentifierProvider\ResourceIdentifierProvider;
 use Kendo\IdentifierProvider\GeneralIdentifierProvider;
+use Kendo\IdentifierProvider\RecordIdentifierProvider;
 use Kendo\RuleMatcher\RuleMatcher;
 use Kendo\Context;
 use LogicException;
@@ -47,6 +48,9 @@ class AccessRuleMatcher implements RuleMatcher
         }
 
         $actorIdentifier = null;
+        $actorRecordId = null;
+
+        // Check actor 
 
         if ($matchedActorDefinition) {
             
@@ -56,9 +60,17 @@ class AccessRuleMatcher implements RuleMatcher
 
             $actorIdentifier = $actor->getActorIdentifier();
 
+            if ($actor instanceof RecordIdentifierProvider) {
+                $actorRecordId = $actor->getRecordIdentifier();
+            }
+
         } else if ($actor instanceof GeneralIdentifierProvider) {
 
             $actorIdentifier = $actor->getIdentifier();
+
+            if ($actor instanceof RecordIdentifierProvider) {
+                $actorRecordId = $actor->getRecordIdentifier();
+            }
 
         } else {
 
@@ -75,6 +87,8 @@ class AccessRuleMatcher implements RuleMatcher
 
 
         $resourceIdentifier = null;
+        $resourceRecordId   = null;
+
         if (is_string($resource)) {
 
             $resourceIdentifier = $resource;
@@ -82,10 +96,16 @@ class AccessRuleMatcher implements RuleMatcher
         } else if ($resource instanceof ResourceIdentifierProvider) {
 
             $resourceIdentifier = $resource->getResourceIdentifier();
+            if ($resource instanceof RecordIdentifierProvider) {
+                $resourceRecordId = $resource->getResourceIdentifier();
+            }
 
         } else if ($resource instanceof GeneralIdentifierProvider) {
 
             $resourceIdentifier = $resource->getIdentifier();
+            if ($resource instanceof RecordIdentifierProvider) {
+                $resourceRecordId = $resource->getResourceIdentifier();
+            }
 
         } else {
 
@@ -118,15 +138,14 @@ class AccessRuleMatcher implements RuleMatcher
 
         foreach ($rules as $rule) {
 
-            /*
-            // FIXME
             if (isset($rule['actor_record_id']) && $rule['actor_record_id'] != $actorRecordId) {
                 continue;
             }
+
             if (isset($rule['resource_record_id']) && $rule['resource_record_id'] != $resourceRecordId) {
                 continue;
             }
-            */
+
             if (isset($rule['role']) && $rule['role'] != $role) {
                 continue;
             }
