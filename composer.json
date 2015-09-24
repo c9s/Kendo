@@ -18,6 +18,7 @@
         "corneltek/phpunit-testmore": "dev-master",
         "corneltek/universal": "^1.4",
         "corneltek/lazyrecord": "dev-master",
+        "corneltek/sqlbuilder": "dev-master as 2.8.999",
         "twig/twig": "*"
     },
     "license": "MIT",
