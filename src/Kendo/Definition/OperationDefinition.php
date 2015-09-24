@@ -10,8 +10,6 @@ class OperationDefinition
      */
     public $id;
 
-    public $bitmask;
-
     public $identifier;
 
     public $label;
@@ -31,11 +29,6 @@ class OperationDefinition
         if ($this->id) {
             $this->id = intval($this->id);
         }
-        /*
-        if ($this->bitmask) {
-            $this->bitmask = intval($this->bitmask);
-        }
-        */
     }
 }
 
