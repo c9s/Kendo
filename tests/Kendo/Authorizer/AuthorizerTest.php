@@ -29,7 +29,8 @@ class AuthorizerTest extends PHPUnit_Framework_TestCase
 
         $actor = new NormalUser;
         $ret = $authorizer->authorize($actor, GeneralOperation::VIEW, 'products');
-        var_dump($ret);
+        var_dump( $ret ); 
+        $this->assertInstanceOf('Kendo\Authorizer\Result', $ret);
 
         /*
         $dynamicRuleMatcher = new DynamicRuleMatcher([
