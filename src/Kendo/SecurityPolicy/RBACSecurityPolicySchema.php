@@ -93,8 +93,8 @@ abstract class RBACSecurityPolicySchema
 
     public function findOperationByIdentifier($identifier)
     {
-        if (isset($this->operations[ $identifier ])) {
-            return $this->operations[ $identifier ];
+        if (isset($this->operations[$identifier])) {
+            return $this->operations[$identifier];
         }
     }
 

@@ -79,14 +79,26 @@ class RuleDefinition
      */
     public function can($operations, $resources)
     {
+
+        // XXX: validate operation from resource and policy schema
         if (is_array($resources)) {
             foreach ($resources as $resourceIdentifier) {
                 foreach ((array) $operations as $operation) {
+                    /*
+                    if (!$this->policy->findOperationByIdentifier($operation)) {
+                        throw new LogicException("Operation $operation doesn't exist in " . get_class($this->policy));
+                    }
+                     */
                     $this->permissions[$resourceIdentifier][$operation] = true;
                 }
             }
         } else if (is_string($resources)) {
             foreach ((array) $operations as $operation) {
+                /*
+                if (!$this->policy->findOperationByIdentifier($operation)) {
+                    throw new LogicException("Operation $operation doesn't exist in " . get_class($this->policy));
+                }
+                 */
                 $this->permissions[$resources][$operation] = true;
             }
         } else {

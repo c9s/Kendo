@@ -116,6 +116,45 @@ class PDORuleLoaderTest extends ModelTestCase
         $rules = $loader->queryActorAccessRules('user', 99, 'books');
         $this->assertEmpty($rules);
 
+
+
+
+
+        // Load permission settings for an actor (with ID)
+        // -----------------------------------------------------------------
+        $actor = 'user';
+        $actorRecordId = 1;
+        $policy = new UserSpecificSecurityPolicy;
+
+        // For each resource, load their operations and corresponding setting.
+        $permissionSettings = [
+            /* resource => [ op => permission, ... ] */
+        ];
+        $resDefs = $policy->getResourceDefinitions();
+        foreach ($resDefs as $resDef) {
+
+            // Get available operations
+            if ($resourceOps = $resDef->operations) {
+                foreach ($resourceOps as $opIdentifier) {
+                    $opDef = $policy->findOperationByIdentifier($opIdentifier);
+                    $permissionSettings[$resDef->identifier][$opDef->identifier] = false;
+                }
+            } else {
+                $ops = $policy->getOperationDefinitions();
+                foreach ($ops as $opIdentifier => $opDef) {
+                    $permissionSettings[$resDef->identifier][$opDef->identifier] = false;
+                }
+            }
+
+            $rules = $loader->queryActorAccessRules($actor, $actorRecordId, $resDef->identifier);
+            foreach ($rules as $rule) {
+                $permissionSettings[ $rule['resource'] ][ $rule['operation'] ] = $rule['allow'];
+            }
+        }
+
+        var_dump( $permissionSettings ); 
+        
+
         // echo ConsoleDebug::dumpRows($rules), PHP_EOL;
     }
 
@@ -150,26 +189,6 @@ class PDORuleLoaderTest extends ModelTestCase
         $this->assertCount(2, $rules, 'two resources');
         $this->assertCount(3, $rules['books'], '3 rules on books');
         $this->assertCount(7, $rules['products'], '7 rules on products');
-
-        /*
-        $rules = $loader->getActorAccessRules('user');
-        $this->assertNotEmpty($rules);
-        $this->assertSame([
-            'products' => [ 
-                'view'   => true,
-                'search' => true,
-            ],
-        ], $rules);
-
-        $matcher = new AccessRuleMatcher($loader);
-        $actor = new NormalUser;
-        $rule = $matcher->match($actor, GeneralOperation::VIEW, 'products');
-
-        $this->assertNotNull($rule, 'common user can view products');
-        $this->assertTrue($rule->allow);
-        $this->assertEquals(0, $rule->role);
-        $this->assertEquals('products', $rule->resource);
-        */
     }
 
 }

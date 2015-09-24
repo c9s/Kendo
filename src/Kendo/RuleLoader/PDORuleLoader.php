@@ -156,6 +156,14 @@ class PDORuleLoader implements RuleLoader
 
         $rules = [];
         while ($row = $stm->fetch()) {
+            $row['allow'] = boolval($row['allow']);
+
+            if ($row['resource_record_id']) {
+                $row['resource_record_id'] = intval($row['resource_record_id']);
+            }
+            if ($row['actor_record_id']) {
+                $row['actor_record_id'] = intval($row['actor_record_id']);
+            }
             $rules[] = $row;
         }
         return $rules;
