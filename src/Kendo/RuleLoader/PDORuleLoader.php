@@ -7,6 +7,7 @@ use Kendo\Definition\RoleDefinition;
 use Kendo\Definition\ResourceDefinition;
 use Kendo\Definition\OperationDefinition;
 use SQLBuilder\Universal\Syntax\Conditions;
+use SQLBuilder\Universal\Query\SelectQuery;
 use SQLBuilder\Bind;
 use SQLBuilder\ArgumentArray;
 use SQLBuilder\Driver\PDODriverFactory;
@@ -98,12 +99,9 @@ class PDORuleLoader implements RuleLoader
         }
     }
 
-    public function prepareAccessRuleStatement(ArgumentArray $queryArgs, $actorIdentifier)
+    public function prepareAccessRuleStatement(ArgumentArray $queryArgs, Conditions $conditions)
     {
         $queryDriver =  PDODriverFactory::create($this->conn);
-        $conditions = new Conditions;
-        $conditions->equal('ar.actor', new Bind('actor', $actorIdentifier));
-        // $conditions->equal('ar.actor_id', new Bind('actor_id', $requiredActor->id));
         $conditionSQL = $conditions->toSql($queryDriver, $queryArgs);
         $sql = '
             SELECT 
@@ -131,6 +129,8 @@ class PDORuleLoader implements RuleLoader
      * If $roleIdentifier is given, it returns access rules with that $roleIdentifier.
      * If $roleIdentifier is not given, it returns access rules without role.
      *
+     * This method is usually used when controller needs to verify the permissions.
+     *
      * @param string $actorIdentifier
      *
      * @return array
@@ -148,7 +148,10 @@ class PDORuleLoader implements RuleLoader
         ]);
 
         if (!$this->stm) {
-            $this->stm = $this->prepareAccessRuleStatement($queryArgs, $actorIdentifier);
+            $conditions = new Conditions;
+            $conditions->equal('ar.actor', new Bind('actor', $actorIdentifier));
+            // $conditions->equal('ar.actor_id', new Bind('actor_id', $requiredActor->id));
+            $this->stm = $this->prepareAccessRuleStatement($queryArgs, $conditions);
         }
 
         $this->stm->execute($queryArgs->toArray());
