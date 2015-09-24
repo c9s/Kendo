@@ -99,6 +99,15 @@ class PDORuleLoader implements RuleLoader
         }
     }
 
+
+    /**
+     * Query access rules from database.
+     *
+     * In order to improve the performance, this method doesn't use AccessRuleCollection.
+     *
+     * @param ArgumentArray $args
+     * @param Conditions $conditions
+     */
     public function prepareAccessRuleStatement(ArgumentArray $args, Conditions $conditions)
     {
         $queryDriver =  PDODriverFactory::create($this->conn);
