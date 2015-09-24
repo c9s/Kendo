@@ -11,8 +11,19 @@ use Kendo\Operation\OperationConstantExporter;
 use Exception;
 use ReflectionClass;
 
+
+
+/**
+ * RBACSecurityPolicySchema provides methods related to Role-based access control 
+ *
+ * To use this class, just extends your class from RBACSecurityPolicySchema
+ * and define the roles, resources, actors in the abstract schema method.
+ */
 abstract class RBACSecurityPolicySchema
 {
+
+
+
     abstract public function schema();
 
     /**
@@ -27,8 +38,8 @@ abstract class RBACSecurityPolicySchema
      * Override this property to have a predefined operations, e.g.
      *
      *     protected $operations = [
-     *          ExtraOp::Print => 'Print',
-     *          ExtraOp::Export => 'Export',
+     *          'print' => OperationDefinition,
+     *          'export' => OperationDefinition,
      *     ];
      *
      */
@@ -79,6 +90,14 @@ abstract class RBACSecurityPolicySchema
             return $this->resources[ $identifier ];
         }
     }
+
+    public function findOperationByIdentifier($identifier)
+    {
+        if (isset($this->operations[ $identifier ])) {
+            return $this->operations[ $identifier ];
+        }
+    }
+
 
     public function globalOperation($identifier, $label = null)
     {
