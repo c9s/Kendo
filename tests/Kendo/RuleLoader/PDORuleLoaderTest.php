@@ -110,7 +110,7 @@ class PDORuleLoaderTest extends DatabaseTestCase
 
         $this->assertCount(2, $resources = $loader->getResourceDefinitions());
         $this->assertCount(3, $actors = $loader->getActorDefinitions());
-        $this->assertCount(6, $ops = $loader->getOperationDefinitions());
+        $this->assertCount(5, $ops = $loader->getOperationDefinitions());
 
         $rules = $loader->getActorAccessRules('user');
         $this->assertNotEmpty($rules);
