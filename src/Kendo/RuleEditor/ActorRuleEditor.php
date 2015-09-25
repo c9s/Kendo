@@ -41,6 +41,18 @@ class ActorRuleEditor implements IteratorAggregate
         $this->permissionSettings[ $resource ][ $operation ] = false;
     }
 
+
+    public function getPermission($resource, $operation)
+    {
+        if (!$this->hasResource($resource)) {
+            throw new Exception("Undefined resource $resource.");
+        }
+        if (!isset($this->permissionSettings[ $resource ][ $operation ])) {
+            return null;
+        }
+        return $this->permissionSettings[$resource][$operation];
+    }
+
     public function savePermissions(SecurityPolicySchema $policy, $actor, $actorRecordId)
     {
 
@@ -77,9 +89,6 @@ class ActorRuleEditor implements IteratorAggregate
                 $this->permissionSettings[ $rule['resource'] ][ $rule['operation'] ] = $rule['allow'];
             }
         }
-
-        var_dump( $this->permissionSettings ); 
-        
         return $this->permissionSettings;
     }
 

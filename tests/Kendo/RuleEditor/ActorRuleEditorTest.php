@@ -60,11 +60,14 @@ class ActorRuleEditorTest extends DatabaseTestCase
         $editor->setAllow('books', GeneralOperation::UPDATE);
         $editor->setAllow('books', GeneralOperation::DELETE);
 
+
+        $this->assertTrue( $editor->getPermission('books', GeneralOperation::CREATE) );
+        $this->assertTrue( $editor->getPermission('books', GeneralOperation::UPDATE) );
+
         foreach ($editor as $resource => $ops) {
-            var_dump( $ops ); 
+            $this->assertTrue( is_string($resource) );
+            $this->assertTrue( is_array($ops) );
         }
-
-
 
 
     }
