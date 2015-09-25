@@ -92,7 +92,7 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
     {
         $stm = $this->conn->prepare('select * from access_actors');
         $stm->execute();
-        while ($actor = $stm->fetchObject('Kendo\\Definition\\ActorDefinition')) {
+        while ($actor = $stm->fetchObject('Kendo\\Definition\\ActorDefinition', [null, null])) {
             $this->definedActors[$actor->identifier] = $actor;
         }
     }
