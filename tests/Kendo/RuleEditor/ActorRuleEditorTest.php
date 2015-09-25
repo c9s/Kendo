@@ -55,6 +55,18 @@ class ActorRuleEditorTest extends DatabaseTestCase
 
         $editor = new ActorRuleEditor($loader);
         $editor->loadPermissions(new UserSpecificSecurityPolicy, 'user', 1);
+
+        $editor->setAllow('books', GeneralOperation::CREATE);
+        $editor->setAllow('books', GeneralOperation::UPDATE);
+        $editor->setAllow('books', GeneralOperation::DELETE);
+
+        foreach ($editor as $resource => $ops) {
+            var_dump( $ops ); 
+        }
+
+
+
+
     }
 }
 

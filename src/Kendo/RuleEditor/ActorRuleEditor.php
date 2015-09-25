@@ -2,15 +2,50 @@
 namespace Kendo\RuleEditor;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\SecurityPolicy\SecurityPolicySchema;
+use Exception;
+use ArrayIterator;
+use IteratorAggregate;
 
-class ActorRuleEditor
+class ActorRuleEditor implements IteratorAggregate
 {
     protected $permissionSettings = array();
+
+
 
     public function __construct(RuleLoader $loader)
     {
         $this->loader = $loader;
     }
+
+
+    public function hasResource($resource)
+    {
+        return isset($this->permissionSettings[$resource]);
+    }
+
+
+    public function setAllow($resource, $operation)
+    {
+        if (!$this->hasResource($resource)) {
+            throw new Exception("Undefined resource $resource.");
+        }
+        $this->permissionSettings[ $resource ][ $operation ] = true;
+    }
+
+
+    public function setDisallow($resource, $operation)
+    {
+        if (!$this->hasResource($resource)) {
+            throw new Exception("Undefined resource $resource.");
+        }
+        $this->permissionSettings[ $resource ][ $operation ] = false;
+    }
+
+    public function savePermissions(SecurityPolicySchema $policy, $actor, $actorRecordId)
+    {
+
+    }
+
 
     public function loadPermissions(SecurityPolicySchema $policy, $actor, $actorRecordId)
     {
@@ -42,8 +77,21 @@ class ActorRuleEditor
                 $this->permissionSettings[ $rule['resource'] ][ $rule['operation'] ] = $rule['allow'];
             }
         }
+
+        var_dump( $this->permissionSettings ); 
+        
         return $this->permissionSettings;
     }
+
+
+    /**
+     * Implements IteratorAggregate interface
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->permissionSettings);
+    }
+
 
 }
 

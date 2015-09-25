@@ -50,6 +50,10 @@ class PDORuleLoader implements RuleLoader
      */
     protected $defineResourceGroups = array();
 
+
+    /**
+     * @var PDOStatement $stm prepared statement object for general query.
+     */
     protected $stm;
 
     public function __construct()
