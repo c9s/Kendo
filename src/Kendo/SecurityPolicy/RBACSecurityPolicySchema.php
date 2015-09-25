@@ -19,7 +19,7 @@ use ReflectionClass;
  * To use this class, just extends your class from RBACSecurityPolicySchema
  * and define the roles, resources, actors in the abstract schema method.
  */
-abstract class RBACSecurityPolicySchema
+abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
 {
 
 

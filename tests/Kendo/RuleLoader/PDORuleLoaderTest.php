@@ -1,6 +1,7 @@
 <?php
 use LazyRecord\ConnectionManager;
 use LazyRecord\Testing\ModelTestCase;
+use Kendo\Testing\DatabaseTestCase;
 
 use SimpleApp\SimpleSecurityPolicy;
 use SimpleApp\UserSpecificSecurityPolicy;
@@ -26,55 +27,22 @@ use Kendo\Model\RoleCollection;
 
 use CLIFramework\Debug\ConsoleDebug;
 
-class PDORuleLoaderTest extends ModelTestCase
+class PDORuleLoaderTest extends DatabaseTestCase
 {
-    public $driver = 'sqlite';
 
-    public function getModels()
+
+    public function getPolicies()
     {
         return [
-            new \Kendo\Model\ActorSchema,
-            new \Kendo\Model\RoleSchema,
-            new \Kendo\Model\ResourceSchema,
-            new \Kendo\Model\OperationSchema,
-            new \Kendo\Model\AccessRuleSchema,
-            new \Kendo\Model\AccessControlSchema,
+            new UserSpecificSecurityPolicy,
         ];
     }
 
-    public function setUp()
-    {
-    }
-
-
-    public function tearDown()
-    {
-        $resources = new ResourceCollection;
-        $resources->delete();
-
-        $rules = new AccessRuleCollection;
-        $rules->delete();
-
-        $actor = new ActorCollection;
-        $actor->delete();
-
-        $actors = new ActorCollection;
-        $actors->delete();
-
-        $roles = new RoleCollection;
-        $roles->delete();
-
-        $ops = new OperationCollection;
-        $ops->delete();
-    }
 
     public function testGetActorAccessRulesByResource()
     {
-        $module = new SecurityPolicyModule;
-        $module->add(new UserSpecificSecurityPolicy);
-
         $loader = new SchemaRuleLoader;
-        $loader->load($module);
+        $loader->load($this->policyModule);
 
         $exporter = new DatabaseRuleImporter($loader);
         $exporter->import();
@@ -151,7 +119,6 @@ class PDORuleLoaderTest extends ModelTestCase
                 $permissionSettings[ $rule['resource'] ][ $rule['operation'] ] = $rule['allow'];
             }
         }
-
         var_dump( $permissionSettings ); 
         
 
