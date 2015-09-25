@@ -257,5 +257,13 @@ class PDORuleLoader implements RuleLoader
         return $this->definedResourceGroupDefinitions;
     }
 
+
+
+    public function getConnection()
+    {
+        return $this->conn;
+    }
+
+
 }
 
