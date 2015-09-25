@@ -12,64 +12,14 @@ use Exception;
 /**
  * SchemaRuleLoader loads definitions from schema and build up the access rules.
  */
-class SchemaRuleLoader implements RuleLoader
+class SchemaRuleLoader extends BaseRuleLoader implements RuleLoader
 {
     protected $policyModule;
 
-    /**
-     * @var ActorDefinition[identifier]
-     */
-    protected $definedActors = array();
-
-    /**
-     * @var OperationDefinition[identifier]
-     */
-    protected $definedOperations = array();
-
-    /**
-     * @var ResourceDefinition[identifier]
-     */
-    protected $definedResources = array();
-
-    /**
-     * @var array accessRules[actor][role][resource] = [ CREATE, UPDATE, DELETE ];
-     *
-     * role == 0   -- without role restriction
-     */
-    protected $accessRules = array();
 
     public function __construct(SecurityPolicyModule $storage = null)
     {
         $this->policyModule = $storage ?: new SecurityPolicyModule;
-    }
-
-
-
-
-    public function getResourceDefinitions()
-    {
-        return $this->definedResources;
-    }
-
-    public function getResourceGroupDefinitions()
-    {
-        return $this->definedResourceGroups;
-    }
-
-    public function getActorDefinitions()
-    {
-        return $this->definedActors;
-    }
-
-    public function getOperationDefinitions()
-    {
-        return $this->definedOperations;
-    }
-
-
-    public function getAccessRules()
-    {
-        return $this->accessRules;
     }
 
     public function load(SecurityPolicyModule $module)
