@@ -125,6 +125,27 @@ class PDORuleLoader implements RuleLoader
     }
 
 
+    public function findActorByIdentifier($identifier)
+    {
+        if (isset($this->definedActors[ $identifier ])) {
+            return $this->definedActors[ $identifier ];
+        }
+    }
+
+    public function findResourceByIdentifier($identifier)
+    {
+        if (isset($this->definedResources[ $identifier ])) {
+            return $this->definedResources[ $identifier ];
+        }
+    }
+
+    public function findOperationByIdentifier($identifier)
+    {
+        if (isset($this->definedOperations[$identifier])) {
+            return $this->definedOperations[$identifier];
+        }
+    }
+
 
     /**
      * Query access rules from database.
@@ -275,7 +296,6 @@ class PDORuleLoader implements RuleLoader
 
     public function getResourceGroupDefinitions()
     {
-
         return $this->definedResourceGroupDefinitions;
     }
 
