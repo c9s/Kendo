@@ -60,16 +60,15 @@ class ActorRuleEditorTest extends DatabaseTestCase
         $editor->setAllow('books', GeneralOperation::UPDATE);
         $editor->setAllow('books', GeneralOperation::DELETE);
 
-
         $this->assertTrue( $editor->getPermission('books', GeneralOperation::CREATE) );
         $this->assertTrue( $editor->getPermission('books', GeneralOperation::UPDATE) );
 
         foreach ($editor as $resource => $ops) {
-            $this->assertTrue( is_string($resource) );
-            $this->assertTrue( is_array($ops) );
+            $this->assertTrue(is_string($resource));
+            $this->assertTrue(is_array($ops));
         }
 
-
+        $editor->savePermissions(new UserSpecificSecurityPolicy, 'user', 1);
     }
 }
 

@@ -5,11 +5,12 @@ use Kendo\SecurityPolicy\SecurityPolicySchema;
 use Exception;
 use ArrayIterator;
 use IteratorAggregate;
+use Kendo\Model\AccessRuleCollection;
+use Kendo\Model\AccessRule;
 
 class ActorRuleEditor implements IteratorAggregate
 {
     protected $permissionSettings = array();
-
 
 
     public function __construct(RuleLoader $loader)
@@ -18,12 +19,23 @@ class ActorRuleEditor implements IteratorAggregate
     }
 
 
+    /**
+     * Check if we've defined the resource.
+     *
+     * @param string $resource
+     */
     public function hasResource($resource)
     {
         return isset($this->permissionSettings[$resource]);
     }
 
 
+    /**
+     * @param string $resource
+     * @param string $operation
+     *
+     * @return null|boolean
+     */
     public function setAllow($resource, $operation)
     {
         if (!$this->hasResource($resource)) {
@@ -33,6 +45,14 @@ class ActorRuleEditor implements IteratorAggregate
     }
 
 
+    /**
+     * Set disallow permission on specific resource and operation
+     *
+     * @param string $resource
+     * @param string $operation
+     *
+     * @return null|boolean
+     */
     public function setDisallow($resource, $operation)
     {
         if (!$this->hasResource($resource)) {
@@ -42,6 +62,14 @@ class ActorRuleEditor implements IteratorAggregate
     }
 
 
+    /**
+     * Get permission value for specific resource and operation
+     *
+     * @param string $resource
+     * @param string $operation
+     *
+     * @return null|boolean
+     */
     public function getPermission($resource, $operation)
     {
         if (!$this->hasResource($resource)) {
@@ -53,9 +81,33 @@ class ActorRuleEditor implements IteratorAggregate
         return $this->permissionSettings[$resource][$operation];
     }
 
+    /**
+     * Save permissions for specific actor.
+     *
+     * @param SecurityPolicySchema $policy
+     * @param string $actor
+     * @param integer $actorRecordId
+     */
     public function savePermissions(SecurityPolicySchema $policy, $actor, $actorRecordId)
     {
+        $actorDef = $policy->findActorByIdentifier($actor);
+        foreach ($this->permissionSettings as $resource => $ops) {
+            $resDef = $policy->findResourceByIdentifier($resource);
 
+            foreach ($ops as $op => $allow) {
+                $opDef = $policy->findOperationByIdentifier($op);
+                if (!$opDef) {
+                    throw new LogicException("Operation $op isn't defined.");
+                }
+
+                /*
+                $rule = new AccessRule;
+                $rule->createOrUpdate([
+                    ''
+                ],[]);
+                */
+            }
+        }
     }
 
 

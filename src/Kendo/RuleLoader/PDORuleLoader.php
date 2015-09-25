@@ -72,36 +72,58 @@ class PDORuleLoader implements RuleLoader
         $this->conn = $conn;
 
         // pre-fetch actor records
-        $stm = $conn->prepare('select * from access_actors');
-        $stm->execute();
-        while ($actor = $stm->fetchObject('Kendo\\Definition\\ActorDefinition')) {
-            $this->definedActors[$actor->identifier] = $actor;
-        }
+        $this->loadActorDefinitions();
+        $this->loadResourceDefinitions();
+        $this->loadResourceGroupDefinitions();
+        $this->loadOperationDefinitions();
+        $this->loadRoleDefinitions();
+    }
 
-        $stm = $conn->prepare('select * from access_resources');
-        $stm->execute();
-        while ($res = $stm->fetchObject('Kendo\\Definition\\ResourceDefinition')) {
-            $this->definedResources[$res->identifier] = $res;
-        }
-
-        $stm = $conn->prepare('select * from access_resource_groups');
-        $stm->execute();
-        while ($res = $stm->fetchObject('Kendo\\Definition\\ResourceGroupDefinition')) {
-            $this->definedResourceGroups[$res->identifier] = $res;
-        }
-
-        $stm = $conn->prepare('select * from access_operations');
-        $stm->execute();
-        while ($op = $stm->fetchObject('Kendo\\Definition\\OperationDefinition', [null, null])) {
-            $this->definedOperations[$op->identifier] = $op;
-        }
-
-        $stm = $conn->prepare('select * from access_roles');
+    public function loadRoleDefinitions()
+    {
+        $stm = $this->conn->prepare('select * from access_roles');
         $stm->execute();
         while ($role = $stm->fetchObject('Kendo\\Definition\\RoleDefinition', [null, null])) {
             $this->definedRoles[$role->identifier] = $role;
         }
     }
+
+    public function loadOperationDefinitions()
+    {
+        $stm = $this->conn->prepare('select * from access_operations');
+        $stm->execute();
+        while ($op = $stm->fetchObject('Kendo\\Definition\\OperationDefinition', [null, null])) {
+            $this->definedOperations[$op->identifier] = $op;
+        }
+    }
+
+    public function loadResourceGroupDefinitions()
+    {
+        $stm = $this->conn->prepare('select * from access_resource_groups');
+        $stm->execute();
+        while ($res = $stm->fetchObject('Kendo\\Definition\\ResourceGroupDefinition',[ null, null ])) {
+            $this->definedResourceGroups[$res->identifier] = $res;
+        }
+    }
+
+    public function loadResourceDefinitions()
+    {
+        $stm = $this->conn->prepare('select * from access_resources');
+        $stm->execute();
+        while ($res = $stm->fetchObject('Kendo\\Definition\\ResourceDefinition', [null, null])) {
+            $this->definedResources[$res->identifier] = $res;
+        }
+    }
+
+    public function loadActorDefinitions()
+    {
+        $stm = $this->conn->prepare('select * from access_actors');
+        $stm->execute();
+        while ($actor = $stm->fetchObject('Kendo\\Definition\\ActorDefinition')) {
+            $this->definedActors[$actor->identifier] = $actor;
+        }
+    }
+
 
 
     /**
