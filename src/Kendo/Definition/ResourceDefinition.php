@@ -58,6 +58,7 @@ class ResourceDefinition extends BaseDefinition
     public function group(ResourceGroupDefinition $group)
     {
         $this->group = $group;
+        $group->addChildResource($this);
         return $this;
     }
 }
