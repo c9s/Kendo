@@ -2,14 +2,30 @@
 namespace Kendo\Definition;
 use Kendo\Definition\BaseDefinition;
 use Kendo\Definition\OperationDefinition;
-use Kendo\Definition\ResourceGroupDefinition;
 use Kendo\Operation\OperationConstantExporter;
 
 class ResourceDefinition extends BaseDefinition
 {
     public $operations = array();
 
+
+    /**
+     * @var Kendo\Definition\ResourceDefinition
+     */
     public $group;
+
+    public $group_id;
+
+
+    /**
+     * @var Kendo\Definition\ResourceDefinition
+     */
+    protected $childResources = [];
+
+
+    public $label;
+
+    public $description;
 
 
     /**
@@ -55,12 +71,25 @@ class ResourceDefinition extends BaseDefinition
         return $this;
     }
 
-    public function group(ResourceGroupDefinition $group)
+    public function group(ResourceDefinition $group)
     {
         $this->group = $group;
         $group->addChildResource($this);
         return $this;
     }
+
+
+    public function addChildResource(ResourceDefinition $resource)
+    {
+        $this->childResources[] = $resource;
+    }
+
+    public function getChildResources()
+    {
+        return $this->childResources;
+    }
+
+
 }
 
 
