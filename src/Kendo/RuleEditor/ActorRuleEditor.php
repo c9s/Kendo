@@ -19,6 +19,11 @@ class ActorRuleEditor implements IteratorAggregate
     }
 
 
+    public function getLoader()
+    {
+        return $this->loader;
+    }
+
     /**
      * Check if we've defined the resource.
      *
@@ -79,6 +84,11 @@ class ActorRuleEditor implements IteratorAggregate
             return null;
         }
         return $this->permissionSettings[$resource][$operation];
+    }
+
+    public function getPermissionSettings()
+    {
+        return $this->permissionSettings;
     }
 
     /**

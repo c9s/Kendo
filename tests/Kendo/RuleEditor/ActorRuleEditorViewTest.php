@@ -17,8 +17,9 @@ use Kendo\Operation\GeneralOperation;
 use Kendo\Authorizer\Authorizer;
 use Kendo\SecurityPolicy\SecurityPolicyModule;
 
-use Kendo\RuleEditor\ActorRuleEditor;
 use Kendo\RuleImporter\DatabaseRuleImporter;
+use Kendo\RuleEditor\ActorRuleEditor;
+use Kendo\RuleEditor\ActorRuleEditorView;
 
 use Kendo\Model\AccessRuleCollection;
 use Kendo\Model\ActorCollection;
@@ -28,7 +29,7 @@ use Kendo\Model\RoleCollection;
 
 use CLIFramework\Debug\ConsoleDebug;
 
-class ActorRuleEditorTest extends DatabaseTestCase
+class ActorRuleEditorViewTest extends DatabaseTestCase
 {
     public function getPolicies()
     {
@@ -37,7 +38,7 @@ class ActorRuleEditorTest extends DatabaseTestCase
         ];
     }
 
-    public function testActorRuleEditorWithPDOLoader()
+    public function testActorEditorView()
     {
         $loader = new SchemaRuleLoader;
         $loader->load($this->policyModule);
@@ -55,30 +56,7 @@ class ActorRuleEditorTest extends DatabaseTestCase
         $editor = new ActorRuleEditor($loader);
         $editor->loadPermissions(new UserSpecificSecurityPolicy, 'user', 1);
 
-        $editor->setAllow('books', GeneralOperation::CREATE);
-        $editor->setAllow('books', GeneralOperation::UPDATE);
-        $editor->setAllow('books', GeneralOperation::DELETE);
-
-        $this->assertTrue( $editor->getPermission('books', GeneralOperation::CREATE) );
-        $this->assertTrue( $editor->getPermission('books', GeneralOperation::UPDATE) );
-
-        foreach ($editor as $resource => $ops) {
-            $this->assertTrue(is_string($resource));
-            $this->assertTrue(is_array($ops));
-        }
-
-        $editor->savePermissions(new UserSpecificSecurityPolicy, 'user', 1);
-
-
-        // re-create rule loader object
-        $loader = new PDORuleLoader();
-        $loader->load($conn);
-        $editor2 = new ActorRuleEditor($loader);
-        $editor2->loadPermissions(new UserSpecificSecurityPolicy, 'user', 1);
-
-        $this->assertTrue( $editor->getPermission('books', GeneralOperation::CREATE) );
-        $this->assertTrue( $editor->getPermission('books', GeneralOperation::UPDATE) );
-        // $editor2->
+        $view = new ActorRuleEditorView($editor);
+        $html = $view->render();
     }
 }
-
