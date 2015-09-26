@@ -90,22 +90,26 @@ class ActorRuleEditor implements IteratorAggregate
      */
     public function savePermissions(SecurityPolicySchema $policy, $actor, $actorRecordId)
     {
-        $actorDef = $policy->findActorByIdentifier($actor);
+        $actorDef = $this->loader->findActorByIdentifier($actor);
         foreach ($this->permissionSettings as $resource => $ops) {
-            $resDef = $policy->findResourceByIdentifier($resource);
-
+            $resDef = $this->loader->findResourceByIdentifier($resource);
             foreach ($ops as $op => $allow) {
-                $opDef = $policy->findOperationByIdentifier($op);
+                $opDef = $this->loader->findOperationByIdentifier($op);
                 if (!$opDef) {
                     throw new LogicException("Operation $op isn't defined.");
                 }
 
-                /*
                 $rule = new AccessRule;
                 $rule->createOrUpdate([
-                    ''
-                ],[]);
-                */
+                    'actor_id'        => $actorDef->id,
+                    'actor_record_id' => $actorRecordId,
+                    'actor'           => $actorDef->identifier,
+                    'resource_id'     => $resDef->id,
+                    'resource'        => $resDef->identifier,
+                    'operation'       => $opDef->identifier,
+                    'operation_id'    => $opDef->id,
+                    'allow' => $allow,
+                ],['actor', 'actor_record_id', 'resource', 'operation']);
             }
         }
     }

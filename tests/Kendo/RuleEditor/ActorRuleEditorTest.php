@@ -69,6 +69,17 @@ class ActorRuleEditorTest extends DatabaseTestCase
         }
 
         $editor->savePermissions(new UserSpecificSecurityPolicy, 'user', 1);
+
+
+        // re-create rule loader object
+        $loader = new PDORuleLoader();
+        $loader->load($conn);
+        $editor2 = new ActorRuleEditor($loader);
+        $editor2->loadPermissions(new UserSpecificSecurityPolicy, 'user', 1);
+
+        $this->assertTrue( $editor->getPermission('books', GeneralOperation::CREATE) );
+        $this->assertTrue( $editor->getPermission('books', GeneralOperation::UPDATE) );
+        // $editor2->
     }
 }
 
