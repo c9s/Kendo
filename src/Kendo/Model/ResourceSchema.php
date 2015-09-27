@@ -22,10 +22,10 @@ class ResourceSchema extends DeclareSchema
 
         $this->column('group_id')
             ->integer()
+            ->default(NULL)
             ;
 
-        $this->belongsTo('group', 'Kendo\\Model\\ResourceGroupSchema', 'id', 'group_id');
-
+        $this->belongsTo('group', 'Kendo\\Model\\ResourceSchema', 'id', 'group_id');
     }
 
 
