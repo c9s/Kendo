@@ -33,10 +33,31 @@ class ResourceDefinition extends BaseDefinition
         if (isset($this->operations[$identifier])) {
             throw new Exception("Operation $label ($identifier) is already defined.");
         }
-        $op = new OperationDefinition($this->policy, $identifier, $label);
-        $this->operations[$identifier] = $op;
+        $def = new OperationDefinition($this->policy, $identifier, $label);
+        $this->operations[$identifier] = $def;
         return $this;
     }
+
+
+
+    private function inheritsOperationOrCreate($identifier, $label = null)
+    {
+        if ($def = $this->policy->findOperationByIdentifier($identifier)) {
+            $this->operations[$identifier] = $def;
+        } else {
+            $this->operations[$identifier] = new OperationDefinition($this->policy, $identifier, $label);
+        }
+    }
+
+
+    private function importOperationsFromMap(array $identifierToLabel)
+    {
+        foreach ($identifierToLabel as $identifier => $label) {
+            $this->inheritsOperationOrCreate($identifier, $label);
+        }
+    }
+
+
 
     /**
      * Operations method defines available operations of this resource
@@ -48,11 +69,24 @@ class ResourceDefinition extends BaseDefinition
         $args = func_get_args();
         foreach ($args as $arg) {
             if (is_array($arg)) {
+                // supports the following formats:
+                //
+                //     operations([ 'view', 'create' ])
+                //
+                //     operations([
+                //          'view' => 'View',
+                //          'create' => 'Create',
+                //     ])
+                //
+                //     operations(new OperationDefinition('foo','Handle Foo'))
+                //
                 foreach ($arg as $op => $val) {
                     if ($val instanceof OperationDefinition) {
                         $this->operations[$val->identifier] = $val;
                     } else if (is_numeric($op)) {
-                        $this->operations[$val] = new OperationDefinition($this->policy, $val, ucfirst($val));
+                        $this->inheritsOperationOrCreate($val, ucfirst($val));
+                    } else if ($def = $this->policy->findOperationByIdentifier($op)) {
+                        $this->operations[$op] = $def;
                     } else {
                         $this->operations[$op] = new OperationDefinition($this->policy, $op, $val);
                     }
@@ -63,20 +97,13 @@ class ResourceDefinition extends BaseDefinition
 
             } else if (method_exists($arg,'export')) {
 
-                $maps = $arg->export();
-                foreach ($maps as $identifier => $label) {
-                    $this->operations[$identifier] = new OperationDefinition($this->policy, $identifier, $label);
-                }
+                $map = $arg->export();
+                $this->importOperationsFromMap($map);
 
             } else {
-
                 $exporter = new OperationConstantExporter;
                 $constants = $exporter->export($arg);
-
-                foreach ($constants as $identifier => $label) {
-                    $this->operations[$identifier] = new OperationDefinition($this->policy, $identifier, $label);
-                }
-
+                $this->importOperationsFromMap($constants);
             }
         }
         return $this;
