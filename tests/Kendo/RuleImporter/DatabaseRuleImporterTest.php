@@ -64,7 +64,7 @@ class DatabaseRuleImporterTest extends ModelTestCase
         }
 
         $resources = new ResourceCollection;
-        $this->assertCount(2, $resources);
+        $this->assertCount(3, $resources);
     }
 }
 
