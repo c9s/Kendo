@@ -4,7 +4,7 @@ use LazyRecord\Schema\DeclareSchema;
 
 class ResourceGroupSchema extends DeclareSchema
 {
-    public function schema() 
+    public function schema()
     {
         $this->table('access_resource_groups');
 
@@ -19,7 +19,6 @@ class ResourceGroupSchema extends DeclareSchema
         $this->column('description')
             ->text();
     }
-
 
 }
 
