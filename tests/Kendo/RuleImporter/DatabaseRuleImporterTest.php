@@ -20,23 +20,11 @@ use LazyRecord\Testing\ModelTestCase;
 
 use CLIFramework\Debug\ConsoleDebug;
 use CLIFramework\Debug\LineIndicator;
+use Kendo\Testing\DatabaseTestCase;
 
-class DatabaseRuleImporterTest extends ModelTestCase
+class DatabaseRuleImporterTest extends DatabaseTestCase
 {
     public $driver = 'sqlite';
-
-    public function getModels()
-    {
-        return [
-            new \Kendo\Model\ActorSchema,
-            new \Kendo\Model\RoleSchema,
-            new \Kendo\Model\ResourceSchema,
-            new \Kendo\Model\OperationSchema,
-            new \Kendo\Model\AccessRuleSchema,
-            new \Kendo\Model\AccessControlSchema,
-        ];
-    }
-
 
     public function testImport()
     {

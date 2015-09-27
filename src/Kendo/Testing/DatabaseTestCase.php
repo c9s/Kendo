@@ -44,7 +44,6 @@ abstract class DatabaseTestCase extends ModelTestCase
             new \Kendo\Model\ResourceSchema,
             new \Kendo\Model\OperationSchema,
             new \Kendo\Model\AccessRuleSchema,
-            new \Kendo\Model\AccessControlSchema,
         ];
     }
 

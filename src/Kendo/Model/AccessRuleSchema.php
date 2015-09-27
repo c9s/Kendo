@@ -79,8 +79,6 @@ class AccessRuleSchema extends DeclareSchema
         $this->belongsTo('operation','Kendo\\Model\\OperationSchema','id','operation_id');
 
         $this->belongsTo('actor','Kendo\\Model\\ActorSchema','id','actor_id');
-
-        $this->many('controls', 'Kendo\\Model\\AccessControlSchema', 'rule_id', 'id');
     }
 }
 

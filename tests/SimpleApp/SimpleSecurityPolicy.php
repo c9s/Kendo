@@ -36,21 +36,25 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
         // Actor without roles
         $this->actor('store', 'Store');
 
+        // This will expand to 3 rules
         $this->rule()
             ->actor('user')->role('admin')
                 ->can([GeneralOperation::CREATE, GeneralOperation::UPDATE, GeneralOperation::DELETE], 'books');
 
+        // This will expand to 3 rules
         $this->rule()
             ->actor('user')
                 ->role('admin')
                 ->can([GeneralOperation::CREATE, GeneralOperation::UPDATE, GeneralOperation::DELETE], 'products');
 
+        // This will expand to 2 rules
         $this->rule()
             ->actor('user')
                 ->role('customer')
                 ->can([GeneralOperation::VIEW], 'products')
                 ->cant([GeneralOperation::CREATE], 'products');
 
+        // This will expand to 2 rules
         // all user actor can view and search
         $this->rule()
             ->actor('user')

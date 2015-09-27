@@ -22,7 +22,6 @@ $schemas = array(
     new \Kendo\Model\ResourceGroupSchema,
     new \Kendo\Model\OperationSchema,
     new \Kendo\Model\AccessRuleSchema,
-    new \Kendo\Model\AccessControlSchema,
 );
 $g = new SchemaGenerator($config, $logger);
 // $g->setForceUpdate(true);
