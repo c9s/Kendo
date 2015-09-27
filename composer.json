@@ -1,7 +1,7 @@
 {
     "name": "corneltek/kendo",
     "homepage": "https://github.com/c9s/Kendo",
-    "version": "1.0.4",
+    "version": "2.0.0",
     "description": "The powerful general access control framework",
     "keywords": [
         "access",
@@ -36,8 +36,7 @@
     "authors": [
         {
             "name": "Yo-An Lin",
-            "email": "cornelius.howl@gmail.com",
-            "homepage": "http://c9s.me"
+            "email": "cornelius.howl@gmail.com"
         }
     ],
     "autoload": {
