@@ -3,6 +3,7 @@ namespace Kendo\RuleEditor;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\SecurityPolicy\SecurityPolicySchema;
 use Exception;
+use LogicException;
 use ArrayIterator;
 use IteratorAggregate;
 use Kendo\Model\AccessRuleCollection;
@@ -110,7 +111,7 @@ class ActorRuleEditor implements IteratorAggregate
             foreach ($ops as $op => $allow) {
                 $opDef = $this->loader->findOperationByIdentifier($op);
                 if (!$opDef) {
-                    throw new LogicException("Operation $op isn't defined.");
+                    throw new LogicException("Operation '$op' isn't defined.");
                 }
 
                 $rule = new AccessRule;
@@ -142,8 +143,8 @@ class ActorRuleEditor implements IteratorAggregate
 
             // Get available operations
             if ($resourceOps = $resDef->operations) {
-                foreach ($resourceOps as $opIdentifier) {
-                    $opDef = $this->policy->findOperationByIdentifier($opIdentifier);
+                foreach ($resourceOps as $opIdentifier => $opDef) {
+                    // echo get_class($opDef) , ':' , $opDef->identifier, PHP_EOL;
                     $this->permissionSettings[$resDef->identifier][$opDef->identifier] = false;
                 }
             } else {
@@ -172,6 +173,10 @@ class ActorRuleEditor implements IteratorAggregate
     }
 
 
+    public function getPolicy()
+    {
+        return $this->policy;
+    }
 }
 
 

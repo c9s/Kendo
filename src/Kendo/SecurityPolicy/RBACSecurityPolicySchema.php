@@ -44,7 +44,7 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
      *     ];
      *
      */
-    protected $operations = array();
+    protected $globalOperations = array();
 
 
     /**
@@ -94,19 +94,19 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
 
     public function findOperationByIdentifier($identifier)
     {
-        if (isset($this->operations[$identifier])) {
-            return $this->operations[$identifier];
+        if (isset($this->globalOperations[$identifier])) {
+            return $this->globalOperations[$identifier];
         }
     }
 
 
     public function globalOperation($identifier, $label = null)
     {
-        if (isset($this->operations[$identifier])) {
+        if (isset($this->globalOperations[$identifier])) {
             throw new Exception("operation $label ($identifier) is already defined.");
         }
-        $op = new OperationDefinition($identifier, $label);
-        $this->operations[$identifier] = $op;
+        $op = new OperationDefinition($this, $identifier, $label);
+        $this->globalOperations[$identifier] = $op;
         return $this;
     }
 
@@ -118,14 +118,14 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
         if (method_exists($operations, 'export')) {
             $constants = $operations->export();
             foreach ($constants as $constantName => $constantValue) {
-                $this->globalOperation($constantName, $constantValue);
+                $this->globalOperation($constantValue, $constantName);
             }
         } else {
             // Fetch constant information by using ReflectionClass
             $refClass = new ReflectionClass($operations);
             $constants = $refClass->getConstants();
             foreach ($constants as $constantName => $constantValue) {
-                $this->globalOperation($constantValue);
+                $this->globalOperation($constantValue, $constantName);
             }
         }
         return $this;
@@ -165,7 +165,7 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
 
     public function getOperationDefinitions()
     {
-        return $this->operations;
+        return $this->globalOperations;
     }
 
     public function getResourceDefinitions()

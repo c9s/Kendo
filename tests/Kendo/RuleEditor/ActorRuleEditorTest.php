@@ -55,6 +55,9 @@ class ActorRuleEditorTest extends DatabaseTestCase
         $editor = new ActorRuleEditor(new UserSpecificSecurityPolicy, $loader);
         $editor->loadPermissionSettings('user', 1);
 
+        $settings = $editor->getPermissionSettings();
+        // var_dump( $settings ); 
+
         $editor->setAllow('books', GeneralOperation::CREATE);
         $editor->setAllow('books', GeneralOperation::UPDATE);
         $editor->setAllow('books', GeneralOperation::DELETE);
@@ -66,7 +69,6 @@ class ActorRuleEditorTest extends DatabaseTestCase
             $this->assertTrue(is_string($resource));
             $this->assertTrue(is_array($ops));
         }
-
         $editor->savePermissionSettings('user', 1);
 
 

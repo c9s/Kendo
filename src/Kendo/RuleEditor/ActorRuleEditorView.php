@@ -49,6 +49,7 @@ class ActorRuleEditorView
         return $this->environment->render('rule_editor.html.twig', array(
             'view'   => $this,
             'editor' => $this->editor,
+            'policy' => $this->editor->getPolicy(),
             'rule_loader' => $this->editor->getLoader(),
         ));
     }

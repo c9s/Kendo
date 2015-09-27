@@ -28,33 +28,44 @@ class ResourceDefinition extends BaseDefinition
     public $description;
 
 
+    public function operation($identifier, $label = null)
+    {
+        if (isset($this->operations[$identifier])) {
+            throw new Exception("Operation $label ($identifier) is already defined.");
+        }
+        $op = new OperationDefinition($this->policy, $identifier, $label);
+        $this->operations[$identifier] = $op;
+        return $this;
+    }
+
     /**
-     * operations method defines available operations of this resource
+     * Operations method defines available operations of this resource
      *
      * @param OperationDefinition
      */
     public function operations($opertions)
     {
-
         $args = func_get_args();
         foreach ($args as $arg) {
             if (is_array($arg)) {
                 foreach ($arg as $op => $val) {
                     if ($val instanceof OperationDefinition) {
-                        $this->operations[$val->identifier] = true;
+                        $this->operations[$val->identifier] = $val;
+                    } else if (is_numeric($op)) {
+                        $this->operations[$val] = new OperationDefinition($this->policy, $val, ucfirst($val));
                     } else {
-                        $this->operations[$op] = $val;
+                        $this->operations[$op] = new OperationDefinition($this->policy, $op, $val);
                     }
                 }
             } else if ($arg instanceof OperationDefinition) {
 
-                $this->operations[$op->identifier] = $op;
+                $this->operations[$arg->identifier] = $arg;
 
             } else if (method_exists($arg,'export')) {
 
                 $maps = $arg->export();
-                foreach ($maps as $identifier => $val) {
-                    $this->operations[$identifier] = true;
+                foreach ($maps as $identifier => $label) {
+                    $this->operations[$identifier] = new OperationDefinition($this->policy, $identifier, $label);
                 }
 
             } else {
@@ -62,8 +73,8 @@ class ResourceDefinition extends BaseDefinition
                 $exporter = new OperationConstantExporter;
                 $constants = $exporter->export($arg);
 
-                foreach ($constants as $identifier => $val) {
-                    $this->operations[$identifier] = $val;
+                foreach ($constants as $identifier => $label) {
+                    $this->operations[$identifier] = new OperationDefinition($this->policy, $identifier, $label);
                 }
 
             }

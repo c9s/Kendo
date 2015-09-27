@@ -5,6 +5,10 @@ use ReflectionClass;
 
 class OperationConstantExporter
 {
+    /**
+     *
+     * @return array[string label]string identifier
+     */
     public function export($operationClass)
     {
         $reflection = new ReflectionClass($operationClass);

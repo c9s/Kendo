@@ -54,7 +54,7 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
     {
         $stm = $this->conn->prepare('select * from access_roles');
         $stm->execute();
-        while ($role = $stm->fetchObject('Kendo\\Definition\\RoleDefinition', [null, null])) {
+        while ($role = $stm->fetchObject('Kendo\\Definition\\RoleDefinition')) {
             $this->definedRoles[$role->identifier] = $role;
         }
     }
@@ -63,7 +63,7 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
     {
         $stm = $this->conn->prepare('select * from access_operations');
         $stm->execute();
-        while ($op = $stm->fetchObject('Kendo\\Definition\\OperationDefinition', [null, null])) {
+        while ($op = $stm->fetchObject('Kendo\\Definition\\OperationDefinition')) {
             $this->definedOperations[$op->identifier] = $op;
         }
     }
@@ -100,7 +100,7 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
     {
         $stm = $this->conn->prepare('select * from access_actors');
         $stm->execute();
-        while ($actor = $stm->fetchObject('Kendo\\Definition\\ActorDefinition', [null, null])) {
+        while ($actor = $stm->fetchObject('Kendo\\Definition\\ActorDefinition')) {
             $this->definedActors[$actor->identifier] = $actor;
         }
     }

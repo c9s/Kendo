@@ -3,12 +3,55 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
 <div class="form-group">
   {% set settings = editor.getPermissionSettings() %}
-  {% set groups = rule_loader.getResourceGroupDefinitions() %}
 
-  {% for group in groups %}
+  {% for group in policy.getResourceGroupDefinitions() %}
       <div class="form-group">
         <label>{{group.label}}</label>
 
+        {% for childResource in group.childResources %}
+          <div class="form-group">
+            <label>{{childResource.label}}</label>
+            {% set resOps = childResource.operations %}
+
+            {% for opIdentifier, opDef in resOps if resOps %}
+              {% set globalOpDef = policy.findOperationByIdentifier(opIdentifier) %}
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="rules[books][create]" value="1"> 
+                  {% if globalOpDef %}
+                    {{globalOpDef.label}}
+                  {% else %}
+                    {{opDef.label}}
+                  {% endif %}
+                </label>
+              </div>
+            {% else %}
+              {% set ops = policy.getOperationDefinitions() %}
+              {% for opIdentifier, opDef in ops if ops %}
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="rules[books][create]" value="1"> 
+                    {{opDef.label}}
+                  </label>
+                </div>
+              {% endfor %}
+
+            {% endfor %}
+          </div>
+          {#
+            {% set opDef = policy.findOperationByIdentifier(opIdentifier) %}
+          {% endfor %}
+          #}
+        {% endfor %}
+      </div>
+  {% endfor %}
+
+
+  {#
+  {% set groups = rule_loader.getResourceGroupDefinitions() %}
+  {% for group in groups %}
+      <div class="form-group">
+        <label>{{group.label}}</label>
 
         {% for childResource in group.childResources %}
 
@@ -27,78 +70,8 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 
         {% endfor %}
       </div>
-      {#
       {{dump(group)}}
       {{dump(groupLabel)}}
-      #}
   {% endfor %}
-
-
-  {#
-    {% for resource, op in  %}
-        {% set resDef = rule_loader.findResourceByIdentifier(resource) %}
-
-        {% if resDef.group %}
-
-        {% endif %}
-        {{dump(resDef)}}
-    {% endfor %}
   #}
-  <label>Core Module</label>
-  <div class="col-md-offset-1 col-md-2">
-    <!-- submodule -->
-    <div class="form-group">
-      <label>Book (id=2)</label>
-      <div class="col-md-offset-1 col-md-2">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="rules[books][create]" value="1"> Create
-          </label>
-        </div>
-
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="rules[books][update]" value="1"> Update
-          </label>
-        </div>
-
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="rules[books][delete]" value="1"> Delete
-          </label>
-        </div>
-
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="rules[books][export]" value="1"> Export
-          </label>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- submodule -->
-    <div class="form-group">
-      <label>Product</label>
-      <div class="col-md-offset-1 col-md-2">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="rules[books][create]" value="1"> Create
-          </label>
-        </div>
-
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="rules[books][update]" value="1"> Update
-          </label>
-        </div>
-
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="rules[books][delete]" value="1"> Delete
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
