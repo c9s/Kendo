@@ -15,7 +15,8 @@ before_script:
 - phpenv rehash
 - php vendor/bin/lazy build-conf db/config/database.travis.yml
 - php vendor/bin/lazy schema build -f src
-- php vendor/bin/lazy sql --rebuild src
+- php vendor/bin/lazy sql -D=mysql --rebuild src
+- php vendor/bin/lazy sql -D=sqlite --rebuild src
 
 script:
 - phpunit -c phpunit.xml.dist
