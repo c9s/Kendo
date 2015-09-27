@@ -5,6 +5,7 @@ use Kendo\Definition\RuleDefinition;
 use Kendo\Definition\ActorDefinition;
 use Kendo\Definition\RoleDefinition;
 use Kendo\Definition\ResourceDefinition;
+use Kendo\Definition\ResourceGroupDefinition;
 use Kendo\Definition\OperationDefinition;
 use SQLBuilder\Universal\Syntax\Conditions;
 use SQLBuilder\Universal\Query\SelectQuery;
@@ -43,11 +44,8 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
     public function load(PDO $conn)
     {
         $this->conn = $conn;
-
-        // pre-fetch actor records
         $this->loadActorDefinitions();
         $this->loadResourceDefinitions();
-        $this->loadResourceGroupDefinitions();
         $this->loadOperationDefinitions();
         $this->loadRoleDefinitions();
     }
@@ -70,21 +68,31 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
         }
     }
 
-    public function loadResourceGroupDefinitions()
-    {
-        $stm = $this->conn->prepare('select * from access_resource_groups');
-        $stm->execute();
-        while ($res = $stm->fetchObject('Kendo\\Definition\\ResourceGroupDefinition',[ null, null ])) {
-            $this->definedResourceGroups[$res->identifier] = $res;
-        }
-    }
-
     public function loadResourceDefinitions()
     {
-        $stm = $this->conn->prepare('select * from access_resources');
+        $stm = $this->conn->prepare('SELECT * FROM access_resources');
         $stm->execute();
-        while ($res = $stm->fetchObject('Kendo\\Definition\\ResourceDefinition', [null, null])) {
+
+        // resource map by record ID
+        $resourceMap = [];
+        while ($row = $stm->fetch()) {
+            $res = new ResourceDefinition;
+            $res->id = intval($row['id']);
+            $res->identifier = $row['identifier'];
+            $res->label = $row['label'];
+            $res->description = $row['description'];
+            $res->group_id = $row['group_id'] ? intval($row['group_id']) : NULL;
+            $resourceMap[$res->id] = $res;
             $this->definedResources[$res->identifier] = $res;
+        }
+
+        // rebuild group relationship
+        foreach ($resourceMap as $id => $res) {
+            if ($res->group_id) {
+                $parentRes = $resourceMap[$res->group_id];
+                $res->group($parentRes);
+                $this->definedResourceGroups[ $parentRes->identifier ] = $parentRes;
+            }
         }
     }
 
