@@ -53,7 +53,7 @@ class ActorRuleEditorTest extends DatabaseTestCase
         $loader->load($conn);
 
         $editor = new ActorRuleEditor($loader);
-        $editor->loadPermissions(new UserSpecificSecurityPolicy, 'user', 1);
+        $editor->loadPermissionSettings(new UserSpecificSecurityPolicy, 'user', 1);
 
         $editor->setAllow('books', GeneralOperation::CREATE);
         $editor->setAllow('books', GeneralOperation::UPDATE);
@@ -74,7 +74,7 @@ class ActorRuleEditorTest extends DatabaseTestCase
         $loader = new PDORuleLoader();
         $loader->load($conn);
         $editor2 = new ActorRuleEditor($loader);
-        $editor2->loadPermissions(new UserSpecificSecurityPolicy, 'user', 1);
+        $editor2->loadPermissionSettings(new UserSpecificSecurityPolicy, 'user', 1);
 
         $this->assertTrue( $editor->getPermission('books', GeneralOperation::CREATE) );
         $this->assertTrue( $editor->getPermission('books', GeneralOperation::UPDATE) );

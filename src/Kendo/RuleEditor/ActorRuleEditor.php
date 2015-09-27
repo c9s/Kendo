@@ -125,7 +125,7 @@ class ActorRuleEditor implements IteratorAggregate
     }
 
 
-    public function loadPermissions(SecurityPolicySchema $policy, $actor, $actorRecordId)
+    public function loadPermissionSettings(SecurityPolicySchema $policy, $actor, $actorRecordId)
     {
         $this->loader->queryActorAccessRules($actor);
 
