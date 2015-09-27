@@ -1,77 +1,53 @@
 {#
 vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
-<div class="form-group">
+{% macro resource(policy, resource) %}
+  <div class="form-group">
+    <label>{{resource.label}}</label>
+
+
+    {% set resOps = resource.operations %}
+    {% for opIdentifier, opDef in resOps if resOps %}
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
+          {{opDef.label}}
+        </label>
+      </div>
+    {% else %}
+      {#
+      {% set ops = policy.getOperationDefinitions() %}
+      {% for opIdentifier, opDef in ops if ops %}
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
+            {{opDef.label}}
+          </label>
+        </div>
+      {% endfor %}
+      #}
+    {% endfor %}
+
+    {% if resource.childResources %}
+      {% for childResource in resource.childResources %}
+        {{_self.resource(policy, childResource)}}
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endmacro %}
+
+<div class="row">
   {% set settings = editor.getPermissionSettings() %}
-
   {% for group in policy.getResourceGroupDefinitions() %}
+      {{_self.resource(policy, group)}}
+
+      {#
       <div class="form-group">
         <label>{{group.label}}</label>
-
         {% for childResource in group.childResources %}
-          <div class="form-group">
-            <label>{{childResource.label}}</label>
-            {% set resOps = childResource.operations %}
-
-            {% for opIdentifier, opDef in resOps if resOps %}
-              {% set globalOpDef = policy.findOperationByIdentifier(opIdentifier) %}
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="rules[books][create]" value="1"> 
-                  {% if globalOpDef %}
-                    {{globalOpDef.label}}
-                  {% else %}
-                    {{opDef.label}}
-                  {% endif %}
-                </label>
-              </div>
-            {% else %}
-              {% set ops = policy.getOperationDefinitions() %}
-              {% for opIdentifier, opDef in ops if ops %}
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" name="rules[books][create]" value="1"> 
-                    {{opDef.label}}
-                  </label>
-                </div>
-              {% endfor %}
-
-            {% endfor %}
-          </div>
-          {#
-            {% set opDef = policy.findOperationByIdentifier(opIdentifier) %}
-          {% endfor %}
-          #}
+          {{_self.resource(policy, childResource)}}
         {% endfor %}
       </div>
+      #}
   {% endfor %}
-
-
-  {#
-  {% set groups = rule_loader.getResourceGroupDefinitions() %}
-  {% for group in groups %}
-      <div class="form-group">
-        <label>{{group.label}}</label>
-
-        {% for childResource in group.childResources %}
-
-          <div class="form-group">
-            <label>{{childResource.label}}</label>
-
-            {% set ops = childResource.operations %}
-            {% for op in ops %}
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" name="rules[books][create]" value="1"> Create
-              </label>
-            </div>
-            {% endfor %}
-          </div>
-
-        {% endfor %}
-      </div>
-      {{dump(group)}}
-      {{dump(groupLabel)}}
-  {% endfor %}
-  #}
 </div>

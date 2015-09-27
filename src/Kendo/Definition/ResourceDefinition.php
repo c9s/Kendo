@@ -58,6 +58,11 @@ class ResourceDefinition extends BaseDefinition
     }
 
 
+    public function useGlobalOperations()
+    {
+        $this->operations = $this->policy->getOperationDefinitions();
+        return $this;
+    }
 
     /**
      * Operations method defines available operations of this resource

@@ -20,6 +20,7 @@ class UserSpecificSecurityPolicy extends RBACSecurityPolicySchema
 
         $this->resource('products', 'Product')
             ->group($coreGroup)
+            ->useGlobalOperations()
             ;
 
 
