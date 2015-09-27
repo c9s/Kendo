@@ -12,9 +12,13 @@ class ActorRuleEditor implements IteratorAggregate
 {
     protected $permissionSettings = array();
 
+    protected $loader;
 
-    public function __construct(RuleLoader $loader)
+    protected $policy;
+
+    public function __construct(SecurityPolicySchema $policy, RuleLoader $loader)
     {
+        $this->policy = $policy;
         $this->loader = $loader;
     }
 
@@ -98,7 +102,7 @@ class ActorRuleEditor implements IteratorAggregate
      * @param string $actor
      * @param integer $actorRecordId
      */
-    public function savePermissions(SecurityPolicySchema $policy, $actor, $actorRecordId)
+    public function savePermissionSettings($actor, $actorRecordId)
     {
         $actorDef = $this->loader->findActorByIdentifier($actor);
         foreach ($this->permissionSettings as $resource => $ops) {
@@ -125,7 +129,7 @@ class ActorRuleEditor implements IteratorAggregate
     }
 
 
-    public function loadPermissionSettings(SecurityPolicySchema $policy, $actor, $actorRecordId)
+    public function loadPermissionSettings($actor, $actorRecordId)
     {
         $this->loader->queryActorAccessRules($actor);
 
@@ -133,17 +137,17 @@ class ActorRuleEditor implements IteratorAggregate
         $this->permissionSettings = [
             /* resource => [ op => permission, ... ] */
         ];
-        $resDefs = $policy->getResourceDefinitions();
+        $resDefs = $this->policy->getResourceDefinitions();
         foreach ($resDefs as $resDef) {
 
             // Get available operations
             if ($resourceOps = $resDef->operations) {
                 foreach ($resourceOps as $opIdentifier) {
-                    $opDef = $policy->findOperationByIdentifier($opIdentifier);
+                    $opDef = $this->policy->findOperationByIdentifier($opIdentifier);
                     $this->permissionSettings[$resDef->identifier][$opDef->identifier] = false;
                 }
             } else {
-                $ops = $policy->getOperationDefinitions();
+                $ops = $this->policy->getOperationDefinitions();
                 foreach ($ops as $opIdentifier => $opDef) {
                     $this->permissionSettings[$resDef->identifier][$opDef->identifier] = false;
                 }

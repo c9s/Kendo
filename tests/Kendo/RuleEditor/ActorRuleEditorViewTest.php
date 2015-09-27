@@ -53,8 +53,8 @@ class ActorRuleEditorViewTest extends DatabaseTestCase
         $loader = new PDORuleLoader();
         $loader->load($conn);
 
-        $editor = new ActorRuleEditor($loader);
-        $editor->loadPermissionSettings(new UserSpecificSecurityPolicy, 'user', 1);
+        $editor = new ActorRuleEditor(new UserSpecificSecurityPolicy, $loader);
+        $editor->loadPermissionSettings('user', 1);
 
         $view = new ActorRuleEditorView($editor);
         $html = $view->render();

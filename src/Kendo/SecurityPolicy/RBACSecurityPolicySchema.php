@@ -8,6 +8,7 @@ use Kendo\Definition\RuleDefinition;
 use Kendo\Definition\OperationDefinition;
 use Kendo\Operation\OperationList;
 use Kendo\Operation\OperationConstantExporter;
+use Kendo\SecurityPolicy\SecurityPolicySchema;
 use Exception;
 use ReflectionClass;
 
@@ -74,7 +75,7 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
         if (isset($this->actors[ $identifier ])) {
             return $this->actors[ $identifier ];
         }
-        return $this->actors[$identifier] = new ActorDefinition($identifier, $label);
+        return $this->actors[$identifier] = new ActorDefinition($this, $identifier, $label);
     }
 
     public function findActorByIdentifier($identifier)
@@ -135,7 +136,7 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
         if (isset($this->resourceGroups[ $identifier ])) {
             return $this->resourceGroups[ $identifier ];
         }
-        return $this->resourceGroups[ $identifier ] = new ResourceDefinition($identifier, $label);
+        return $this->resourceGroups[ $identifier ] = new ResourceDefinition($this, $identifier, $label);
     }
 
     public function resource($identifier, $label = null)
@@ -143,7 +144,7 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
         if (isset($this->resources[ $identifier ])) {
             return $this->resources[ $identifier ];
         }
-        return $this->resources[ $identifier ] = new ResourceDefinition($identifier, $label);
+        return $this->resources[ $identifier ] = new ResourceDefinition($this, $identifier, $label);
     }
 
 

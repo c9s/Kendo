@@ -5,11 +5,32 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
   {% set settings = editor.getPermissionSettings() %}
   {% set groups = rule_loader.getResourceGroupDefinitions() %}
 
-  {% for groupLabel, group in groups %}
-    {#
+  {% for group in groups %}
+      <div class="form-group">
+        <label>{{group.label}}</label>
+
+
+        {% for childResource in group.childResources %}
+
+          <div class="form-group">
+            <label>{{childResource.label}}</label>
+
+            {% set ops = childResource.operations %}
+            {% for op in ops %}
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="rules[books][create]" value="1"> Create
+              </label>
+            </div>
+            {% endfor %}
+          </div>
+
+        {% endfor %}
+      </div>
+      {#
       {{dump(group)}}
       {{dump(groupLabel)}}
-    #}
+      #}
   {% endfor %}
 
 
@@ -25,7 +46,6 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
   #}
   <label>Core Module</label>
   <div class="col-md-offset-1 col-md-2">
-
     <!-- submodule -->
     <div class="form-group">
       <label>Book (id=2)</label>

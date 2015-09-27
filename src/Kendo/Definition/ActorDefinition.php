@@ -27,13 +27,13 @@ class ActorDefinition extends BaseDefinition
             if (is_array($arg)) {
                 foreach ($arg as $roleIdentifier) {
                     if (is_array($roleIdentifier)) {
-                        $this->roles[$roleIdentifier] = new RoleDefinition($roleIdentifier[0], $roleIdentifier[1]);
+                        $this->roles[$roleIdentifier] = new RoleDefinition($this->policy, $roleIdentifier[0], $roleIdentifier[1]);
                     } else {
-                        $this->roles[$roleIdentifier] = new RoleDefinition($roleIdentifier, $roleIdentifier);
+                        $this->roles[$roleIdentifier] = new RoleDefinition($this->policy, $roleIdentifier, $roleIdentifier);
                     }
                 }
             } else {
-                $this->roles[$arg] = new RoleDefinition($arg);
+                $this->roles[$arg] = new RoleDefinition($this->policy, $arg);
             }
         }
         return $this;
@@ -41,7 +41,7 @@ class ActorDefinition extends BaseDefinition
 
     public function role($roleIdentifier, $roleLabel)
     {
-        $this->roles[$roleIdentifier] = new RoleDefinition($roleIdentifier, $roleLabel);
+        $this->roles[$roleIdentifier] = new RoleDefinition($this->policy, $roleIdentifier, $roleLabel);
         return $this;
     }
 

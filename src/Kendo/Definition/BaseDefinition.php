@@ -1,6 +1,7 @@
 <?php
 namespace Kendo\Definition;
 use LazyRecord\BaseModel;
+use Kendo\SecurityPolicy\SecurityPolicySchema;
 
 class BaseDefinition
 {
@@ -20,9 +21,12 @@ class BaseDefinition
      */
     protected $record;
 
+    public $policy;
 
-    public function __construct($identifier = null, $label = null)
+    public function __construct(SecurityPolicySchema $policy = null, $identifier = null, $label = null)
     {
+        $this->policy = $policy;
+
         if ($identifier) {
             $this->identifier = $identifier;
         }
