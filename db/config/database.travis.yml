@@ -3,6 +3,8 @@ bootstrap:
   - vendor/autoload.php
 schema:
   auto_id: true
+  paths:
+  - src/Kendo/Model
 seeds:
 data_source:
   default: sqlite
