@@ -135,9 +135,8 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
         if (isset($this->resourceGroups[ $identifier ])) {
             return $this->resourceGroups[ $identifier ];
         }
-        return $this->resourceGroups[ $identifier ] = new ResourceGroupDefinition($identifier, $label);
+        return $this->resourceGroups[ $identifier ] = new ResourceDefinition($identifier, $label);
     }
-
 
     public function resource($identifier, $label = null)
     {
