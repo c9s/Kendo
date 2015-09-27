@@ -13,5 +13,5 @@ data_source:
     mysql:
       driver: mysql
       host: localhost
-      database: kendo_test
+      database: kendo
       user: root

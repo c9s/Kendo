@@ -9,7 +9,7 @@ install:
 - composer self-update
 - composer require satooshi/php-coveralls:dev-master --no-update --dev
 - composer install --prefer-source
-- mysql -e 'create database kendo_test;'
+- mysql -e 'create database kendo;'
 
 before_script:
 - phpenv rehash
