@@ -2,11 +2,27 @@
 vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
 <div class="form-group">
+  {% set settings = editor.getPermissionSettings() %}
+  {% set groups = rule_loader.getResourceGroupDefinitions() %}
 
-    {% for resource, op in editor.getPermissionSettings() %}
+  {% for groupLabel, group in groups %}
+    {#
+      {{dump(group)}}
+      {{dump(groupLabel)}}
+    #}
+  {% endfor %}
+
+
+  {#
+    {% for resource, op in  %}
         {% set resDef = rule_loader.findResourceByIdentifier(resource) %}
+
+        {% if resDef.group %}
+
+        {% endif %}
         {{dump(resDef)}}
     {% endfor %}
+  #}
   <label>Core Module</label>
   <div class="col-md-offset-1 col-md-2">
 
