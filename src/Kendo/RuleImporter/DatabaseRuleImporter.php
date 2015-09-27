@@ -11,6 +11,7 @@ use Kendo\Model\Operation as OperationRecord;
 use Kendo\Model\Resource as ResourceRecord;
 use Kendo\Model\ResourceGroup as ResourceGroupRecord;
 use Kendo\Exception\DefinitionRedefinedException;
+use Kendo\Definition\ResourceDefinition;
 
 /**
  * DatabaseRuleImporter imports AccessRule from schema to database
@@ -93,29 +94,30 @@ class DatabaseRuleImporter
         return $records;
     }
 
+
+
+    protected function importResource(ResourceDefinition $definition, array & $resourceRecords)
+    {
+        if ($definition->group) {
+            $this->importResource($definition->group, $resourceRecords);
+        }
+        $resourceRecord = new ResourceRecord;
+        $ret = $resourceRecord->createOrUpdate([
+            'identifier' => $definition->identifier,
+            'label'      => $definition->label,
+            'group_id'   => $definition->group ? $definition->group->id : null,
+        ], 'identifier');
+        $this->assertResultSuccess($ret);
+        $definition->setRecord($resourceRecord);
+        $definition->id = $resourceRecord->id;
+        $resourceRecords[$definition->identifier] = $resourceRecord;
+    }
+
     protected function importResourceRecords(array $definitions)
     {
         $resourceRecords = [];
         foreach ($definitions as $definition) {
-            $resourceRecord = new ResourceRecord;
-
-            $groupId = null;
-
-            if ($definition->group) {
-                if ($groupRecord = $definition->group->getRecord()) {
-                    $groupId = $groupRecord->id;
-                }
-            }
-
-            $ret = $resourceRecord->createOrUpdate([
-                'identifier' => $definition->identifier,
-                'group_id'   => $groupId,
-                'label'      => $definition->label,
-            ], 'identifier');
-            $this->assertResultSuccess($ret);
-            $resourceRecords[$resourceRecord->identifier] = $resourceRecord;
-
-            $definition->setRecord($resourceRecord);
+            $this->importResource($definition, $resourceRecords);
         }
         return $resourceRecords;
     }
@@ -150,9 +152,8 @@ class DatabaseRuleImporter
         $actorDefinitions    = $this->loader->getActorDefinitions();
         $roleRecords = $this->importRoleRecords($actorDefinitions);
 
-
         $resourceGroupDefinitions = $this->loader->getResourceGroupDefinitions();
-        $resourceGroupRecords = $this->importResourceGroupRecords($resourceGroupDefinitions);
+        $resourceGroupRecords = $this->importResourceRecords($resourceGroupDefinitions);
 
         $resourceDefinitions = $this->loader->getResourceDefinitions();
         $resourceRecords = $this->importResourceRecords($resourceDefinitions);
