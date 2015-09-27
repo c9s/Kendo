@@ -103,12 +103,12 @@ class PDORuleLoaderTest extends DatabaseTestCase
         $this->assertNotNull($conn);
 
         $resources = new ResourceCollection;
-        $this->assertCount(2, $resources);
+        $this->assertCount(3, $resources);
 
         $loader = new PDORuleLoader();
         $loader->load($conn);
 
-        $this->assertCount(2, $resources = $loader->getResourceDefinitions());
+        $this->assertCount(3, $resources = $loader->getResourceDefinitions());
         $this->assertCount(3, $actors = $loader->getActorDefinitions());
         $this->assertCount(5, $ops = $loader->getOperationDefinitions());
 
