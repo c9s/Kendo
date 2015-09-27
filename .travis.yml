@@ -1,5 +1,6 @@
 services:
   - mysql
+sudo: required
 language: php
 php:
 - 5.5
