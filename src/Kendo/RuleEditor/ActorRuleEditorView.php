@@ -43,10 +43,15 @@ class ActorRuleEditorView
         }
     }
 
+    public function getTemplateDirectory()
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . 'Templates';
+    }
+
     public function createDefaultTemplateLoader()
     {
         $loader = new Twig_Loader_Filesystem;
-        $loader->addPath(__DIR__ . DIRECTORY_SEPARATOR . 'Templates', 'Kendo');
+        $loader->addPath($this->getTemplateDirectory(), 'Kendo');
         // $templateContent = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'rule_editor.html.twig');
         /*
         $loader = new Twig_Loader_Array(array(
