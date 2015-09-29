@@ -4,7 +4,7 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 <div class="row">
   {% set settings = editor.getPermissionSettings() %}
   {% for group in policy.getResourceGroupDefinitions() %}
-    <div class="col-md-4">
+    <div class="col-md-3">
       {% include "@Kendo/resource.html.twig" with { "policy": policy, "resource": group } %}
     </div>
   {% endfor %}
