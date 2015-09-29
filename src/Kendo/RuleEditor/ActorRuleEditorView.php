@@ -1,9 +1,10 @@
 <?php
 namespace Kendo\RuleEditor;
-use Twig_Loader_Array;
 use Twig_Environment;
-use Twig_LoaderInterface;
 use Twig_Extension_Debug;
+use Twig_LoaderInterface;
+use Twig_Loader_Array;
+use Twig_Loader_Filesystem;
 
 class ActorRuleEditorView
 {
@@ -37,16 +38,20 @@ class ActorRuleEditorView
 
     public function createDefaultTemplateLoader()
     {
-        $templateContent = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'rule_editor.html.twig');
+        $loader = new Twig_Loader_Filesystem;
+        $loader->addPath(__DIR__ . DIRECTORY_SEPARATOR . 'Templates', 'Kendo');
+        // $templateContent = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'rule_editor.html.twig');
+        /*
         $loader = new Twig_Loader_Array(array(
             'rule_editor.html.twig' => $templateContent,
         ));
+         */
         return $loader;
     }
 
     public function render()
     {
-        return $this->environment->render('rule_editor.html.twig', array(
+        return $this->environment->render('@Kendo/rule_editor.html.twig', array(
             'view'   => $this,
             'editor' => $this->editor,
             'policy' => $this->editor->getPolicy(),

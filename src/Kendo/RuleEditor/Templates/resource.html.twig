@@ -1,0 +1,36 @@
+{#
+vim:filetype=htmldjango:sw=2:ts=2:sts=2:
+#}
+
+<div class="form-group">
+  <label>{{resource.label}}</label>
+
+  {% set resOps = resource.operations %}
+  {% for opIdentifier, opDef in resOps if resOps %}
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
+        {{opDef.label}}
+      </label>
+    </div>
+  {% else %}
+    {# Show global operations #}
+    {#
+    {% set ops = policy.getOperationDefinitions() %}
+    {% for opIdentifier, opDef in ops if ops %}
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
+          {{opDef.label}}
+        </label>
+      </div>
+    {% endfor %}
+    #}
+  {% endfor %}
+
+  {% if resource.childResources %}
+    {% for childResource in resource.childResources %}
+      {% include "@Kendo/resource.html.twig" with { "policy": policy, "resource": childResource } %}
+    {% endfor %}
+  {% endif %}
+</div>

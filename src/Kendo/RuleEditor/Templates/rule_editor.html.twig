@@ -1,53 +1,9 @@
 {#
 vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
-{% macro resource(policy, resource) %}
-  <div class="form-group">
-    <label>{{resource.label}}</label>
-
-
-    {% set resOps = resource.operations %}
-    {% for opIdentifier, opDef in resOps if resOps %}
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
-          {{opDef.label}}
-        </label>
-      </div>
-    {% else %}
-      {#
-      {% set ops = policy.getOperationDefinitions() %}
-      {% for opIdentifier, opDef in ops if ops %}
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
-            {{opDef.label}}
-          </label>
-        </div>
-      {% endfor %}
-      #}
-    {% endfor %}
-
-    {% if resource.childResources %}
-      {% for childResource in resource.childResources %}
-        {{_self.resource(policy, childResource)}}
-      {% endfor %}
-    {% endif %}
-  </div>
-{% endmacro %}
-
 <div class="row">
   {% set settings = editor.getPermissionSettings() %}
   {% for group in policy.getResourceGroupDefinitions() %}
-      {{_self.resource(policy, group)}}
-
-      {#
-      <div class="form-group">
-        <label>{{group.label}}</label>
-        {% for childResource in group.childResources %}
-          {{_self.resource(policy, childResource)}}
-        {% endfor %}
-      </div>
-      #}
+      {% include "@Kendo/resource.html.twig" with { "policy": policy, "resource": group } %}
   {% endfor %}
 </div>
