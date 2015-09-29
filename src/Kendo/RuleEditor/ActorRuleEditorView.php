@@ -20,7 +20,6 @@ class ActorRuleEditorView
      */
     protected $environment;
 
-
     public function __construct(ActorRuleEditor $editor, Twig_Environment $environment = null, Twig_LoaderInterface $loader = null)
     {
         $this->editor = $editor;
@@ -31,7 +30,9 @@ class ActorRuleEditorView
             // Add Kendo template directory to existing loader
             $loader = $environment->getLoader();
             if ($loader instanceof Twig_Loader_Filesystem) {
-                $loader->addPath(__DIR__ . DIRECTORY_SEPARATOR . 'Templates', 'Kendo');
+                if (!in_array('Kendo',$loader->getNamespaces())) {
+                    $loader->addPath($this->getTemplateDirectory(), 'Kendo');
+                }
             }
 
         } else {
