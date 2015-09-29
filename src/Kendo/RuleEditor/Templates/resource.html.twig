@@ -3,28 +3,28 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
 <div class="resource-group">
   <div class="resource">
-    <span class="resource-label">{{resource.label}}</span>
+    <div class="resource-label">{{resource.label}}</div>
     {% set resOps = resource.operations %}
 
-    <div class="resource-operations">
-    {% for opIdentifier, opDef in resOps if resOps %}
-
-
-      <label class="checkbox-inline">
-        <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
-        {{opDef.label}}
-      </label>
-
-      {#
-      <div class="checkbox">
-        <label>
+    {% if resOps %}
+      <div class="resource-operations">
+      {% for opIdentifier, opDef in resOps %}
+        <label class="checkbox-inline">
           <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
           {{opDef.label}}
         </label>
+
+        {#
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
+            {{opDef.label}}
+          </label>
+        </div>
+        #}
+      {% endfor %}
       </div>
-      #}
-    {% endfor %}
-    </div>
+    {% endif %}
   </div>
 
   {% if resource.childResources %}
