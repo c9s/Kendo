@@ -73,18 +73,22 @@ $view = new ActorRuleEditorView($editor);
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
       <style>
 
-      .resource-group {  }
+      .resource-group { 
+        
+      }
       .resource-group .resource-label {
         font-weight: bold;
         font-size: large;
         display: block;
         padding: 3px 8px;
         background: #e0e0e0;
+        color: #000;
         text-shadow: 1px 0 1px #fff;
       }
       .resource-group .resource-group .resource-label {
         font-size: small;
         background: #f0f0f0;
+        color: #505050;
         text-shadow: 1px 0 1px #fff;
       }
       .resource-operations {
