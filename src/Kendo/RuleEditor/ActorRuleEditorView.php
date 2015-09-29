@@ -27,6 +27,13 @@ class ActorRuleEditorView
 
         if ($environment) {
             $this->environment = $environment;
+
+            // Add Kendo template directory to existing loader
+            $loader = $environment->getLoader();
+            if ($loader instanceof Twig_Loader_Filesystem) {
+                $loader->addPath(__DIR__ . DIRECTORY_SEPARATOR . 'Templates', 'Kendo');
+            }
+
         } else {
             if (!$loader) {
                 $loader = $this->createDefaultTemplateLoader();
