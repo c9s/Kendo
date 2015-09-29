@@ -82,25 +82,30 @@ class RuleDefinition
 
         // XXX: validate operation from resource and policy schema
         if (is_array($resources)) {
-            foreach ($resources as $resourceIdentifier) {
+            foreach ($resources as $resource) {
+
+                if (is_string($resource)) {
+                    $resourceIdentifier = $resource;
+                } else if ($resource instanceof ResourceDefinition) {
+                    $resourceIdentifier = $resource->identifier;
+                } else {
+                    throw new Exception("Unsupported type of resources");
+                }
+
                 foreach ((array) $operations as $operation) {
-                    /*
-                    if (!$this->policy->findOperationByIdentifier($operation)) {
-                        throw new LogicException("Operation $operation doesn't exist in " . get_class($this->policy));
-                    }
-                     */
                     $this->permissions[$resourceIdentifier][$operation] = true;
                 }
             }
         } else if (is_string($resources)) {
             foreach ((array) $operations as $operation) {
-                /*
-                if (!$this->policy->findOperationByIdentifier($operation)) {
-                    throw new LogicException("Operation $operation doesn't exist in " . get_class($this->policy));
-                }
-                 */
                 $this->permissions[$resources][$operation] = true;
             }
+        } else if ($resource instanceof ResourceDefinition) {
+
+            foreach ((array) $operations as $operation) {
+                $this->permissions[$resource->identifier][$operation] = true;
+            }
+
         } else {
             throw new Exception('Unsupported type of resources.');
         }
@@ -117,15 +122,35 @@ class RuleDefinition
     public function cant($operations, $resources)
     {
         if (is_array($resources)) {
-            foreach ($resources as $resourceIdentifier) {
+
+            foreach ($resources as $resource) {
+
+                if (is_string($resource)) {
+                    $resourceIdentifier = $resource;
+                } else if ($resource instanceof ResourceDefinition) {
+                    $resourceIdentifier = $resource->identifier;
+                } else {
+                    throw new Exception("Unsupported type of resources");
+                }
+
                 foreach ((array) $operations as $operation) {
+
                     $this->permissions[$resourceIdentifier][$operation] = false;
                 }
             }
+
         } else if (is_string($resources)) {
+
             foreach ((array) $operations as $operation) {
                 $this->permissions[$resources][$operation] = false;
             }
+
+        } else if ($resource instanceof ResourceDefinition) {
+
+            foreach ((array) $operations as $operation) {
+                $this->permissions[$resource->identifier][$operation] = true;
+            }
+
         } else {
             throw new Exception('Unsupported type of resources.');
         }
