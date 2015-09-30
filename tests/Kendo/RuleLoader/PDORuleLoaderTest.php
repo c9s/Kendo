@@ -44,8 +44,8 @@ class PDORuleLoaderTest extends DatabaseTestCase
         $loader = new SchemaRuleLoader;
         $loader->load($this->policyModule);
 
-        $exporter = new DatabaseRuleImporter($loader);
-        $exporter->import();
+        $exporter = new DatabaseRuleImporter();
+        $exporter->import($loader);
 
         $rules = new AccessRuleCollection;
         $this->assertCount(3, $rules);
@@ -94,8 +94,8 @@ class PDORuleLoaderTest extends DatabaseTestCase
         $loader = new SchemaRuleLoader;
         $loader->load($module);
 
-        $exporter = new DatabaseRuleImporter($loader);
-        $exporter->import();
+        $exporter = new DatabaseRuleImporter();
+        $exporter->import($loader);
 
 
         $connectionManager = ConnectionManager::getInstance();

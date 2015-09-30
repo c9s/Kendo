@@ -43,8 +43,8 @@ class ActorRuleEditorViewTest extends DatabaseTestCase
         $loader = new SchemaRuleLoader;
         $loader->load($this->policyModule);
 
-        $exporter = new DatabaseRuleImporter($loader);
-        $exporter->import();
+        $exporter = new DatabaseRuleImporter();
+        $exporter->import($loader);
 
         $connectionManager = ConnectionManager::getInstance();
         $conn = $connectionManager->getConnection($this->getDriverType());

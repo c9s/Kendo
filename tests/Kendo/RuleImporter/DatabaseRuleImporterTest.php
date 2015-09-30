@@ -36,8 +36,8 @@ class DatabaseRuleImporterTest extends DatabaseTestCase
 
         $rules = $loader->getAccessRules();
 
-        $importer = new DatabaseRuleImporter($loader);
-        $importer->import();
+        $importer = new DatabaseRuleImporter();
+        $importer->import($loader);
 
         $rules = new AccessRuleCollection;
         $this->assertCount(10, $rules);

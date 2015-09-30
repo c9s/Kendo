@@ -1,6 +1,7 @@
 <?php
 namespace Kendo\RuleImporter;
 use Kendo\RuleLoader\SchemaRuleLoader;
+use Kendo\SecurityPolicy\SecurityPolicySchema;
 use Kendo\RuleLoader\RuleLoader;
 use Kendo\Model\AccessRule as AccessRuleRecord;
 use Kendo\Model\AccessControl as AccessControlRecord;
@@ -18,17 +19,6 @@ use Kendo\Definition\ResourceDefinition;
  */
 class DatabaseRuleImporter
 {
-
-    /**
-     * @var RuleLoader $loader
-     */
-    protected $loader;
-
-    public function __construct(RuleLoader $loader)
-    {
-        $this->loader = $loader;
-    }
-
     /**
      * Result
      */
@@ -142,35 +132,32 @@ class DatabaseRuleImporter
         return $operationRecords;
     }
 
-    public function import()
+    public function import(RuleLoader $loader)
     {
         // TODO: clean up removed actor records...
-
-        $actorDefinitions    = $this->loader->getActorDefinitions();
+        $actorDefinitions    = $loader->getActorDefinitions();
         $actorRecords = $this->importActorRecords($actorDefinitions);
 
-        $actorDefinitions    = $this->loader->getActorDefinitions();
+        $actorDefinitions    = $loader->getActorDefinitions();
         $roleRecords = $this->importRoleRecords($actorDefinitions);
 
-        $resourceGroupDefinitions = $this->loader->getResourceGroupDefinitions();
+        $resourceGroupDefinitions = $loader->getResourceGroupDefinitions();
         $resourceGroupRecords = $this->importResourceRecords($resourceGroupDefinitions);
 
-        $resourceDefinitions = $this->loader->getResourceDefinitions();
+        $resourceDefinitions = $loader->getResourceDefinitions();
         $resourceRecords = $this->importResourceRecords($resourceDefinitions);
 
-        $operationDefinitions = $this->loader->getOperationDefinitions();
+        $operationDefinitions = $loader->getOperationDefinitions();
         $operationRecords = $this->importOperationRecords($operationDefinitions);
 
-
         // get all access rules from loader
-        $accessRules = $this->loader->getAccessRules();
+        $accessRules = $loader->getAccessRules();
         foreach ($accessRules as $actorIdentifier =>  $actorRules) {
             foreach ($actorRules as $resourceIdentifier => $rules) {
                 foreach ($rules as $rule) {
                     $opIdentifier = $rule['op'];
                     $allow = $rule['allow'];
                     $roleIdentifier = $rule['role'];
-                    $op = $operationDefinitions[$opIdentifier];
 
                     $ruleRecord = new AccessRuleRecord;
                     $ret = $ruleRecord->createOrUpdate([
