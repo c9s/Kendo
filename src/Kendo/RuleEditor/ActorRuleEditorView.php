@@ -15,12 +15,19 @@ class ActorRuleEditorView
     protected $editor;
 
 
+    protected $defaultTwigOptions = [ 'debug' => true ];
+
+
     /**
      * @var Twig_Environment
      */
     protected $environment;
 
-    public function __construct(ActorRuleEditor $editor, Twig_Environment $environment = null, Twig_LoaderInterface $loader = null)
+    protected $options = array(
+        'rules_field_name' => 'rules',
+    );
+
+    public function __construct(ActorRuleEditor $editor, Twig_Environment $environment = null, array $options = array())
     {
         $this->editor = $editor;
 
@@ -36,12 +43,14 @@ class ActorRuleEditorView
             }
 
         } else {
-            if (!$loader) {
-                $loader = $this->createDefaultTemplateLoader();
-            }
-            $this->environment = new Twig_Environment($loader, [ 'debug' => true, ]);
+
+            $loader = $this->createDefaultTemplateLoader();
+            $this->environment = new Twig_Environment($loader, $this->defaultTwigOptions);
             $this->environment->addExtension(new Twig_Extension_Debug());
+
         }
+
+        $this->options = array_merge($this->options, $options);
     }
 
     public function getTemplateDirectory()
@@ -53,12 +62,6 @@ class ActorRuleEditorView
     {
         $loader = new Twig_Loader_Filesystem;
         $loader->addPath($this->getTemplateDirectory(), 'Kendo');
-        // $templateContent = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'rule_editor.html.twig');
-        /*
-        $loader = new Twig_Loader_Array(array(
-            'rule_editor.html.twig' => $templateContent,
-        ));
-         */
         return $loader;
     }
 
@@ -69,6 +72,7 @@ class ActorRuleEditorView
             'editor' => $this->editor,
             'policy' => $this->editor->getPolicy(),
             'rule_loader' => $this->editor->getLoader(),
+            'rules_field_name' => $this->options['rules_field_name'],
         ));
     }
 
