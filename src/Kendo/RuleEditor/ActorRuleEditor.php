@@ -8,6 +8,7 @@ use ArrayIterator;
 use IteratorAggregate;
 use Kendo\Model\AccessRuleCollection;
 use Kendo\Model\AccessRule;
+use Kendo\Definition\ResourceDefinition;
 
 class ActorRuleEditor implements IteratorAggregate
 {
@@ -96,6 +97,13 @@ class ActorRuleEditor implements IteratorAggregate
         return $this->permissionSettings;
     }
 
+
+    public function setPermissionSettings(array $settings)
+    {
+        $this->permissionSettings = $settings;
+    }
+
+
     /**
      * Save permissions for specific actor.
      *
@@ -130,10 +138,17 @@ class ActorRuleEditor implements IteratorAggregate
     }
 
 
-    public function loadPermissionSettings($actor, $actorRecordId)
+    private function loadResourcePermissions($actor, $actorRecordId, ResourceDefinition $resDef)
     {
-        $this->loader->queryActorAccessRules($actor);
+        $rules = $this->loader->queryActorAccessRules($actor, $actorRecordId, $resDef->identifier);
+        foreach ($rules as $rule) {
+            $this->permissionSettings[ $rule['resource'] ][ $rule['operation'] ] = $rule['allow'];
+        }
+    }
 
+
+    public function loadPermissionSettings($actor, $actorRecordId = 0)
+    {
         // For each resource, load their operations and corresponding setting.
         $this->permissionSettings = [
             /* resource => [ op => permission, ... ] */
@@ -155,9 +170,8 @@ class ActorRuleEditor implements IteratorAggregate
             }
 
             // XXX: reconcile this method into the rule loader interface
-            $rules = $this->loader->queryActorAccessRules($actor, $actorRecordId, $resDef->identifier);
-            foreach ($rules as $rule) {
-                $this->permissionSettings[ $rule['resource'] ][ $rule['operation'] ] = $rule['allow'];
+            if ($actorRecordId) {
+                $this->loadResourcePermissions($actor, $actorRecordId, $resDef->identifier);
             }
         }
         return $this->permissionSettings;
