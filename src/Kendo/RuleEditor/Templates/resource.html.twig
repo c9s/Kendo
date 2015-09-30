@@ -11,7 +11,14 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
       {% for opIdentifier, opDef in resOps %}
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="{{rules_field_name|default('rules')}}[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
+            <input type="checkbox" 
+                   name="{{rules_field_name|default('rules')}}[{{ resource.identifier }}][{{opDef.identifier}}]" 
+                   value="1"
+
+                   {% if editor.getPermission(resource.identifier, opDef.identifier) %}
+                   checked="checked"
+                   {% endif %}
+            />
             {{opDef.label}}
           </label>
         </div>
