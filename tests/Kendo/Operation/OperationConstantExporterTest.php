@@ -3,16 +3,16 @@ use Kendo\Operation\OperationConstantExporter;
 
 class TestFooConstants
 {
-    const A = 0;
-    const B = 1;
-    const C = 2;
+    const A = 'a';
+    const B = 'b';
+    const C = 'c';
 }
 
 class TestFooDuplicatedConstants
 {
-    const A = 0;
-    const B = 0;
-    const C = 0;
+    const A = 'a';
+    const B = 'c';
+    const C = 'c';
 }
 
 class OperationConstantExporterTest extends PHPUnit_Framework_TestCase
@@ -22,9 +22,9 @@ class OperationConstantExporterTest extends PHPUnit_Framework_TestCase
         $exporter = new OperationConstantExporter;
         $constants = $exporter->export('TestFooConstants');
         $this->assertSame([ 
-            'A' => 0,
-            'B' => 1,
-            'C' => 2,
+            'a' => 'A',
+            'b' => 'B',
+            'c' => 'C',
         ], $constants);
     }
 

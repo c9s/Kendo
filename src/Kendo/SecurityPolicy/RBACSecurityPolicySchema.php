@@ -115,18 +115,28 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
      */
     public function globalOperations($operations)
     {
-        if (method_exists($operations, 'export')) {
-            $constants = $operations->export();
-            foreach ($constants as $constantName => $constantValue) {
-                $this->globalOperation($constantValue, $constantName);
+        $exporter = new OperationConstantExporter;
+        if (is_array($operations)) {
+            foreach ($operations as $k => $v) {
+                if (is_numeric($k)) {
+                    if (!is_object($v)) {
+                        throw new Exception("operation definition should be an object.");
+                    }
+                    $constants = $exporter->export($v);
+                    foreach ($constants as $identifier => $label) {
+                        $this->globalOperation($identifier, $label);
+                    }
+                } else {
+                    $this->globalOperation($k, $v);
+                }
             }
         } else {
-            // Fetch constant information by using ReflectionClass
-            $refClass = new ReflectionClass($operations);
-            $constants = $refClass->getConstants();
-            foreach ($constants as $constantName => $constantValue) {
-                $this->globalOperation($constantValue, $constantName);
+
+            $constants = $exporter->export($operations);
+            foreach ($constants as $identifier => $label) {
+                $this->globalOperation($identifier, $label);
             }
+
         }
         return $this;
     }
