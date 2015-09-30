@@ -171,7 +171,7 @@ class ActorRuleEditor implements IteratorAggregate
 
             // XXX: reconcile this method into the rule loader interface
             if ($actorRecordId) {
-                $this->loadResourcePermissions($actor, $actorRecordId, $resDef->identifier);
+                $this->loadResourcePermissions($actor, $actorRecordId, $resDef);
             }
         }
         return $this->permissionSettings;
