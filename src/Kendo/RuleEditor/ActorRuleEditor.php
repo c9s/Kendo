@@ -103,6 +103,11 @@ class ActorRuleEditor implements IteratorAggregate
         $this->permissionSettings = $settings;
     }
 
+    public function applyPermissionSettings(array $settings)
+    {
+        $this->permissionSettings = array_replace_recursive($this->permissionSettings, $settings);
+    }
+
 
     /**
      * Save permissions for specific actor.
@@ -146,8 +151,7 @@ class ActorRuleEditor implements IteratorAggregate
         }
     }
 
-
-    public function loadPermissionSettings($actor, $actorRecordId = 0)
+    public function initPermissionSettings($defaultAllow = false)
     {
         // For each resource, load their operations and corresponding setting.
         $this->permissionSettings = [
@@ -155,22 +159,28 @@ class ActorRuleEditor implements IteratorAggregate
         ];
         $resDefs = $this->policy->getResourceDefinitions();
         foreach ($resDefs as $resDef) {
-
             // Get available operations
             if ($resourceOps = $resDef->operations) {
                 foreach ($resourceOps as $opIdentifier => $opDef) {
                     // echo get_class($opDef) , ':' , $opDef->identifier, PHP_EOL;
-                    $this->permissionSettings[$resDef->identifier][$opDef->identifier] = false;
+                    $this->permissionSettings[$resDef->identifier][$opDef->identifier] = $defaultAllow;
                 }
             } else {
                 $ops = $this->policy->getOperationDefinitions();
                 foreach ($ops as $opIdentifier => $opDef) {
-                    $this->permissionSettings[$resDef->identifier][$opDef->identifier] = false;
+                    $this->permissionSettings[$resDef->identifier][$opDef->identifier] = $defaultAllow;
                 }
             }
+        }
+    }
 
-            // XXX: reconcile this method into the rule loader interface
-            if ($actorRecordId) {
+    public function loadPermissionSettings($actor, $actorRecordId = 0)
+    {
+        $this->initPermissionSettings();
+        $resDefs = $this->policy->getResourceDefinitions();
+        if ($actorRecordId) {
+            foreach ($resDefs as $resDef) {
+                // XXX: reconcile this method into the rule loader interface
                 $this->loadResourcePermissions($actor, $actorRecordId, $resDef);
             }
         }
