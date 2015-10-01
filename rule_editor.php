@@ -46,8 +46,8 @@ $module->add(new UserSpecificSecurityPolicy);
 $loader = new SchemaRuleLoader;
 $loader->load($module);
 
-$exporter = new DatabaseRuleImporter($loader);
-$exporter->import();
+$exporter = new DatabaseRuleImporter();
+$exporter->import($loader);
 
 $loader = new PDORuleLoader();
 $loader->load($conn);
