@@ -116,6 +116,17 @@ class ResourceDefinition extends BaseDefinition
         return $this;
     }
 
+    /**
+     * Create a new child resource group
+     */
+    public function resourceGroup($identifier, $label = null)
+    {
+        $childGroup = new ResourceDefinition($this->policy, $identifier, $label);
+        $childGroup->group = $this;
+        $this->addChildResource($childGroup);
+        return $childGroup;
+    }
+
 
     public function addChildResource(ResourceDefinition $resource)
     {
