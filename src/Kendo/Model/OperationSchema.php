@@ -16,6 +16,9 @@ class OperationSchema extends DeclareSchema
         $this->column('label')
             ->varchar(30);
 
+        $this->column('reference_class')
+            ->varchar(60);
+
         $this->column('description')
             ->text();
     }
