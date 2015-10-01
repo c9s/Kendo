@@ -12,10 +12,10 @@ class GeneralOperation
     /**
      * Constant values are identifier
      */
+    const VIEW   = 'view';
     const CREATE = 'create';
     const UPDATE = 'update';
     const DELETE = 'delete';
-    const VIEW   = 'view';
     const SEARCH = 'search';
 
 

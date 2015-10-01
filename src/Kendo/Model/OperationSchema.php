@@ -19,8 +19,6 @@ class OperationSchema extends DeclareSchema
         $this->column('description')
             ->text();
     }
-
-
 }
 
 
