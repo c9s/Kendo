@@ -84,7 +84,7 @@ class ActorRuleEditor implements IteratorAggregate
     public function getPermission($resource, $operation)
     {
         if (!$this->hasResource($resource)) {
-            throw new Exception("Undefined resource $resource.");
+            return null;
         }
         if (!isset($this->permissionSettings[ $resource ][ $operation ])) {
             return null;
