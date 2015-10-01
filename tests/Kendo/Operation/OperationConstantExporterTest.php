@@ -22,27 +22,10 @@ class OperationConstantExporterTest extends PHPUnit_Framework_TestCase
         $exporter = new OperationConstantExporter;
         $constants = $exporter->export('TestFooConstants');
         $this->assertSame([ 
-            'a' => 'A',
-            'b' => 'B',
-            'c' => 'C',
+            'A' => 'a',
+            'B' => 'b',
+            'C' => 'c',
         ], $constants);
     }
-
-
-    /**
-     * @expectedException LogicException
-     */
-    public function testExpotDuplicateValue()
-    {
-        $exporter = new OperationConstantExporter;
-        $constants = $exporter->export('TestFooDuplicatedConstants');
-        $this->assertSame([ 
-            'A' => 0,
-            'B' => 1,
-            'C' => 2,
-        ], $constants);
-    }
-
-
 }
 

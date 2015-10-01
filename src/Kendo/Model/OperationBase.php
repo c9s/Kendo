@@ -14,12 +14,14 @@ class OperationBase
     public static $column_names = array (
       0 => 'identifier',
       1 => 'label',
-      2 => 'description',
-      3 => 'id',
+      2 => 'reference_class',
+      3 => 'description',
+      4 => 'id',
     );
     public static $column_hash = array (
       'identifier' => 1,
       'label' => 1,
+      'reference_class' => 1,
       'description' => 1,
       'id' => 1,
     );
@@ -39,6 +41,10 @@ class OperationBase
     public function getLabel()
     {
             return $this->get('label');
+    }
+    public function getReferenceClass()
+    {
+            return $this->get('reference_class');
     }
     public function getDescription()
     {

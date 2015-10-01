@@ -16,7 +16,7 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
 
         $this->resource('books', 'Book')
             ->group($coreGroup)
-            ->operations([ GeneralOperation::CREATE, GeneralOperation::UPDATE ]);
+            ->operations([ 'CREATE', 'UPDATE' ]);
 
         $this->resource('products', 'Product')
             ->group($coreGroup)
@@ -39,25 +39,25 @@ class SimpleSecurityPolicy extends RBACSecurityPolicySchema
         // This will expand to 3 rules
         $this->rule()
             ->actor('user')->role('admin')
-                ->can([GeneralOperation::CREATE, GeneralOperation::UPDATE, GeneralOperation::DELETE], 'books');
+                ->can(['CREATE', 'UPDATE', 'DELETE'], 'books');
 
         // This will expand to 3 rules
         $this->rule()
             ->actor('user')
                 ->role('admin')
-                ->can([GeneralOperation::CREATE, GeneralOperation::UPDATE, GeneralOperation::DELETE], 'products');
+                ->can(['CREATE', 'UPDATE', 'DELETE'], 'products');
 
         // This will expand to 2 rules
         $this->rule()
             ->actor('user')
                 ->role('customer')
-                ->can([GeneralOperation::VIEW], 'products')
-                ->cant([GeneralOperation::CREATE], 'products');
+                ->can(['VIEW'], 'products')
+                ->cant(['CREATE'], 'products');
 
         // This will expand to 2 rules
         // all user actor can view and search
         $this->rule()
             ->actor('user')
-                ->can([GeneralOperation::VIEW, GeneralOperation::SEARCH], 'products');
+                ->can(['VIEW', 'SEARCH'], 'products');
     }
 }

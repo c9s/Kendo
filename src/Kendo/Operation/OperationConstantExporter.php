@@ -30,14 +30,6 @@ class OperationConstantExporter
         }
 
         $constants = $reflection->getConstants();
-        $defined = array();
-        foreach ($constants as $constantName => $identifier) {
-            if (isset($defined[$identifier])) {
-                throw new LogicException("Constant '$constantName' definition use '$identifier', however '$identifier' was defined in " . $defined[$identifier]);
-            }
-            // We use Constant name as the default label.
-            $defined[$identifier] = $constantName;
-        }
-        return $defined;
+        return $constants;
     }
 }

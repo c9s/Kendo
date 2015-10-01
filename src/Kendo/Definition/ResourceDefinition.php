@@ -100,11 +100,6 @@ class ResourceDefinition extends BaseDefinition
 
                 $this->operations[$arg->identifier] = $arg;
 
-            } else if (method_exists($arg,'export')) {
-
-                $map = $arg->export();
-                $this->importOperationsFromMap($map);
-
             } else {
                 $exporter = new OperationConstantExporter;
                 $constants = $exporter->export($arg);

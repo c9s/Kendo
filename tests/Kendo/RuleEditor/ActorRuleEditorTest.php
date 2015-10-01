@@ -58,12 +58,12 @@ class ActorRuleEditorTest extends DatabaseTestCase
         $settings = $editor->getPermissionSettings();
         // var_dump( $settings ); 
 
-        $editor->setAllow('books', GeneralOperation::CREATE);
-        $editor->setAllow('books', GeneralOperation::UPDATE);
-        $editor->setAllow('books', GeneralOperation::DELETE);
+        $editor->setAllow('books', 'CREATE');
+        $editor->setAllow('books', 'UPDATE');
+        $editor->setAllow('books', 'DELETE');
 
-        $this->assertTrue( $editor->getPermission('books', GeneralOperation::CREATE) );
-        $this->assertTrue( $editor->getPermission('books', GeneralOperation::UPDATE) );
+        $this->assertTrue( $editor->getPermission('books', 'CREATE'));
+        $this->assertTrue( $editor->getPermission('books', 'UPDATE'));
 
         foreach ($editor as $resource => $ops) {
             $this->assertTrue(is_string($resource));
@@ -78,8 +78,8 @@ class ActorRuleEditorTest extends DatabaseTestCase
         $editor2 = new ActorRuleEditor(new UserSpecificSecurityPolicy, $loader);
         $editor2->loadPermissionSettings('user', 1);
 
-        $this->assertTrue( $editor->getPermission('books', GeneralOperation::CREATE) );
-        $this->assertTrue( $editor->getPermission('books', GeneralOperation::UPDATE) );
+        $this->assertTrue( $editor->getPermission('books', 'CREATE'));
+        $this->assertTrue( $editor->getPermission('books', 'UPDATE'));
         // $editor2->
     }
 }

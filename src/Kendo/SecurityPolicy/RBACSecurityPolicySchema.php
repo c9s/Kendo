@@ -123,9 +123,7 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
                         throw new Exception("operation definition should be an object.");
                     }
                     $constants = $exporter->export($v);
-                    foreach ($constants as $identifier => $label) {
-                        $this->globalOperation($identifier, $label);
-                    }
+                    $this->globalOperations($constants);
                 } else {
                     $this->globalOperation($k, $v);
                 }
@@ -133,9 +131,7 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
         } else {
 
             $constants = $exporter->export($operations);
-            foreach ($constants as $identifier => $label) {
-                $this->globalOperation($identifier, $label);
-            }
+            $this->globalOperations($constants);
 
         }
         return $this;

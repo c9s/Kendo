@@ -21,12 +21,12 @@ class FooSecurityPolicy extends RBACSecurityPolicySchema
         /*
         $this->rule()
             ->roles(['admin', 'user'])
-            ->can(['create', 'update'], 'book')
+            ->can(['CREATE', 'UPDATE'], 'book')
             ;
 
         $this->rule()
             ->roles('admin', 'user')
-            ->can(['create', 'update'], 'book')
+            ->can(['CREATE', 'UPDATE'], 'book')
             ;
 
         $user1 = new MockUser(1);
@@ -34,12 +34,12 @@ class FooSecurityPolicy extends RBACSecurityPolicySchema
 
         $this->rule()
             ->users($user1, $user2)
-            ->can(['create', 'update'], 'book')
+            ->can(['CREATE', 'UPDATE'], 'book')
             ;
 
         $this->rule()
             ->users([$user1])
-            ->can(['create', 'update'], 'book')
+            ->can(['CREATE', 'UPDATE'], 'book')
             ;
          */
     }
