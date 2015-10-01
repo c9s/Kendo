@@ -88,9 +88,13 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
 
         // rebuild group relationship
         foreach ($resourceMap as $id => $res) {
-            if ($res->group_id) {
-                $parentRes = $resourceMap[$res->group_id];
-                $res->group($parentRes);
+            if (!$res->group_id) {
+                continue;
+            }
+            $res->group($resourceMap[$res->group_id]);
+        }
+        foreach ($resourceMap as $id => $res) {
+            if ($res->group == null && !empty($res->childResources) ) {
                 $this->definedResourceGroups[ $parentRes->identifier ] = $parentRes;
             }
         }
