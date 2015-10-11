@@ -45,3 +45,5 @@ cache.properties
 *.swp
 locale/*.mo
 manifest.php
+src/Kendo/Model/*Base.php
+src/Kendo/Model/*CollectionBase.php
