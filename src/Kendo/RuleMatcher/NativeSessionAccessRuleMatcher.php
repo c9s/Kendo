@@ -12,16 +12,13 @@ use LogicException;
 
 class NativeSessionAccessRuleMatcher extends AccessRuleMatcher implements RuleMatcher
 {
-
     protected function getActorRules($actorIdentifier)
     {
         $actorSessionKey = '__kendo:' . $actorIdentifier;
-
         if (isset($_SESSION[$actorSessionKey])) {
             $accessRules = $_SESSION[$actorSessionKey];
         } else {
-            $accessRules = $this->loader->getActorAccessRules($actorIdentifier);
-            $_SESSION[$actorSessionKey] = $accessRules;
+            $_SESSION[$actorSessionKey] = $accessRules = $this->loader->getActorAccessRules($actorIdentifier);
         }
         return $accessRules;
     }
