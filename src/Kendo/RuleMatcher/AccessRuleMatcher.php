@@ -22,6 +22,26 @@ class AccessRuleMatcher implements RuleMatcher
         $this->context = $context;
     }
 
+    protected function getResourceIdentifier($resource)
+    {
+        if (is_string($resource)) {
+
+            return $resource;
+
+        } else if ($resource instanceof ResourceIdentifierProvider) {
+
+            return $resource->getResourceIdentifier();
+
+        } else if ($resource instanceof GeneralIdentifierProvider) {
+
+            return $resource->getIdentifier();
+
+        } else {
+            // throw new LogicException("Can't recognise resource, identifier provider interface is not implemented.");
+        }
+
+    }
+
     protected function getActorIdentifier($actor, $matchedActorDefinition = null)
     {
         if ($matchedActorDefinition) {
@@ -41,80 +61,9 @@ class AccessRuleMatcher implements RuleMatcher
         return null;
     }
 
-    /**
-     * @param mixed $actor 
-     * @param string $operation operation identifier
-     * @param mixed $resource the resource object
-     * @param Context $context authentication context.
-     */
-    public function match($actor, $operation, $resource, Context $context = null)
+
+    protected function matchRules(array $accessRules, $actor, $role, $actorRecordId = null, $operation, $resourceIdentifier, $resourceRecordId)
     {
-        $actorDefinitions = $this->loader->getActorDefinitions();
-        $currentContext = $context ?: $this->context;
-
-        // for each actor definition, use instance class to find the matched actor definition.
-        $matchedActorDefinition = null;
-        foreach ($actorDefinitions as $actorDefinition) {
-            if (!$actorDefinition->instanceClass) {
-                continue;
-            }
-            if ($actor instanceof $actorDefinition->instanceClass) {
-                $matchedActorDefinition = $actorDefinition;
-            }
-        }
-
-        $actorIdentifier = $this->getActorIdentifier($actor, $matchedActorDefinition);
-        $actorRecordId = null;
-
-        if (!$actorIdentifier) {
-            throw new LogicException("Can't recognise actor, identifier provider interface is not implemented.");
-        }
-
-        if ($actor instanceof RecordIdentifierProvider) {
-            $actorRecordId = $actor->getRecordIdentifier();
-        }
-
-
-        // An actor may have different roles, if the actor doesn't have one, we will use '0' to find access_rules.
-        $role = 0;
-        if ($actor instanceof RoleIdentifierProvider) {
-            $role = $actor->getRoleIdentifier();
-        }
-
-
-        $resourceIdentifier = null;
-        $resourceRecordId   = null;
-
-        if (is_string($resource)) {
-
-            $resourceIdentifier = $resource;
-
-        } else if ($resource instanceof ResourceIdentifierProvider) {
-
-            $resourceIdentifier = $resource->getResourceIdentifier();
-            if ($resource instanceof RecordIdentifierProvider) {
-                $resourceRecordId = $resource->getResourceIdentifier();
-            }
-
-        } else if ($resource instanceof GeneralIdentifierProvider) {
-
-            $resourceIdentifier = $resource->getIdentifier();
-            if ($resource instanceof RecordIdentifierProvider) {
-                $resourceRecordId = $resource->getResourceIdentifier();
-            }
-
-        } else {
-
-            throw new LogicException("Can't recognise resource, identifier provider interface is not implemented.");
-
-        }
-
-        $accessRules = $this->loader->getActorAccessRules($actorIdentifier);
-
-        // TODO: return reason
-        if ($accessRules === null || empty($accessRules)) {
-            return RuleMatcher::ACTOR_RULE_UNDEFINED;
-        }
 
         // resource undefined.
         // TODO: return reason
@@ -156,6 +105,70 @@ class AccessRuleMatcher implements RuleMatcher
         }
 
         return RuleMatcher::NO_RULE_MATCHED;
+
+
+
+    }
+
+
+    /**
+     * @param mixed $actor 
+     * @param string $operation operation identifier
+     * @param mixed $resource the resource object
+     * @param Context $context authentication context.
+     */
+    public function match($actor, $operation, $resource, Context $context = null)
+    {
+        $actorDefinitions = $this->loader->getActorDefinitions();
+        $currentContext = $context ?: $this->context;
+
+        // for each actor definition, use instance class to find the matched actor definition.
+        $matchedActorDefinition = null;
+        foreach ($actorDefinitions as $actorDefinition) {
+            if (!$actorDefinition->instanceClass) {
+                continue;
+            }
+            if ($actor instanceof $actorDefinition->instanceClass) {
+                $matchedActorDefinition = $actorDefinition;
+            }
+        }
+
+        $actorIdentifier = $this->getActorIdentifier($actor, $matchedActorDefinition);
+        $actorRecordId = null;
+
+        // An actor may have different roles, if the actor doesn't have one, we will use '0' to find access_rules.
+        $role = 0;
+        $resourceIdentifier = null;
+        $resourceRecordId   = null;
+
+        if (!$actorIdentifier) {
+            throw new LogicException("Can't recognise actor, identifier provider interface is not implemented.");
+        }
+
+        if ($actor instanceof RecordIdentifierProvider) {
+            $actorRecordId = $actor->getRecordIdentifier();
+        }
+        if ($actor instanceof RoleIdentifierProvider) {
+            $role = $actor->getRoleIdentifier();
+        }
+
+        $resourceIdentifier = $this->getResourceIdentifier($resource);
+        if (!$resourceIdentifier) {
+            throw new LogicException("Can't recognise resource, identifier provider interface is not implemented.");
+        }
+
+        if ($resource instanceof RecordIdentifierProvider) {
+            $resourceRecordId = $resource->getResourceIdentifier();
+        }
+
+        $accessRules = $this->loader->getActorAccessRules($actorIdentifier);
+
+        // TODO: return reason
+        if ($accessRules === null || empty($accessRules)) {
+            return RuleMatcher::ACTOR_RULE_UNDEFINED;
+        }
+
+        return $this->matchRules($accessRules, $actor, $role, $actorRecordId, $operation, $resourceIdentifier, $resourceRecordId);
     }
 }
 
