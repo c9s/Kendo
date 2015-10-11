@@ -13,7 +13,7 @@ use LogicException;
 class NativeSessionAccessRuleMatcher extends AccessRuleMatcher implements RuleMatcher
 {
 
-    protected function matchRules($actorIdentifier, $role, $actorRecordId = null, $operation, $resourceIdentifier, $resourceRecordId)
+    protected function getActorRules($actorIdentifier)
     {
         $actorSessionKey = '__kendo:' . $actorIdentifier;
 
@@ -23,6 +23,6 @@ class NativeSessionAccessRuleMatcher extends AccessRuleMatcher implements RuleMa
             $accessRules = $this->loader->getActorAccessRules($actorIdentifier);
             $_SESSION[$actorSessionKey] = $accessRules;
         }
-        return parent::matchRules($actorIdentifier, $role, $actorRecordId, $oepration, $resourceIdentifier, $resourceRecordId);
+        return $accessRules;
     }
 }

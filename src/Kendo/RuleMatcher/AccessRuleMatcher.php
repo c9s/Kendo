@@ -59,9 +59,14 @@ class AccessRuleMatcher implements RuleMatcher
     }
 
 
+    protected function getActorRules($actorIdentifier)
+    {
+        return $this->loader->getActorAccessRules($actorIdentifier);
+    }
+
     protected function matchRules($actorIdentifier, $role, $actorRecordId = null, $operation, $resourceIdentifier, $resourceRecordId)
     {
-        $accessRules = $this->loader->getActorAccessRules($actorIdentifier);
+        $accessRules = $this->getActorRules($actorIdentifier);
 
         // TODO: return reason
         if ($accessRules === null || empty($accessRules)) {
