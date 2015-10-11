@@ -9,7 +9,6 @@ interface RuleMatcher
     const ACTOR_RULE_UNDEFINED    = 3;
     const NO_RULE_MATCHED         = 4;
 
-
     public function match($actor, $operation, $resource, Context $context = null);
 
 }

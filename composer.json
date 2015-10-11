@@ -20,6 +20,7 @@
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
         "corneltek/universal": "^1.4",
+        "corneltek/sessionkit": "dev-master",
         "corneltek/lazyrecord": "dev-master",
         "corneltek/sqlbuilder": "dev-master as 2.8.999"
     },
