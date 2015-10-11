@@ -22,9 +22,26 @@ class AccessRuleMatcher implements RuleMatcher
         $this->context = $context;
     }
 
+    protected function getActorIdentifier($actor, $matchedActorDefinition = null)
+    {
+        if ($matchedActorDefinition) {
+            
+            return $matchedActorDefinition->identifier;
+
+        } else if ($actor instanceof ActorIdentifierProvider) {
+
+            return $actor->getActorIdentifier();
+
+
+        } else if ($actor instanceof GeneralIdentifierProvider) {
+
+            return $actor->getIdentifier();
+
+        }
+        return null;
+    }
+
     /**
-     *
-     *
      * @param mixed $actor 
      * @param string $operation operation identifier
      * @param mixed $resource the resource object
@@ -46,35 +63,15 @@ class AccessRuleMatcher implements RuleMatcher
             }
         }
 
-        $actorIdentifier = null;
+        $actorIdentifier = $this->getActorIdentifier($actor, $matchedActorDefinition);
         $actorRecordId = null;
 
-        // Check actor 
-
-        if ($matchedActorDefinition) {
-            
-            $actorIdentifier = $matchedActorDefinition->identifier;
-
-        } else if ($actor instanceof ActorIdentifierProvider) {
-
-            $actorIdentifier = $actor->getActorIdentifier();
-
-            if ($actor instanceof RecordIdentifierProvider) {
-                $actorRecordId = $actor->getRecordIdentifier();
-            }
-
-        } else if ($actor instanceof GeneralIdentifierProvider) {
-
-            $actorIdentifier = $actor->getIdentifier();
-
-            if ($actor instanceof RecordIdentifierProvider) {
-                $actorRecordId = $actor->getRecordIdentifier();
-            }
-
-        } else {
-
+        if (!$actorIdentifier) {
             throw new LogicException("Can't recognise actor, identifier provider interface is not implemented.");
+        }
 
+        if ($actor instanceof RecordIdentifierProvider) {
+            $actorRecordId = $actor->getRecordIdentifier();
         }
 
 
