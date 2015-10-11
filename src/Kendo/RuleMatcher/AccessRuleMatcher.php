@@ -36,10 +36,7 @@ class AccessRuleMatcher implements RuleMatcher
 
             return $resource->getIdentifier();
 
-        } else {
-            // throw new LogicException("Can't recognise resource, identifier provider interface is not implemented.");
         }
-
     }
 
     protected function getActorIdentifier($actor, $matchedActorDefinition = null)
@@ -81,20 +78,22 @@ class AccessRuleMatcher implements RuleMatcher
 
         foreach ($rules as $rule) {
 
-            if (isset($rule['actor_record_id']) && $rule['actor_record_id'] != $actorRecordId) {
+            if (isset($rule['actor_record_id']) && $rule['actor_record_id'] !== $actorRecordId) {
                 continue;
             }
 
-            if (isset($rule['resource_record_id']) && $rule['resource_record_id'] != $resourceRecordId) {
+            if (isset($rule['resource_record_id']) && $rule['resource_record_id'] !== $resourceRecordId) {
                 continue;
             }
 
-            if (isset($rule['role']) && $rule['role'] != $role) {
+            if (isset($rule['role']) && $rule['role'] !== $role) {
                 continue;
             }
-            if ($rule['op'] != $operation) {
+
+            if ($rule['op'] !== $operation) {
                 continue;
             }
+
             return (object) [
                 'actor'     => $actor,
                 'role'      => $role,
@@ -105,9 +104,6 @@ class AccessRuleMatcher implements RuleMatcher
         }
 
         return RuleMatcher::NO_RULE_MATCHED;
-
-
-
     }
 
 
