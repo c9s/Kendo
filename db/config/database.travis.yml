@@ -4,7 +4,7 @@ bootstrap:
 schema:
   auto_id: true
   paths:
-  - src/Kendo/Model
+  - src
 seeds:
 data_source:
   default: sqlite

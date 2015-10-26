@@ -3,6 +3,8 @@ bootstrap:
   - vendor/autoload.php
 schema:
   auto_id: true
+  paths:
+  - src
 seeds:
 data_source:
   default: sqlite
