@@ -3,26 +3,32 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
 <div class="resource-group">
   <div class="resource">
-    <div class="resource-label">{{resource.label}}</div>
+    <div class="resource-label">
+      <label class="checkbox-inline">
+        <input type="checkbox"/>
+        {{resource.label}}
+      </label>
+    </div>
     {% set resOps = resource.operations %}
 
     {% if resOps %}
       <div class="resource-operations">
       {% for opIdentifier, opDef in resOps %}
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" 
-                   name="{{rules_field_name|default('rules')}}[{{ resource.identifier }}][{{opDef.identifier}}]" 
-                   value="1"
 
-                   {% if editor.getPermission(resource.identifier, opDef.identifier) %}
-                   checked="checked"
-                   {% endif %}
-            />
-            {{opDef.label}}
-          </label>
-        </div>
+        {# inline styled checkbox #}
+        <label class="checkbox-inline">
+          <input type="checkbox"
+                  name="{{rules_field_name|default('rules')}}[{{ resource.identifier }}][{{opDef.identifier}}]" 
+                  value="1"
 
+                  {% if editor.getPermission(resource.identifier, opDef.identifier) %}
+                  checked="checked"
+                  {% endif %}
+          />
+          {{opDef.label}}
+        </label>
+
+        {# block styled checkbox #}
         {#
         <div class="checkbox">
           <label>
