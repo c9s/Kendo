@@ -1,0 +1,21 @@
+---
+bootstrap:
+  - vendor/autoload.php
+schema:
+  auto_id: true
+seeds:
+data_source:
+  default: sqlite
+  nodes:
+    sqlite:
+      driver: "sqlite"
+      dsn: "sqlite:kendo.sqlite"
+    mysql:
+      driver: mysql
+      host: localhost
+      database: kendo_test
+      user: root
+      pass: 123123
+    memory:
+      driver: "sqlite"
+      dsn: "sqlite::memory:"

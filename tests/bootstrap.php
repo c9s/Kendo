@@ -1,6 +1,7 @@
 <?php
 use LazyRecord\Schema\SchemaGenerator;
 use LazyRecord\ConfigLoader;
+use LazyRecord\ConnectionManager;
 use CLIFramework\Logger;
 
 $loader = require 'vendor/autoload.php';
@@ -9,6 +10,7 @@ $loader->add(null, 'tests');
 
 $config = ConfigLoader::getInstance();
 $config->loadFromSymbol(true);
+$config->init();
 
 
 $logger = new Logger;
