@@ -60,7 +60,7 @@ class Authorizer
      *
      *
      * @param string|RuleIdentifierProvider|ActorIdentifierProvider $actor
-     * @param string $oepration
+     * @param string $operation
      * @param string|ResourceIdentifierProvider $resource
      */
     public function authorize($actor, $operation, $resource)
@@ -79,6 +79,4 @@ class Authorizer
         return new AuthorizationResult(true, "Allowed by default.");
     }
 }
-
-
 

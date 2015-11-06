@@ -10,7 +10,9 @@ use Kendo\RuleMatcher\RuleMatcher;
 use Kendo\Context;
 use LogicException;
 
-class NativeSessionAccessRuleMatcher extends AccessRuleMatcher implements RuleMatcher
+class NativeSessionAccessRuleMatcher 
+    extends AccessRuleMatcher 
+    implements RuleMatcher
 {
     protected function getActorRules($actorIdentifier)
     {

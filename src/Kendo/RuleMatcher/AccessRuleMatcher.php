@@ -64,6 +64,13 @@ class AccessRuleMatcher implements RuleMatcher
         return $this->loader->getActorAccessRules($actorIdentifier);
     }
 
+    /**
+     *
+     * @param string $actorIdentifier
+     * @param mixed $role
+     * @param integer $actorRecordId
+     * @param string $operation operation identity
+     */
     protected function matchRules($actorIdentifier, $role, $actorRecordId = null, $operation, $resourceIdentifier, $resourceRecordId)
     {
         $accessRules = $this->getActorRules($actorIdentifier);
