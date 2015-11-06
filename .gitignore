@@ -27,3 +27,5 @@ manifest.php
 src/Kendo/Model/*Base.php
 src/Kendo/Model/*CollectionBase.php
 composer.lock
+/tags
+/db/config/*.php
