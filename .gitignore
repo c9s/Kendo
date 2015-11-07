@@ -29,3 +29,5 @@ src/Kendo/Model/*CollectionBase.php
 composer.lock
 /tags
 /db/config/*.php
+/db/config/database.yml
+*.sqlite
