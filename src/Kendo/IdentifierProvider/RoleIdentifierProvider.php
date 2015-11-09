@@ -1,9 +1,9 @@
 <?php
 namespace Kendo\IdentifierProvider;
 
-interface RuleIdentifierProvider
+interface RoleIdentifierProvider
 {
-    public function getRuleIdentifier();
+    public function getRoleIdentifier();
 }
 
 
