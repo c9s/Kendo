@@ -92,6 +92,14 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
         }
     }
 
+    public function findResourceGroupByIdentifier($identifier)
+    {
+        if (isset($this->resourceGroups[ $identifier ])) {
+            return $this->resourceGroups[ $identifier ];
+        }
+    }
+
+
     public function findOperationByIdentifier($identifier)
     {
         if (isset($this->globalOperations[$identifier])) {
