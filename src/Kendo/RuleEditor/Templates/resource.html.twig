@@ -3,11 +3,7 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
 <div class="resource-group">
   <div class="resource">
-
-
-
-    {% if resource.group and resource.operations|length == 1 %}
-
+    {% if resource.childResources and resource.operations|length == 1 %}
       {# render the first operation on the left of the label #}
       {% set firstOp = resource.operations|first %}
       <div class="resource-label">
@@ -62,11 +58,7 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
         {% endfor %}
         </div>
       {% endif %}
-
     {% endif %}
-
-
-
   </div>
 
   {% if resource.childResources %}
