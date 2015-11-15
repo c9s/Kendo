@@ -165,7 +165,7 @@ class ActorRuleEditor implements IteratorAggregate
         $this->permissionSettings = [
             /* resource => [ op => permission, ... ] */
         ];
-        $resDefs = $this->policy->getResourceDefinitions();
+        $resDefs = array_merge($this->policy->getResourceDefinitions(), $this->policy->getResourceGroupDefinitions());
         foreach ($resDefs as $resDef) {
             // Get available operations
             if ($resourceOps = $resDef->operations) {
@@ -185,8 +185,8 @@ class ActorRuleEditor implements IteratorAggregate
     public function loadPermissionSettings($actor, $actorRecordId = 0)
     {
         $this->initPermissionSettings();
-        $resDefs = $this->policy->getResourceDefinitions();
         if ($actorRecordId) {
+            $resDefs = array_merge($this->policy->getResourceDefinitions(), $this->policy->getResourceGroupDefinitions());
             foreach ($resDefs as $resDef) {
                 // XXX: reconcile this method into the rule loader interface
                 $this->loadResourcePermissions($actor, $actorRecordId, $resDef);
