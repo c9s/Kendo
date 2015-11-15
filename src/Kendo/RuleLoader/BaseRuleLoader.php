@@ -50,6 +50,13 @@ abstract class BaseRuleLoader
         }
     }
 
+    public function findResourceGroupByIdentifier($identifier)
+    {
+        if (isset($this->definedResourceGroups[ $identifier ])) {
+            return $this->definedResourceGroups[ $identifier ];
+        }
+    }
+
     public function findResourceByIdentifier($identifier)
     {
         if (isset($this->definedResources[ $identifier ])) {

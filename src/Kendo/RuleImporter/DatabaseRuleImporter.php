@@ -68,28 +68,10 @@ class DatabaseRuleImporter
         return $roleRecords;
     }
 
-    protected function importResourceGroupRecords(array $definitions)
-    {
-        $records = array();
-        foreach ($definitions as $definition) {
-            $record = new ResourceGroupRecord;
-            $ret = $record->createOrUpdate([
-                'identifier' => $definition->identifier,
-                'label' => $definition->label,
-            ], 'identifier');
-            $this->assertResultSuccess($ret);
-            $records[$record->identifier] = $record;
-            $definition->setRecord($record);
-        }
-        return $records;
-    }
-
-
-
     protected function importResource(ResourceDefinition $definition, array & $resourceRecords)
     {
         if ($definition->group) {
-            $this->importResource($definition->group, $resourceRecords);
+            $parentResourceRecord = $this->importResource($definition->group, $resourceRecords);
         }
         $resourceRecord = new ResourceRecord;
         $ret = $resourceRecord->createOrUpdate([
@@ -100,7 +82,7 @@ class DatabaseRuleImporter
         $this->assertResultSuccess($ret);
         $definition->setRecord($resourceRecord);
         $definition->id = $resourceRecord->id;
-        $resourceRecords[$definition->identifier] = $resourceRecord;
+        return $resourceRecords[$definition->identifier] = $resourceRecord;
     }
 
     protected function importResourceRecords(array $definitions)

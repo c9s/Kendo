@@ -168,7 +168,6 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
         $rules = [];
         while ($row = $stm->fetch()) {
             $row['allow'] = boolval($row['allow']);
-
             if ($row['resource_record_id']) {
                 $row['resource_record_id'] = intval($row['resource_record_id']);
             }
@@ -227,8 +226,8 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
                 'op'                 => $row['operation'],
                 'role'               => $row['role'],
                 'resource'           => $row['resource'],
-                'resource_record_id' => $row['resource_record_id'],
-                'actor_record_id'    => $row['actor_record_id'],
+                'resource_record_id' => $row['resource_record_id'] ? intval($row['resource_record_id']) : null,
+                'actor_record_id'    => $row['actor_record_id'] ? intval($row['actor_record_id']) : null,
                 'allow'              => boolval($row['allow']),
             ];
         }

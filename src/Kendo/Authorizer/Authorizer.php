@@ -71,7 +71,7 @@ class Authorizer
                 $reason = $this->translateCode($retval);
                 return new AuthorizationResult(false, $reason);
             }
-            return new AuthorizationResult($matched->allow, "Rule matched");
+            return new AuthorizationResult($retval->allow, "Rule matched");
         }
         if ($this->disallowNoRuleMatches) {
             return new AuthorizationResult(false, "Disallowed.");

@@ -121,6 +121,11 @@ class ActorRuleEditor implements IteratorAggregate
         $actorDef = $this->loader->findActorByIdentifier($actor);
         foreach ($this->permissionSettings as $resource => $ops) {
             $resDef = $this->loader->findResourceByIdentifier($resource);
+
+            if (!$resDef) {
+                $resDef = $this->loader->findResourceGroupByIdentifier($resource);
+            }
+
             if (!$resDef) {
                 throw new LogicException("Resource '$resource' isn't defined.");
             }

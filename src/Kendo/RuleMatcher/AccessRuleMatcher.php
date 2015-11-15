@@ -41,8 +41,9 @@ class AccessRuleMatcher implements RuleMatcher
 
     protected function getActorIdentifier($actor, $matchedActorDefinition = null)
     {
+
         if ($matchedActorDefinition) {
-            
+
             return $matchedActorDefinition->identifier;
 
         } else if ($actor instanceof ActorIdentifierProvider) {
@@ -71,7 +72,7 @@ class AccessRuleMatcher implements RuleMatcher
      * @param integer $actorRecordId
      * @param string $operation operation identity
      */
-    protected function matchRules($actorIdentifier, $role, $actorRecordId = null, $operation, $resourceIdentifier, $resourceRecordId)
+    protected function matchRules($actorIdentifier, $role, $actorRecordId = null, $operation, $resourceIdentifier, $resourceRecordId = null)
     {
         $accessRules = $this->getActorRules($actorIdentifier);
 
@@ -128,7 +129,8 @@ class AccessRuleMatcher implements RuleMatcher
 
 
     /**
-     * @param mixed $actor 
+     *
+     * @param mixed $actor
      * @param string $operation operation identifier
      * @param mixed $resource the resource object
      * @param Context $context authentication context.
