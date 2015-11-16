@@ -13,12 +13,35 @@ use Kendo\Model\Resource as ResourceRecord;
 use Kendo\Model\ResourceGroup as ResourceGroupRecord;
 use Kendo\Exception\DefinitionRedefinedException;
 use Kendo\Definition\ResourceDefinition;
+use CLIFramework\Logger;
 
 /**
  * DatabaseRuleImporter imports AccessRule from schema to database
  */
 class DatabaseRuleImporter
 {
+    protected $importedResources = [];
+
+    public function __construct($logger = null)
+    {
+        $this->logger = $logger;
+    }
+
+    public function info($message)
+    {
+        if ($this->logger) {
+            $this->logger->info($message);
+        }
+    }
+
+    public function debug($message)
+    {
+        if ($this->logger) {
+            $this->logger->debug($message);
+        }
+    }
+
+
     /**
      * Result
      */
@@ -68,11 +91,12 @@ class DatabaseRuleImporter
         return $roleRecords;
     }
 
-    protected function importResource(ResourceDefinition $definition, array & $resourceRecords)
+    protected function importResource(ResourceDefinition $definition)
     {
-        if ($definition->group) {
-            $parentResourceRecord = $this->importResource($definition->group, $resourceRecords);
+        if (isset($this->importedResources[$definition->identifier])) {
+            return $this->importedResources[$definition->identifier];
         }
+        $this->info("Importing resource: " . $definition->identifier);
         $resourceRecord = new ResourceRecord;
         $ret = $resourceRecord->createOrUpdate([
             'identifier' => $definition->identifier,
@@ -82,16 +106,25 @@ class DatabaseRuleImporter
         $this->assertResultSuccess($ret);
         $definition->setRecord($resourceRecord);
         $definition->id = $resourceRecord->id;
-        return $resourceRecords[$definition->identifier] = $resourceRecord;
+        return $this->importedResources[$definition->identifier] = $resourceRecord;
     }
 
     protected function importResourceRecords(array $definitions)
     {
-        $resourceRecords = [];
         foreach ($definitions as $definition) {
-            $this->importResource($definition, $resourceRecords);
+            if ($definition->group) {
+                $this->importResource($definition->group);
+            }
+            $this->importResource($definition);
+            if ($childResources = $definition->getChildResources()) {
+                if (!empty($childResources)) {
+                    foreach ($childResources as $childResource) {
+                        $this->importResource($childResource);
+                    }
+                }
+            }
         }
-        return $resourceRecords;
+        return $this->importedResources;
     }
 
     protected function importOperationRecords(array $definitions)

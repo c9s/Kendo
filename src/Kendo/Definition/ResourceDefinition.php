@@ -128,6 +128,15 @@ class ResourceDefinition extends BaseDefinition
     }
 
 
+    /**
+     * A resource definition is a group when there are childResources under it.
+     */
+    public function isGroup()
+    {
+        return !empty($this->childResources);
+    }
+
+
     public function addChildResource(ResourceDefinition $resource)
     {
         $this->childResources[] = $resource;
