@@ -29,14 +29,19 @@ class OperationConstantExporter
             }
         }
 
+        $map = [ ];
         $constants = $reflection->getConstants();
+        foreach ($constants as $key => $val) {
+            $map[ strtolower($key) ] = $val;
+        }
         return $constants;
-
+        /*
         // rewrite constant names with class name
         $fullqualifiedConstants = [];
         foreach ($constants as $identifier => $label) {
-            $fullqualifiedConstants[ $reflection->getShortName() . ':' . $identifier ] = $label;
+            $fullqualifiedConstants[ $reflection->getShortName() . ':' . $identifier] = $label;
         }
         return $fullqualifiedConstants;
+         */
     }
 }
