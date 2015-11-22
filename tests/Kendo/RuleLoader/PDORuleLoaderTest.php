@@ -71,15 +71,15 @@ class PDORuleLoaderTest extends DatabaseTestCase
         // $rules = $loader->queryActorAccessRules('user', 1, 'books');
         $rules = $loader->queryActorAccessRules('user', 1, 'books');
         $this->assertCount(1, $rules);
-        $this->assertEquals('CREATE', $rules[0]['operation']);
+        $this->assertEquals('create', $rules[0]['operation']);
 
         $rules = $loader->queryActorAccessRules('user', 2, 'books');
         $this->assertCount(1, $rules);
-        $this->assertEquals('UPDATE', $rules[0]['operation']);
+        $this->assertEquals('update', $rules[0]['operation']);
 
         $rules = $loader->queryActorAccessRules('user', 3, 'books');
         $this->assertCount(1, $rules);
-        $this->assertEquals('DELETE', $rules[0]['operation']);
+        $this->assertEquals('delete', $rules[0]['operation']);
 
         $rules = $loader->queryActorAccessRules('user', 99, 'books');
         $this->assertEmpty($rules);

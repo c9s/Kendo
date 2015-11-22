@@ -74,6 +74,7 @@ class AccessRuleMatcher implements RuleMatcher
      */
     protected function matchRules($actorIdentifier, $role, $actorRecordId = null, $operation, $resourceIdentifier, $resourceRecordId = null)
     {
+        echo 'actor:', $actorIdentifier, PHP_EOL;
         $accessRules = $this->getActorRules($actorIdentifier);
 
         // TODO: return reason

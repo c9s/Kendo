@@ -16,7 +16,7 @@ class UserSpecificSecurityPolicy extends RBACSecurityPolicySchema
 
         $this->resource('books', 'Book')
             ->group($coreGroup)
-            ->operations([ 'CREATE', 'UPDATE', 'DELETE' ]);
+            ->operations([ 'create', 'update', 'delete' ]);
 
         $this->resource('products', 'Product')
             ->group($coreGroup)
@@ -33,14 +33,14 @@ class UserSpecificSecurityPolicy extends RBACSecurityPolicySchema
 
         $this->rule()
             ->actor('user', 1)
-            ->can(['CREATE'], 'books');
+            ->can(['create'], 'books');
 
         $this->rule()
             ->actor('user', 2)
-            ->can(['UPDATE'], 'books');
+            ->can(['update'], 'books');
 
         $this->rule()
             ->actor('user', 3)
-            ->can(['DELETE'], 'books');
+            ->can(['delete'], 'books');
     }
 }

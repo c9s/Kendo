@@ -16,6 +16,7 @@ class SchemaRuleLoader extends BaseRuleLoader implements RuleLoader
 {
     protected $policyModule;
 
+    protected $accessRules = array();
 
     public function __construct(SecurityPolicyModule $storage = null)
     {
@@ -66,7 +67,6 @@ class SchemaRuleLoader extends BaseRuleLoader implements RuleLoader
             }
 
 
-            $this->accessRules = [];
 
             // Populate rule definitions into access rule array structure
             $ruleDefinitions = $definition->getRuleDefinitions();

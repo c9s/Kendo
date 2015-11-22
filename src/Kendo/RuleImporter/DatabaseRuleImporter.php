@@ -14,6 +14,7 @@ use Kendo\Model\ResourceGroup as ResourceGroupRecord;
 use Kendo\Exception\DefinitionRedefinedException;
 use Kendo\Definition\ResourceDefinition;
 use CLIFramework\Logger;
+use Exception;
 
 /**
  * DatabaseRuleImporter imports AccessRule from schema to database
@@ -172,7 +173,12 @@ class DatabaseRuleImporter
                 foreach ($rules as $rule) {
                     $opIdentifier = $rule['op'];
                     $allow = $rule['allow'];
+
                     $roleIdentifier = $rule['role'];
+
+                    if (!isset($operationRecords[$opIdentifier])) {
+                        throw new Exception("Undefined operation '$opIdentifier'.");
+                    }
 
                     $ruleRecord = new AccessRuleRecord;
                     $ret = $ruleRecord->createOrUpdate([

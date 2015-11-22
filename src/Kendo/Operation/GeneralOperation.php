@@ -27,11 +27,11 @@ class GeneralOperation
     static public function export()
     {
         return [
-            'CREATE' => "Create",
-            'UPDATE' => "Update",
-            'DELETE' => "Delete",
-            'VIEW'   => "View",
-            'SEARCH' => "Search",
+            "create" => "Create",
+            "update" => "Update",
+            "delete" => "Delete",
+            "view"   => "View",
+            "search" => "Search",
         ];
     }
 }

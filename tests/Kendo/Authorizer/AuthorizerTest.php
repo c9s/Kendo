@@ -23,13 +23,12 @@ class AuthorizerTest extends PHPUnit_Framework_TestCase
         $loader->load($storage);
 
         $authorizer = new Authorizer;
-
         $accessRuleMatcher = new AccessRuleMatcher($loader);
         $authorizer->addMatcher($accessRuleMatcher);
 
         $actor = new NormalUser;
         $ret = $authorizer->authorize($actor, 'view', 'products');
-        var_dump($ret); 
+        $this->assertTrue($ret->allowed, 'view product should be allowed: ' . $ret->reason);
         $this->assertInstanceOf('Kendo\Authorizer\AuthorizationResult', $ret);
 
         /*
