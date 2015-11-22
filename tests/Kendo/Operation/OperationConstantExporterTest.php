@@ -22,9 +22,9 @@ class OperationConstantExporterTest extends PHPUnit_Framework_TestCase
         $exporter = new OperationConstantExporter;
         $constants = $exporter->export('TestFooConstants');
         $this->assertSame([ 
-            'A' => 'a',
-            'B' => 'b',
-            'C' => 'c',
+            'a' => 'a',
+            'b' => 'b',
+            'c' => 'c',
         ], $constants);
     }
 }
