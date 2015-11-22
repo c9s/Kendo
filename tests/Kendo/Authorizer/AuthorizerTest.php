@@ -28,7 +28,7 @@ class AuthorizerTest extends PHPUnit_Framework_TestCase
         $authorizer->addMatcher($accessRuleMatcher);
 
         $actor = new NormalUser;
-        $ret = $authorizer->authorize($actor, GeneralOperation::VIEW, 'products');
+        $ret = $authorizer->authorize($actor, 'view', 'products');
         var_dump($ret); 
         $this->assertInstanceOf('Kendo\Authorizer\AuthorizationResult', $ret);
 
@@ -45,7 +45,7 @@ class AuthorizerTest extends PHPUnit_Framework_TestCase
 
         /*
         $actor = new NormalUser;
-        $authentication = $authorizer->authorize($actor, Op::CREATE, 'products');
+        $authentication = $authorizer->authorize($actor, 'create', 'products');
         if ($authentication->isAllowed()) {
 
         } else {
