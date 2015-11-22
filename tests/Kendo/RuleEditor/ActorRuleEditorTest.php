@@ -56,7 +56,6 @@ class ActorRuleEditorTest extends DatabaseTestCase
         $editor->loadPermissionSettings('user', 1);
 
         $settings = $editor->getPermissionSettings();
-        // var_dump( $settings ); 
 
         $editor->setAllow('books', 'create');
         $editor->setAllow('books', 'update');
