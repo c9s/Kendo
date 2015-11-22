@@ -216,7 +216,10 @@ class PDORuleLoader extends BaseRuleLoader implements RuleLoader
         $this->stm->execute($args->toArray());
 
         $this->fetchActorAccessRules($this->stm);
-        return $this->accessRules[$actor];
+        if (isset($this->accessRules[$actor])) {
+            return $this->accessRules[$actor];
+        }
+        return [];
     }
 
     protected function fetchActorAccessRules(PDOStatement $stm)
