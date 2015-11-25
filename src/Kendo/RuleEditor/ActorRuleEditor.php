@@ -159,7 +159,11 @@ class ActorRuleEditor implements IteratorAggregate
         }
     }
 
-    public function initPermissionSettings($defaultAllow = false)
+    /**
+     * @param boolean $defaultAllow
+     * @param callable $filter the rule filter callback.
+     */
+    public function initPermissionSettings($defaultAllow = false, callable $filter = null)
     {
         // For each resource, load their operations and corresponding setting.
         $this->permissionSettings = [
@@ -167,27 +171,46 @@ class ActorRuleEditor implements IteratorAggregate
         ];
         $resDefs = array_merge($this->policy->getResourceDefinitions(), $this->policy->getResourceGroupDefinitions());
         foreach ($resDefs as $resDef) {
-            // Get available operations
+
+            // Get available operations from the resource if any.
             if ($resourceOps = $resDef->operations) {
                 foreach ($resourceOps as $opIdentifier => $opDef) {
+
+                    // Skip items if the callback returns false on eval.
+                    if ($filter && $filter($resDef, $opDef) === false) {
+                        continue;
+                    }
+
                     // echo get_class($opDef) , ':' , $opDef->identifier, PHP_EOL;
                     $this->permissionSettings[$resDef->identifier][$opDef->identifier] = $defaultAllow;
                 }
             } else {
                 $ops = $this->policy->getOperationDefinitions();
                 foreach ($ops as $opIdentifier => $opDef) {
+
+                    // Skip items if the callback returns false on eval.
+                    if ($filter && $filter($resDef, $opDef) === false) {
+                        continue;
+                    }
+
                     $this->permissionSettings[$resDef->identifier][$opDef->identifier] = $defaultAllow;
                 }
             }
         }
     }
 
-    public function loadPermissionSettings($actor, $actorRecordId = 0)
+
+
+
+    public function loadPermissionSettings($actor, $actorRecordId = 0, callback $filter = null)
     {
         $this->initPermissionSettings();
         if ($actorRecordId) {
             $resDefs = array_merge($this->policy->getResourceDefinitions(), $this->policy->getResourceGroupDefinitions());
             foreach ($resDefs as $resDef) {
+                if ($filter && $filter($resDef) === false) {
+                    continue;
+                }
                 // XXX: reconcile this method into the rule loader interface
                 $this->loadResourcePermissions($actor, $actorRecordId, $resDef);
             }
