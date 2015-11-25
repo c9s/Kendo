@@ -1,7 +1,7 @@
 {#
 vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
-<div class="resource-group">
+<div class="resource-group resource-group-{{resource.identifier|html_attr}}">
   <div class="resource">
     {% if resource.childResources and resource.operations|length == 1 %}
       {# render the first operation on the left of the label #}
