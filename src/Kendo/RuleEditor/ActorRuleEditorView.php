@@ -18,10 +18,14 @@ class ActorRuleEditorView
     protected $defaultTwigOptions = [ 'debug' => true ];
 
 
+    protected $formTemplate = '@Kendo/rule_editor.html.twig';
+
     /**
      * @var Twig_Environment
      */
     protected $environment;
+
+    protected $readonly = false;
 
     protected $options = array(
         'rules_field_name' => 'rules',
@@ -65,15 +69,24 @@ class ActorRuleEditorView
         return $loader;
     }
 
+    public function setReadOnly($readonly = true)
+    {
+        $this->readonly = $readonly;
+    }
+
     public function render()
     {
-        return $this->environment->render('@Kendo/rule_editor.html.twig', array(
-            'view'   => $this,
-            'editor' => $this->editor,
-            'policy' => $this->editor->getPolicy(),
-            'rule_loader' => $this->editor->getLoader(),
-            'rules_field_name' => $this->options['rules_field_name'],
-        ));
+        return $this->environment->render(
+            ($this->readonly ? $this->viewTemplate : $this->formTemplate),
+            [
+                'view'   => $this,
+                'editor' => $this->editor,
+                'policy' => $this->editor->getPolicy(),
+                'readonly' => $this->readonly,
+                'rule_loader' => $this->editor->getLoader(),
+                'rules_field_name' => $this->options['rules_field_name'],
+            ]
+        );
     }
 
     public function __toString()

@@ -12,6 +12,7 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
           <input
             type="checkbox" name="{{rules_field_name|default('rules')}}[{{resource.identifier}}][{{firstOp.identifier}}]" 
             value="1"
+            {% if readonly %} disabled="disabled" {% endif %}
             {% if editor.getPermission(resource.identifier, firstOp.identifier) %}
             checked="checked"
             {% endif %}
@@ -24,7 +25,9 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 
       <div class="resource-label">
         <label class="checkbox-inline">
+          {% if not readonly %}
           <input type="checkbox"/>
+          {% endif %}
           {{resource.label}}
         </label>
       </div>
@@ -40,6 +43,7 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
                     name="{{rules_field_name|default('rules')}}[{{ resource.identifier }}][{{opDef.identifier}}]" 
                     value="1"
 
+                    {% if readonly %} disabled="disabled" {% endif %}
                     {% if editor.getPermission(resource.identifier, opDef.identifier) %}
                     checked="checked"
                     {% endif %}
