@@ -45,5 +45,6 @@
         "psr-4": {
             "Kendo\\": "src/Kendo/"
         }
-    }
+    },
+    "extra": { "branch-alias": { "dev-master": "2.0.x-dev" } }
 }
