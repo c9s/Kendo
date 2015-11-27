@@ -76,17 +76,14 @@ class ActorRuleEditorView
 
     public function render()
     {
-        return $this->environment->render(
-            ($this->readonly ? $this->viewTemplate : $this->formTemplate),
-            [
+        return $this->environment->render($this->formTemplate, [
                 'view'   => $this,
                 'editor' => $this->editor,
                 'policy' => $this->editor->getPolicy(),
                 'readonly' => $this->readonly,
                 'rule_loader' => $this->editor->getLoader(),
                 'rules_field_name' => $this->options['rules_field_name'],
-            ]
-        );
+            ]);
     }
 
     public function __toString()
