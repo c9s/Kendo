@@ -1,14 +1,34 @@
 {#
 vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
+{% macro render_resource_op(rules_field_name, resource, opDef, readonly = false) %}
+  {# inline styled checkbox #}
+  <label class="checkbox-inline">
+    <input type="checkbox"
+            name="{{rules_field_name|default('rules')}}[{{ resource.identifier }}][{{opDef.identifier}}]" 
+            value="1"
+
+            {% if readonly %} disabled="disabled" {% endif %}
+            {% if editor.getPermission(resource.identifier, opDef.identifier) %}
+            checked="checked"
+            {% endif %}
+    />
+    {{opDef.label}}
+  </label>
+{% endmacro %}
+
+{% import _self as template %}
+
+
 <div class="resource-group resource-group-{{resource.identifier|escape('html_attr')}}">
   <div class="resource">
-    {% if resource.childResources and resource.operations|length == 1 %}
-      {# render the first operation on the left of the label #}
+
+    {# if there is "one" operation on this resource #}
+    {% if resource.operations|length == 1 %}
       {% set firstOp = resource.operations|first %}
+      {# If there is only one operation, we simply render the checkbox with the label #}
       <div class="resource-label">
         <label class="checkbox-inline">
-          {# If there is only one operation, we simply render the checkbox #}
           <input
             type="checkbox" name="{{rules_field_name|default('rules')}}[{{resource.identifier}}][{{firstOp.identifier}}]" 
             value="1"
@@ -20,50 +40,26 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
           {{resource.label}}
         </label>
       </div>
-
     {% else %}
-
+      {# if not, it's just a label without input name #}
       <div class="resource-label">
         <label class="checkbox-inline">
-          {% if not readonly %}
-          <input type="checkbox"/>
-          {% endif %}
+          {% if not readonly %}<input type="checkbox"/>{% endif %}
           {{resource.label}}
         </label>
       </div>
-
-      {% set resOps = resource.operations %}
-      {% if resOps|length > 0 %}
-        <div class="resource-operations">
-        {% for opIdentifier, opDef in resOps %}
-
-          {# inline styled checkbox #}
-          <label class="checkbox-inline">
-            <input type="checkbox"
-                    name="{{rules_field_name|default('rules')}}[{{ resource.identifier }}][{{opDef.identifier}}]" 
-                    value="1"
-
-                    {% if readonly %} disabled="disabled" {% endif %}
-                    {% if editor.getPermission(resource.identifier, opDef.identifier) %}
-                    checked="checked"
-                    {% endif %}
-            />
-            {{opDef.label}}
-          </label>
-          {# block styled checkbox #}
-          {#
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" name="rules[{{ resource.identifier }}][{{opDef.identifier}}]" value="1"> 
-              {{opDef.label}}
-            </label>
-          </div>
-          #}
-        {% endfor %}
-        </div>
-      {% endif %}
     {% endif %}
-  </div>
+
+
+    {# when there is more than 1 operations #}
+    {% if resource.operations|length > 1 %}
+      <div class="resource-operations">
+      {% for opIdentifier, opDef in resource.operations %}
+        {{template.render_resource_op(rules_field_name, resource, opDef, readonly) }}
+      {% endfor %}
+      </div>
+    {% endif %}
+  </div><!-- .resource -->
 
   {% if resource.childResources %}
     {% for childResource in resource.childResources %}
