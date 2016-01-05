@@ -182,6 +182,16 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
         return $this->globalOperations;
     }
 
+    public function getResourceKeys()
+    {
+        return array_keys($this->resources);
+    }
+
+    public function getResourceGroupKeys()
+    {
+        return array_keys($this->resourceGroups);
+    }
+
     public function getResourceDefinitions()
     {
         return $this->resources;
@@ -209,6 +219,9 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
     public function removeResource($identifier)
     {
         unset($this->resources[$identifier]);
+        foreach ($this->resourceGroups as $group) {
+            $group->removeChildResource($identifier);
+        }
     }
 
     public function removeResourceGroup($identifier)

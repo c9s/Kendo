@@ -4,8 +4,10 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 <div class="kendo-rule-editor row">
   {% set settings = editor.getPermissionSettings() %}
   {% for group in policy.getResourceGroupDefinitions() %}
+    {% if group.getChildResources()|length > 0 %}
     <div class="col-md-4">
       {% include "@Kendo/resource.html.twig" with { "policy": policy, "resource": group } %}
     </div>
+    {% endif %}
   {% endfor %}
 </div>

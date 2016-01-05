@@ -1,7 +1,7 @@
 {#
 vim:filetype=htmldjango:sw=2:ts=2:sts=2:
 #}
-{% macro render_resource_op(rules_field_name, resource, opDef, readonly = false) %}
+{% macro render_resource_op(editor, rules_field_name, resource, opDef, readonly = false) %}
   {# inline styled checkbox #}
   <label class="checkbox-inline">
     <input type="checkbox"
@@ -55,7 +55,7 @@ vim:filetype=htmldjango:sw=2:ts=2:sts=2:
     {% if resource.operations|length > 1 %}
       <div class="resource-operations">
       {% for opIdentifier, opDef in resource.operations %}
-        {{template.render_resource_op(rules_field_name, resource, opDef, readonly) }}
+        {{template.render_resource_op(editor, rules_field_name, resource, opDef, readonly) }}
       {% endfor %}
       </div>
     {% endif %}
