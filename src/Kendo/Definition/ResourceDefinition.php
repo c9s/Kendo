@@ -136,10 +136,14 @@ class ResourceDefinition extends BaseDefinition
         return !empty($this->childResources);
     }
 
+    public function removeChildResource($identifier)
+    {
+        unset($this->childResources[$identifier]);
+    }
 
     public function addChildResource(ResourceDefinition $resource)
     {
-        $this->childResources[] = $resource;
+        $this->childResources[$resource->identifier] = $resource;
     }
 
     public function getChildResources()
