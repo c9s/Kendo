@@ -212,10 +212,6 @@ abstract class RBACSecurityPolicySchema implements SecurityPolicySchema
         return $this->rules;
     }
 
-
-
-
-
     public function removeResource($identifier)
     {
         unset($this->resources[$identifier]);

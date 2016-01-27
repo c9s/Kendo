@@ -138,7 +138,13 @@ class ResourceDefinition extends BaseDefinition
 
     public function removeChildResource($identifier)
     {
-        unset($this->childResources[$identifier]);
+        if (isset($this->childResources[$identifier])) {
+            unset($this->childResources[$identifier]);
+        } else {
+            foreach ($this->childResources as $resource) {
+                $resource->removeChildResource($identifier);
+            }
+        }
     }
 
     public function addChildResource(ResourceDefinition $resource)
