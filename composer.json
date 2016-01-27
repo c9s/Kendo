@@ -21,6 +21,7 @@
         "corneltek/phpunit-testmore": "dev-master",
         "corneltek/universal": "*",
         "corneltek/sessionkit": "dev-master",
+        "corneltek/locale": "@dev",
         "corneltek/lazyrecord": "dev-master",
         "corneltek/sqlbuilder": "@dev"
     },
