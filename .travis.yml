@@ -9,7 +9,7 @@ php:
 install:
 - rm -rf vendor
 - composer self-update
-- composer require satooshi/php-coveralls:dev-master --no-update --dev
+- composer require satooshi/php-coveralls "^1" --no-update --dev
 - composer install
 - mysql -e 'create database kendo;'
 
