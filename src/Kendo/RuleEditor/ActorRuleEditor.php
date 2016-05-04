@@ -134,7 +134,6 @@ class ActorRuleEditor implements IteratorAggregate
                 if (!$opDef) {
                     throw new LogicException("Operation '$op' isn't defined.");
                 }
-
                 $rule = new AccessRule;
                 $rule->createOrUpdate([
                     'actor_id'        => $actorDef->id,
@@ -144,7 +143,7 @@ class ActorRuleEditor implements IteratorAggregate
                     'resource'        => $resDef->identifier,
                     'operation'       => $opDef->identifier,
                     'operation_id'    => $opDef->id,
-                    'allow' => $allow,
+                    'allow' => boolval($allow),
                 ],['actor', 'actor_record_id', 'resource', 'operation']);
             }
         }
