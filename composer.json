@@ -22,9 +22,7 @@
         "corneltek/universal": "*",
         "corneltek/sessionkit": "dev-master",
         "corneltek/locale": "@dev",
-        "corneltek/lazyrecord": "dev-master",
-        "corneltek/sqlbuilder": "@dev",
-        "corneltek/cliframework": "@dev"
+        "corneltek/lazyrecord": "^3.0.0"
     },
     "license": "MIT",
     "authors": [
