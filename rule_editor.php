@@ -4,7 +4,7 @@ $loader = require __DIR__ . '/vendor/autoload.php';
 $loader->add(null, 'tests');
 
 use LazyRecord\ConnectionManager;
-use LazyRecord\ConfigLoader;
+use Maghead\Runtime\Config\FileConfigLoader;
 
 use SimpleApp\SimpleSecurityPolicy;
 use SimpleApp\UserSpecificSecurityPolicy;

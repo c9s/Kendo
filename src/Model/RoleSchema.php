@@ -1,16 +1,20 @@
 <?php
 namespace Kendo\Model;
-use LazyRecord\Schema\DeclareSchema;
+use Maghead\Schema\DeclareSchema;
 
-class ActorSchema extends DeclareSchema
+class RoleSchema extends DeclareSchema
 {
     public function schema() 
     {
-        $this->table('access_actors');
+        $this->table('access_roles');
 
+        $this->column('actor_id')
+            ->refer('Kendo\\Model\\ActorSchema')
+            ->integer();
+
+        // role identifier
         $this->column('identifier')
             ->varchar(32)
-            ->unique()
             ->required()
             ;
 
@@ -23,8 +27,11 @@ class ActorSchema extends DeclareSchema
             ->text()
             ;
 
-        $this->many('roles', 'Kendo\\Model\\RoleSchema', 'actor_id', 'id');
+        $this->belongsTo('actor', 'Kendo\\Model\\RoleSchema', 'id', 'actor_id');
     }
+
+
+
 }
 
 

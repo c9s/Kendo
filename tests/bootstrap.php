@@ -1,6 +1,7 @@
 <?php
 use LazyRecord\Schema\SchemaGenerator;
-use LazyRecord\ConfigLoader;
+use Maghead\Runtime\Config\FileConfigLoader;
+use Maghead\Runtime\Bootstrap;
 use LazyRecord\ConnectionManager;
 use CLIFramework\Logger;
 
@@ -8,10 +9,8 @@ $loader = require 'vendor/autoload.php';
 // Add fallback directory for looking up class files
 $loader->add(null, 'tests');
 
-$config = ConfigLoader::getInstance();
-$config->loadFromSymbol(true);
-$config->init();
-
+$config = FileConfigLoader::load('config/database.yml');
+Bootstrap::setup($config);
 
 $logger = new Logger;
 $logger->info("Building schema class files...");

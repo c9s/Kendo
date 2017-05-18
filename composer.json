@@ -8,21 +8,23 @@
         "control",
         "acl",
         "orm",
-        "lazyrecord",
+        "maghead",
         "role-based",
         "RBAC",
         "RSBAC",
         "ABAC"
     ],
     "require": {
-        "twig/twig": "^1.22|^2"
+        "twig/twig": "^1.22|~1.32.0|^2"
     },
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
         "corneltek/universal": "*",
         "corneltek/sessionkit": "dev-master",
         "corneltek/locale": "@dev",
-        "corneltek/lazyrecord": "^3.0.0"
+        "maghead/maghead": "4.0.x-dev",
+        "corneltek/cliframework": "4.0.x-dev",
+        "corneltek/sqlbuilder": "4.0.x-dev"
     },
     "license": "MIT",
     "authors": [
@@ -42,8 +44,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Kendo\\": "src/Kendo/"
+            "Kendo\\": "src/"
         }
     },
-    "extra": { "branch-alias": { "dev-master": "2.0.x-dev" } }
+    "extra": { "branch-alias": { "dev-master": "4.0.x-dev" } }
 }

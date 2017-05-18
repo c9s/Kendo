@@ -1,6 +1,6 @@
 <?php
 namespace Kendo\Model;
-use LazyRecord\Schema\DeclareSchema;
+use Maghead\Schema\DeclareSchema;
 
 class ResourceSchema extends DeclareSchema
 {
