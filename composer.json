@@ -15,7 +15,7 @@
         "ABAC"
     ],
     "require": {
-        "twig/twig": "^1.22"
+        "twig/twig": "^1.22|^2"
     },
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
