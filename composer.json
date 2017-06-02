@@ -19,7 +19,6 @@
     },
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master",
-        "corneltek/universal": "*",
         "corneltek/sessionkit": "dev-master",
         "corneltek/locale": "@dev",
         "maghead/maghead": "4.0.x-dev",
